@@ -1,0 +1,33 @@
+{
+  "name": "hue-remote",
+  "version": "1.0.0",
+  "description": "A remote Phillips Hue API that provides authenticated access to the Hue bridge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yashdalfthegray/hue-remote.git"
+  },
+  "keywords": [
+    "hue",
+    "phillips",
+    "hue",
+    "hue",
+    "remote"
+  ],
+  "author": "Yash Kulshrestha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yashdalfthegray/hue-remote/issues"
+  },
+  "homepage": "https://github.com/yashdalfthegray/hue-remote#readme",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
+  }
+}
