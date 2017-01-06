@@ -1,3 +1,5 @@
+# Project specific
+*.env
 
 # Created by https://www.gitignore.io/api/node,windows,osx,sublimetext,webstorm,git
 
