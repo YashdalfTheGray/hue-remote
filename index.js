@@ -10,7 +10,7 @@ const app = express();
 const appPort = process.env.PORT || process.argv[2] || 8080;
 
 app.use(bodyParser.json());
-app.use(morgan('dev'));
+app.use(morgan('common'));
 app.use(checkAuthToken);
 
 app.get('/', (req, res) => {
