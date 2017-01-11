@@ -34,4 +34,19 @@ lightsRouter.get('/:id', checkAuthToken, (req, res) => {
     });
 });
 
+lightsRouter.get('/:id/state', checkAuthToken, (req, res) => {
+    const hueUser = process.env.HUE_BRIDGE_USERNAME;
+    const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
+
+    request({
+        method: 'GET',
+        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id
+    }).then(result => {
+        res.json(JSON.parse(result).state);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
+
 module.exports = lightsRouter;
