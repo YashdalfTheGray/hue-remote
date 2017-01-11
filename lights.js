@@ -19,4 +19,19 @@ lightsRouter.get('/', checkAuthToken, (req, res) => {
     });
 });
 
+lightsRouter.get('/:id', checkAuthToken, (req, res) => {
+    const hueUser = process.env.HUE_BRIDGE_USERNAME;
+    const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
+
+    request({
+        method: 'GET',
+        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id
+    }).then(result => {
+        res.json(JSON.parse(result));
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
+
 module.exports = lightsRouter;
