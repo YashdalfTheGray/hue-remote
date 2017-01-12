@@ -67,10 +67,6 @@
         "key-spacing": "error",
         "keyword-spacing": "error",
         "line-comment-position": "error",
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
         "lines-around-comment": "error",
         "lines-around-directive": "error",
         "max-depth": "error",
@@ -88,7 +84,7 @@
             "always"
         ],
         "newline-before-return": "off",
-        "newline-per-chained-call": "error",
+        "newline-per-chained-call": "off",
         "no-alert": "error",
         "no-array-constructor": "error",
         "no-await-in-loop": "error",
@@ -196,7 +192,7 @@
         "prefer-reflect": "error",
         "prefer-rest-params": "error",
         "prefer-spread": "error",
-        "prefer-template": "error",
+        "prefer-template": "off",
         "quote-props": "off",
         "quotes": [
             "error",
