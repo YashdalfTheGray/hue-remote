@@ -31,6 +31,7 @@
     "color-space": "^1.14.7",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
+    "lodash": "^4.17.4",
     "morgan": "^1.7.0",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
