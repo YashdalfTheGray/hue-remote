@@ -18,7 +18,7 @@ const scaleToHueValues = hsvArray => [
 ];
 
 
-module.exports = rgbColor => {
+const convertRgbToHue = rgbColor => {
     let colorArr = [];
 
     if (_.isString(rgbColor) && !validateColorString(rgbColor)) {
@@ -41,4 +41,9 @@ module.exports = rgbColor => {
     }
 
     return scaleToHueValues(rgb.hsv(colorArr));
+};
+
+module.exports = {
+    rgbToHue: convertRgbToHue,
+    tempToMired: temp => _.max([153, _.min([_.round(1000000 / temp), 500])])
 };
