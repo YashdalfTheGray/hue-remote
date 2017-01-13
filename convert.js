@@ -40,7 +40,10 @@ const convertRgbToHue = rgbColor => {
         colorArr = rgbColor;
     }
 
-    return scaleToHueValues(rgb.hsv(colorArr));
+    return {
+        status: 'ok',
+        result: scaleToHueValues(rgb.hsv(colorArr))
+    };
 };
 
 module.exports = {
