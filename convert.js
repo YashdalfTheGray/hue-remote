@@ -54,5 +54,5 @@ const convertRgbToHue = rgbColor => {
 
 module.exports = {
     rgbToHue: convertRgbToHue,
-    tempToMired: temp => _.max([153, _.min([_.round(1000000 / temp), 500])])
+    tempToMired: temp => _.max([153, _.min([_.round(1000000 / (temp ? temp : 6500)), 500])])
 };
