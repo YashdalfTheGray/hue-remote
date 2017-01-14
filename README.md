@@ -20,7 +20,7 @@ Run `npm start` to start the Hue remote server. This server depends on a few env
 
 ## Testing
 
-You can use `npm test` to run the tests against the `checkAuthToken` middleware.
+You can use `npm test` to run the tests against the `checkAuthToken` middleware and the `convert` color conversion utility.
 
 ## Suggested use
 
@@ -28,4 +28,4 @@ This is an API server. It is intended to be started and left running on a comput
 
 The default command is `forever start index.js`. This will start `index.js` as a service which can then be left alone for the long term. The location of the logfile for this command can be gotten using `forever logs`.
 
-To get a little fancier, you  can use `forever start -l forever.log -o out.log -e err.log index.js`. This command separates the forever logs, the `stdout` and the `stderr` output streams. You can use `forever list` to get a list of all the running processes and `forever stop` to stop a process. 
+To get a little fancier, you  can use `forever start -l forever.log -o out.log -e err.log index.js`. This command separates the forever logs, the `stdout` and the `stderr` output streams. You can use `forever list` to get a list of all the running processes and `forever stop` to stop a process.
