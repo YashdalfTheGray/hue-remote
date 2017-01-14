@@ -4,8 +4,8 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-const checkAuthToken = require('./checkAuthToken');
-const lightsRouter = require('./lights');
+const checkAuthToken = require('./util/checkAuthToken');
+const lightsRouter = require('./endpoints/lights');
 
 const app = express();
 const apiRouter = express.Router(); // eslint-disable-line new-cap

@@ -1,6 +1,7 @@
 const Router = require('express').Router;
-const checkAuthToken = require('./checkAuthToken');
 const request = require('request-promise');
+
+const checkAuthToken = require('../util/checkAuthToken');
 
 const lightsRouter = Router(); // eslint-disable-line new-cap
 
