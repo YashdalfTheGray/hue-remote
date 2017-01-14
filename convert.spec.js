@@ -15,4 +15,25 @@ test('convertColor', t => {
         t.equal(result.status, 'ok');
         t.end();
     });
+
+    t.test('handles a malformed rgb string', t => {
+        const result = convert.rgbToHue('#dead');
+
+        t.equal(result.status, 'error');
+        t.end();
+    });
+
+    t.test('handles a malformed rgb array', t => {
+        const result = convert.rgbToHue([124, 120]);
+
+        t.equal(result.status, 'error');
+        t.end();
+    });
+
+    t.test('handles na rgb array with illegal values', t => {
+        const result = convert.rgbToHue([124, 120, 300]);
+
+        t.equal(result.status, 'error');
+        t.end();
+    });
 });
