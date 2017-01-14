@@ -42,7 +42,7 @@ const convertRgbToHue = rgbColor => {
 
     return {
         status: 'ok',
-        result: scaleToHueValues(rgb.hsv(colorArr))
+        color: scaleToHueValues(rgb.hsv(colorArr))
     };
 };
 
