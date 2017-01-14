@@ -32,11 +32,11 @@ To get a little fancier, you  can use `forever start -l forever.log -o out.log -
 
 ## Included utilities
 
-Check [docs/utils.md](docs/utils.md) for documentation of some of the tools included with `hue-remote`.
+Check [docs/utils.md](docs/utils.md) for documentation of some of the tools included with `hue-remote`. The Hue local APi isn't very developer friendly or secure so these utilities take some steps towards both those qualities. 
 
 ## The API
 
-check [docs/api.md](docs/api.md) for documentation on the full Hue Remote API. 
+check [docs/api.md](docs/api.md) for documentation on the full Hue Remote API.
 
 ## Some resources
 

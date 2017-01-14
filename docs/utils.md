@@ -1,6 +1,6 @@
 # Utilities
 
-The code that goes with this documentation can be found under the `util/` folder. 
+The code that goes with this documentation can be found under the `util/` folder.
 
 ## `checkAuthToken`
 
@@ -34,6 +34,8 @@ For setting a color temperature,
 }
 ```
 
+### `.rgbToHue()`
+
 If the example `POST` bodies don't make sense, that's expected. For setting color, Hue uses a custom scaled HSL color space. It's also called HSV/HSB in some places. You can find the min and max for HSL and Hue-HSB in the table below.
 
 |             | Hue   | Saturation | Luminosity/Value/Brightness |
@@ -44,3 +46,9 @@ If the example `POST` bodies don't make sense, that's expected. For setting colo
 | Hue-HSB max | 65535 | 254        | 254                         |
 
 As can be seen, the values are not intuitive but luckily are just scaled so the `convert` utility handles the scaling. it also goes a step further and handles the conversion from RGB to HSL and then HSL to Hue-HSB. So you can hand RGB colors to the API and it will tell the lights the right thing. Yay!
+
+Use `convert.rgbToHue('#453ade')` to convert to from RGB string to Hue-HSB or `convert.rgbToHue([54, 126, 233])` to convert an RGB array to Hue-HSB. Giving no input will output an error.
+
+### `.tempToMired`
+
+Hue uses something called the Mired color temperature to set the color temperature of the lights. It's a reciprocal temperature number. The formula for it can be found on the Wikipedia page linked in the resources but it would be great to not have to think about that. So `convert.tempToMired(6500)` will convert a human readable color temperature to the Mired values that hue uses. Passing nothing to `convert.tempToMired()` will set the color temperature to 6500K.   
