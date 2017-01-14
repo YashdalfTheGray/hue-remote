@@ -36,4 +36,11 @@ test('convertColor', t => {
         t.equal(result.status, 'error');
         t.end();
     });
+
+    t.test('handles no input', t => {
+        const result = convert.rgbToHue();
+
+        t.equal(result.status, 'error');
+        t.end();
+    });
 });

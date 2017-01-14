@@ -21,7 +21,13 @@ const scaleToHueValues = hsvArray => [
 const convertRgbToHue = rgbColor => {
     let colorArr = [];
 
-    if (_.isString(rgbColor) && !validateColorString(rgbColor)) {
+    if (!rgbColor) {
+        return {
+            status: 'error',
+            reason: 'Missing input'
+        };
+    }
+    else if (_.isString(rgbColor) && !validateColorString(rgbColor)) {
         return {
             status: 'error',
             reason: 'Malformed RGB string'
