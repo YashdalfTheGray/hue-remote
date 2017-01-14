@@ -49,6 +49,6 @@ As can be seen, the values are not intuitive but luckily are just scaled so the 
 
 Use `convert.rgbToHue('#453ade')` to convert to from RGB string to Hue-HSB or `convert.rgbToHue([54, 126, 233])` to convert an RGB array to Hue-HSB. Giving no input will output an error.
 
-### `.tempToMired`
+### `.tempToMired()`
 
 Hue uses something called the Mired color temperature to set the color temperature of the lights. It's a reciprocal temperature number. The formula for it can be found on the Wikipedia page linked in the resources but it would be great to not have to think about that. So `convert.tempToMired(6500)` will convert a human readable color temperature to the Mired values that hue uses. Passing nothing to `convert.tempToMired()` will set the color temperature to 6500K.   
