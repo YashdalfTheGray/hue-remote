@@ -1,7 +1,7 @@
 (() => {
     [
         'HUE_BRIDGE_ADDRESS',
-        'HUE_BRIDGE_USERNANE',
+        'HUE_BRIDGE_USERNAME',
         'HUE_REMOTE_TOKEN'
     ].forEach(key => {
         if (!process.env[key]) {
