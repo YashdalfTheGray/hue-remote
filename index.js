@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('./util/checkEnv');
 
 const express = require('express');
 const morgan = require('morgan');
