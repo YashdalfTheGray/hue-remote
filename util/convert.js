@@ -43,5 +43,5 @@ const convertRgbToHue = rgbColor => new Promise((resolve, reject) => {
 
 module.exports = {
     rgbToHue: convertRgbToHue,
-    tempToMired: temp => _.max([153, _.min([_.round(1000000 / (temp ? temp : 6500)), 500])])
+    tempToMired: temp => Promise.resolve(_.max([153, _.min([_.round(1000000 / (temp ? temp : 6500)), 500])]))
 };

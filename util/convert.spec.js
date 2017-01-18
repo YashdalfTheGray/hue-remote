@@ -1,4 +1,5 @@
 const test = require('tape');
+const Promise = require('bluebird');
 const convert = require('./convert');
 
 test('convert.rgbToHue handles an rgb string', t => {
@@ -44,38 +45,40 @@ test('convert.rgbToHue handles no input', t => {
 });
 
 test('convert.tempToMired handles valid color temperature', t => {
-    const result = convert.tempToMired(3000);
-
-    t.equal(result, 333);
-    t.end();
+    convert.tempToMired(3000).then(result => {
+        t.equal(result, 333);
+        t.end();
+    });
 });
 
 test('convert.tempToMired handles min and max temperatures', t => {
-    const minResult = convert.tempToMired(2000);
-    const maxResult = convert.tempToMired(6500);
-
-    t.equal(minResult, 500);
-    t.equal(maxResult, 154);
-    t.end();
+    Promise.all([
+        convert.tempToMired(2000),
+        convert.tempToMired(6500)
+    ]).then(results => {
+        t.equal(results[0], 500);
+        t.equal(results[1], 154);
+        t.end();
+    });
 });
 
 test('convert.tempToMired handles temperatures lower than min', t => {
-    const result = convert.tempToMired(1800);
-
-    t.equal(result, 500);
-    t.end();
+    convert.tempToMired(1800).then(result => {
+        t.equal(result, 500);
+        t.end();
+    });
 });
 
 test('convert.tempToMired handles temperatures higher than max', t => {
-    const result = convert.tempToMired(7000);
-
-    t.equal(result, 153);
-    t.end();
+    convert.tempToMired(7000).then(result => {
+        t.equal(result, 153);
+        t.end();
+    });
 });
 
 test('convert.tempToMired defaults to 6500K', t => {
-    const result = convert.tempToMired();
-
-    t.equal(result, 154);
-    t.end();
+    convert.tempToMired().then(result => {
+        t.equal(result, 154);
+        t.end();
+    });
 });
