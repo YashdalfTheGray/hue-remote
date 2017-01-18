@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const rgb = require('color-space/rgb');
 const hsv = require('color-space/hsv');
+const Promise = require('bluebird');
 
 const validateColorString = cs => /^#[A-Fa-f0-9]{6}$/.test(cs);
 const validateColorArray = ca => ca.length === 3 && ca.reduce((acc, cv) => cv >= 0 && cv <= 255);
@@ -18,26 +19,17 @@ const scaleToHueValues = hsvArray => [
 ];
 
 
-const convertRgbToHue = rgbColor => {
+const convertRgbToHue = rgbColor => new Promise((resolve, reject) => {
     let colorArr = [];
 
     if (!rgbColor) {
-        return {
-            status: 'error',
-            reason: 'Missing input'
-        };
+        reject('Missing input');
     }
     else if (_.isString(rgbColor) && !validateColorString(rgbColor)) {
-        return {
-            status: 'error',
-            reason: 'Malformed RGB string'
-        };
+        reject('Malformed RGB string');
     }
     else if (_.isArray(rgbColor) && !validateColorArray(rgbColor)) {
-        return {
-            status: 'error',
-            reason: 'Malformed RGB array'
-        };
+        reject('Malformed RGB array');
     }
     else if (_.isString(rgbColor)) {
         colorArr = convertToRgbArray(rgbColor);
@@ -46,11 +38,8 @@ const convertRgbToHue = rgbColor => {
         colorArr = rgbColor;
     }
 
-    return {
-        status: 'ok',
-        color: scaleToHueValues(rgb.hsv(colorArr))
-    };
-};
+    resolve(scaleToHueValues(rgb.hsv(colorArr)));
+});
 
 module.exports = {
     rgbToHue: convertRgbToHue,
