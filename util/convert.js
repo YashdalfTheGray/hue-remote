@@ -14,8 +14,8 @@ const convertToRgbArray = cs => [
 
 const scaleToHueValues = hsvArray => [
     _.round(hsvArray[0] / hsv.max[0] * 65535),
-    _.round(hsvArray[0] / hsv.max[1] * 254),
-    _.round(hsvArray[0] / hsv.max[2] * 253) + 1
+    _.round(hsvArray[1] / hsv.max[1] * 254),
+    _.round(hsvArray[2] / hsv.max[2] * 253) + 1
 ];
 
 
