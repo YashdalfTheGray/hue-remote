@@ -4,14 +4,14 @@ const convert = require('./convert');
 
 test('convert.rgbToHue handles an rgb string', t => {
     convert.rgbToHue('#deadaf').then(result => {
-        t.same(result, [65089, 908, 906]);
+        t.same(result, [65089, 56, 221]);
         t.end();
     });
 });
 
 test('convert.rgbToHue handles an rgb value array', t => {
     convert.rgbToHue([34, 52, 240]).then(result => {
-        t.same(result, [42736, 596, 595]);
+        t.same(result, [42736, 218, 239]);
         t.end();
     });
 });
