@@ -11,9 +11,10 @@ lightsRouter.get('/', checkAuthToken, (req, res) => {
 
     request({
         method: 'GET',
-        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights'
+        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights',
+        json: true
     }).then(result => {
-        res.json(JSON.parse(result));
+        res.json(result);
     }).catch(err => {
         console.log(err);
         res.status(500).json(err);
@@ -26,9 +27,10 @@ lightsRouter.get('/:id', checkAuthToken, (req, res) => {
 
     request({
         method: 'GET',
-        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id
+        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id,
+        json: true
     }).then(result => {
-        res.json(JSON.parse(result));
+        res.json(result);
     }).catch(err => {
         console.log(err);
         res.status(500).json(err);
@@ -41,9 +43,10 @@ lightsRouter.get('/:id/state', checkAuthToken, (req, res) => {
 
     request({
         method: 'GET',
-        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id
+        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id,
+        json: true
     }).then(result => {
-        res.json(JSON.parse(result).state);
+        res.json(result.state);
     }).catch(err => {
         console.log(err);
         res.status(500).json(err);
