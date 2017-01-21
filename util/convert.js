@@ -12,6 +12,8 @@ const convertToRgbArray = cs => [
     parseInt(cs.substr(5, 2), 16)
 ];
 
+const convertToRgbString = ca => ca.reduce((acc, n) => acc + n.toString(16), '#');
+
 const scaleToHueValues = hsvArray => [
     _.round(hsvArray[0] / hsv.max[0] * 65535),
     _.round(hsvArray[1] / hsv.max[1] * 254),
@@ -46,9 +48,13 @@ const convertRgbToHue = rgbColor => new Promise((resolve, reject) => {
     resolve(scaleToHueValues(rgb.hsv(colorArr)));
 });
 
+const convertHueToRgbArray = hue => hsv.rgb(scaleToHsv(hue)).map(e => _.round(e));
+
 module.exports = {
     rgbStringToRgbArray: convertToRgbArray,
+    rgbArrayToRgbString: convertToRgbString,
     rgbToHue: convertRgbToHue,
-    hueToRgbArray: hue => Promise.resolve(hsv.rgb(scaleToHsv(hue)).map(e => _.round(e))),
+    hueToRgbArray: hue => Promise.resolve(convertHueToRgbArray(hue)),
+    hueToRbgString: hue => Promise.resolve(convertToRgbString(convertHueToRgbArray(hue))),
     tempToMired: temp => Promise.resolve(_.max([153, _.min([_.round(1000000 / (temp ? temp : 6500)), 500])]))
 };
