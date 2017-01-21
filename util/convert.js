@@ -18,6 +18,11 @@ const scaleToHueValues = hsvArray => [
     _.round(hsvArray[2] / hsv.max[2] * 253) + 1
 ];
 
+const scaleToHsv = hueArray => [
+    _.round(hueArray[0] / 65535 * hsv.max[0]),
+    _.round(hueArray[1] / 254 * hsv.max[1]),
+    _.round(hueArray[2] / 254 * hsv.max[2])
+];
 
 const convertRgbToHue = rgbColor => new Promise((resolve, reject) => {
     let colorArr = [];
@@ -43,5 +48,6 @@ const convertRgbToHue = rgbColor => new Promise((resolve, reject) => {
 
 module.exports = {
     rgbToHue: convertRgbToHue,
+    hueToRgbArray: hue => Promise.resolve(hsv.rgb(scaleToHsv(hue)).map(e => _.round(e))),
     tempToMired: temp => Promise.resolve(_.max([153, _.min([_.round(1000000 / (temp ? temp : 6500)), 500])]))
 };
