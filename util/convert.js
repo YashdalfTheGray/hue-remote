@@ -47,6 +47,7 @@ const convertRgbToHue = rgbColor => new Promise((resolve, reject) => {
 });
 
 module.exports = {
+    rgbStringToRgbArray: convertToRgbArray,
     rgbToHue: convertRgbToHue,
     hueToRgbArray: hue => Promise.resolve(hsv.rgb(scaleToHsv(hue)).map(e => _.round(e))),
     tempToMired: temp => Promise.resolve(_.max([153, _.min([_.round(1000000 / (temp ? temp : 6500)), 500])]))
