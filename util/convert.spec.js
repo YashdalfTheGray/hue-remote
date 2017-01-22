@@ -98,3 +98,25 @@ test('convert.tempToMired defaults to 6500K', t => {
         t.end();
     });
 });
+
+test('convert.miredToTemp does the conversion properly', t => {
+    convert.miredToTemp(300).then(r => {
+        t.equal(r, 3300);
+        t.end();
+    });
+});
+
+test('convert.miredToTemp min and max are bounded', t => {
+    Promise.all([150, 510].map(convert.miredToTemp)).then(r => {
+        t.equal(r[0], 6500);
+        t.equal(r[1], 2000);
+        t.end();
+    });
+});
+
+test('convert.miredToTemp defaults to 6500K', t => {
+    convert.miredToTemp().then(r => {
+        t.equal(r, 6500);
+        t.end();
+    });
+});
