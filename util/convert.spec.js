@@ -44,6 +44,22 @@ test('convert.rgbToHue handles no input', t => {
     });
 });
 
+test('convert.hueToRgbArray converts to rgb array properly', t => {
+    Promise.all([[65089, 56, 221], [42736, 218, 239]].map(convert.hueToRgbArray)).then(r => {
+        t.same(r[0], [222, 173, 175]);
+        t.same(r[1], [34, 51, 240]);
+        t.end();
+    });
+});
+
+test('convert.hueToRgbString converts to rgb string properly', t => {
+    Promise.all([[65089, 56, 221], [42736, 218, 239]].map(convert.hueToRgbString)).then(r => {
+        t.same(r[0], '#deadaf');
+        t.same(r[1], '#2233f0');
+        t.end();
+    });
+});
+
 test('convert.tempToMired handles valid color temperature', t => {
     convert.tempToMired(3000).then(result => {
         t.equal(result, 333);
