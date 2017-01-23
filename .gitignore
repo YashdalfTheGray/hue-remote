@@ -1,9 +1,6 @@
 # Project specific
 *.env
 
-# SSL cert
-sslcert/*
-
 # Created by https://www.gitignore.io/api/node,windows,osx,sublimetext,webstorm,git
 
 ### Node ###
