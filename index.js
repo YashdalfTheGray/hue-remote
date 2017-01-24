@@ -1,11 +1,13 @@
 require('dotenv').config();
 require('./util/checkEnv');
 
+const os = require('os');
+const fs = require('fs');
+const https = require('https');
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const fs = require('fs');
-const https = require('https');
+const chalk = require('chalk');
 
 const checkAuthToken = require('./util/checkAuthToken');
 const lightsRouter = require('./endpoints/lights');
@@ -21,7 +23,17 @@ const cert = {
 
 app.use(bodyParser.json());
 app.use(morgan('common'));
-app.use(checkAuthToken);
+
+if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
+    console.log([
+        '\n' + chalk.yellow('WARNING!'),
+        'The server running in Let\'s Encrypt verification mode.',
+        'It is serving any files under ' + chalk.magenta('./static') + ' without any authentication.',
+        'A restart without the ' + chalk.cyan('--letsencrypt-verify') + ' switch is suggested',
+        'after verification is complete.\n'
+    ].join(os.EOL));
+    app.use(express.static('static'));
+}
 
 app.get('/', (req, res) => {
     res.json({
@@ -30,8 +42,9 @@ app.get('/', (req, res) => {
     });
 });
 
+apiRouter.use(checkAuthToken);
 apiRouter.use('/lights', lightsRouter);
 
 app.use('/api', apiRouter);
 
-https.createServer(cert, app).listen(appPort, () => console.log(`Hue remote now listening at ${appPort}...`));
+https.createServer(cert, app).listen(appPort, () => console.log(`Hue remote now listening at ${chalk.green(appPort)}...`));
