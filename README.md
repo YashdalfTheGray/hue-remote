@@ -24,6 +24,10 @@ The server can also run in Let's Encrypt verify mode by passing in the `--letsen
 
 You can use `npm test` to run the tests against the `checkAuthToken` middleware and the `convert` color conversion utility.
 
+## The API
+
+check [docs/api.md](docs/api.md) for documentation on the full Hue Remote API.
+
 ## Suggested use
 
 This is an API server. It is intended to be started and left running on a computer with an open port. The easiest way to do that is to use the `forever` npm module. Run `npm install --global forever` to install it. `forever` is a utility that turns any node scripts into services that can run in the background. If one of those scripts encounters a fatal error and dies, it is logged and the script is restarted.
@@ -35,10 +39,6 @@ To get a little fancier, you  can use `forever start -l forever.log -o out.log -
 ## Included utilities
 
 Check [docs/utils.md](docs/utils.md) for documentation of some of the tools included with `hue-remote`. The Hue local API isn't very developer friendly or secure so these utilities take some steps towards both those.
-
-## The API
-
-check [docs/api.md](docs/api.md) for documentation on the full Hue Remote API.
 
 ## Some resources
 
