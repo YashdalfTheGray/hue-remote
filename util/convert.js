@@ -57,5 +57,5 @@ module.exports = {
     hueToRgbArray: hue => Promise.resolve(convertHueToRgbArray(hue)),
     hueToRgbString: hue => Promise.resolve(convertToRgbString(convertHueToRgbArray(hue))),
     tempToMired: temp => Promise.resolve(_.max([153, _.min([_.round(1000000 / (temp ? temp : 6500)), 500])])),
-    miredToTemp: mired => Promise.resolve(_.max([2000, _.min([_.round(1000000 / (mired ? mired : 154), -1), 6500])]))
+    miredToTemp: mired => Promise.resolve(_.max([2000, _.min([_.round(1000000 / (mired ? mired : 154), -2), 6500])]))
 };
