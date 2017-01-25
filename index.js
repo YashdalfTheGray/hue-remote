@@ -8,6 +8,7 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
+const helmet = require('helmet');
 
 const checkAuthToken = require('./util/checkAuthToken');
 const lightsRouter = require('./endpoints/lights');
@@ -23,6 +24,7 @@ const cert = {
 
 app.use(bodyParser.json());
 app.use(morgan('common'));
+app.use(helmet());
 
 app.get('/', (req, res) => {
     res.json({
