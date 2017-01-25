@@ -40,7 +40,7 @@ openssl req -x509 -sha256 -days 365 -key key.pem -in csr.csr -out cert.pem
 
 The `./sslcert` directory is where the application looks for the `key.pen` and the `cert.pem` file. Running the commands from inside that folder is advised. You can also append `sslcert/` to all of the files in the commands above and be okay.
 
-# Some more explanation
+### Some more explanation
 
 The first command generates a 2048-bit RSA private key. The second generates what's called a Certificate Signing Request. This is what you would generally send to a CA to get signed so that you don't see the invalid certificate error. This command will also ask for some information, fill in what you can since you're not going to send it to an actual CA anyway.
 
