@@ -9,11 +9,13 @@ Clone the repository locally and then run `npm install` to install all the depen
 
 Run `npm start` to start the Hue remote server. This server depends on a few environment variables to be set. Create a copy of the file called `.env.example` and replace the dummy values with actual data. Some explanation around the environment variables is included below.
 
+The server can also run in Let's Encrypt verify mode by passing in the `--letsencrypt-verify` command line switch. It will start an HTTP server on port 8080. Check [docs/ssl.md](docs/ssl.md) for more information.
+
 ## Environment Variables
 
 | Environment Variable  | Explanation                                                                      |
 |-----------------------|----------------------------------------------------------------------------------|
-| `PORT`                | The port that you want the server to use.                                        |
+| `PORT`                | The port that you want the HTTPS server to use.                                  |
 | `HUE_BRIDGE_ADDRESS`  | The local IP address of your hue bridge.                                         |
 | `HUE_BRIDGE_USERNAME` | The username that the bridge gives you after registering with the local Hue API, |
 | `HUE_REMOTE_TOKEN`    | An access token that you want to use to authenticate with the Hue remote API.    |
@@ -32,7 +34,7 @@ To get a little fancier, you  can use `forever start -l forever.log -o out.log -
 
 ## Included utilities
 
-Check [docs/utils.md](docs/utils.md) for documentation of some of the tools included with `hue-remote`. The Hue local API isn't very developer friendly or secure so these utilities take some steps towards both those. 
+Check [docs/utils.md](docs/utils.md) for documentation of some of the tools included with `hue-remote`. The Hue local API isn't very developer friendly or secure so these utilities take some steps towards both those.
 
 ## The API
 
@@ -41,5 +43,5 @@ check [docs/api.md](docs/api.md) for documentation on the full Hue Remote API.
 ## Some resources
 
 * [Hue Bridge API](https://www.developers.meethue.com/documentation/getting-started) - you have to set up yourself as a developer on your Hue Bridge and log into the Hue Developers website to access the documentation, blegh.
-* [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) - this is kind of the color space that the Hue Bridge uses but scales differently for whatever reason. My sneaking suspicion is that the bridge has terrible floating point support.
+* [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) - this is kind of the color space that the Hue Bridge uses but scales differently for whatever reason. My sneaking suspicion is that the bridge doesn't have full floating point support.
 * [Mired color temperature](https://en.wikipedia.org/wiki/Mired) - this is what Hue uses to set the color temperature for the lights.
