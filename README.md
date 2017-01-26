@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/YashdalfTheGray/hue-remote.svg?branch=master)](https://travis-ci.org/YashdalfTheGray/hue-remote)
+
 # hue-remote
 A Phillips Hue remote API that provides remote access to the Hue bridge.
 
