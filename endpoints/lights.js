@@ -1,5 +1,6 @@
 const Router = require('express').Router;
 const request = require('request-promise');
+const _ = require('lodash');
 
 const checkAuthToken = require('../util/checkAuthToken');
 const convert = require('../util/convert');
@@ -57,70 +58,53 @@ lightsRouter.get('/:id/state', checkAuthToken, (req, res) => {
 lightsRouter.post('/:id/state', checkAuthToken, (req, res) => {
     const hueUser = process.env.HUE_BRIDGE_USERNAME;
     const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
+    const validKeys = ['on', 'color', 'colorTemp', 'colorloop'];
 
-    let convertedPromise = {};
+    const validRequest = Object.keys(req.body).reduce((acc, k) => acc || validKeys.indexOf(k) !== -1, false);
 
-    if (req.body.state === 'on' && req.body.color) {
-        convertedPromise = convert.rgbToHue(req.body.color).then(result => { // eslint-disable-line arrow-body-style
-            return {
-                on: true,
-                hue: result[0],
-                sat: result[1],
-                bri: result[2],
-                effect: 'none'
-            };
-        }).catch(err => {
-            throw {
-                status: 400,
-                message: err
-            };
+    let params = {};
+
+    params.on = req.body.on;
+
+    if (req.body.color) {
+        const hueColor = convert.rgbToHue(req.body.color);
+
+        params = _.assign(params, {
+            hue: hueColor[0],
+            sat: hueColor[1],
+            bri: hueColor[2],
+            effect: 'none'
         });
     }
-    else if (req.body.state === 'on' && req.body.colorTemp) {
-        convertedPromise = convert.tempToMired(req.body.colorTemp).then(result => { // eslint-disable-line arrow-body-style
-            return {
-                on: true,
-                ct: result,
-                bri: 254,
-                effect: 'none'
-            };
+    else if (req.body.colorTemp) {
+        params = _.assign(params, {
+            ct: convert.rgbToHue(req.body.colorTemp),
+            effect: 'none'
         });
     }
     else if (req.body.colorloop) {
-        convertedPromise = Promise.resolve({
-            on: true,
-            effect: 'colorloop'
+        params.effect = 'colorloop';
+    }
+
+    if (validRequest) {
+        request({
+            method: 'PUT',
+            url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id + '/state',
+            body: params,
+            json: true
+        }).then(result => {
+            res.json(result);
+        }).catch(err => {
+            console.log(err);
+            res.status(500).json(err);
         });
     }
-    else if (req.body.state === 'on') {
-        convertedPromise = Promise.resolve({ on: true });
-    }
-    else if (req.body.state === 'off') {
-        convertedPromise = Promise.resolve({ on: false });
-    }
     else {
-        convertedPromise = Promise.reject({
+        res.status(400).json({
             status: 400,
             message: 'Malformed request body'
         });
     }
-
-    convertedPromise.then(params => request({
-        method: 'PUT',
-        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id + '/state',
-        body: params,
-        json: true
-    })).then(result => {
-        res.json(result);
-    }).catch(err => {
-        console.log(err);
-        if (err.status === 400) {
-            res.status(400).json(err);
-        }
-        else {
-            res.status(500).json(err);
-        }
-    });
 });
 
 module.exports = lightsRouter;
