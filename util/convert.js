@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const rgb = require('color-space/rgb');
 const hsv = require('color-space/hsv');
-const Promise = require('bluebird');
 
 const validateColorString = cs => /^#[A-Fa-f0-9]{6}$/.test(cs);
 const validateColorArray = ca => ca.length === 3 && ca.reduce((acc, cv) => cv >= 0 && cv <= 255);
@@ -26,17 +25,14 @@ const scaleToHsv = hueArray => [
     _.round(hueArray[2] / 254 * hsv.max[2])
 ];
 
-const convertRgbToHue = rgbColor => new Promise((resolve, reject) => {
+const convertRgbToHue = rgbColor => {
     let colorArr = [];
 
     if (!rgbColor) {
-        reject('Missing input');
+        return -1;
     }
-    else if (_.isString(rgbColor) && !validateColorString(rgbColor)) {
-        reject('Malformed RGB string');
-    }
-    else if (_.isArray(rgbColor) && !validateColorArray(rgbColor)) {
-        reject('Malformed RGB array');
+    else if ((_.isString(rgbColor) && !validateColorString(rgbColor)) || (_.isArray(rgbColor) && !validateColorArray(rgbColor))) {
+        return [];
     }
     else if (_.isString(rgbColor)) {
         colorArr = convertToRgbArray(rgbColor);
@@ -45,8 +41,8 @@ const convertRgbToHue = rgbColor => new Promise((resolve, reject) => {
         colorArr = rgbColor;
     }
 
-    resolve(scaleToHueValues(rgb.hsv(colorArr)));
-});
+    return scaleToHueValues(rgb.hsv(colorArr));
+};
 
 const convertHueToRgbArray = hue => hsv.rgb(scaleToHsv(hue)).map(e => _.round(e));
 
@@ -54,8 +50,8 @@ module.exports = {
     rgbStringToRgbArray: convertToRgbArray,
     rgbArrayToRgbString: convertToRgbString,
     rgbToHue: convertRgbToHue,
-    hueToRgbArray: hue => Promise.resolve(convertHueToRgbArray(hue)),
-    hueToRgbString: hue => Promise.resolve(convertToRgbString(convertHueToRgbArray(hue))),
-    tempToMired: temp => Promise.resolve(_.max([153, _.min([_.round(1000000 / (temp ? temp : 6500)), 500])])),
-    miredToTemp: mired => Promise.resolve(_.max([2000, _.min([_.round(1000000 / (mired ? mired : 154), -2), 6500])]))
+    hueToRgbArray: hue => convertHueToRgbArray(hue),
+    hueToRgbString: hue => convertToRgbString(convertHueToRgbArray(hue)),
+    tempToMired: temp => _.max([153, _.min([_.round(1000000 / (temp ? temp : 6500)), 500])]),
+    miredToTemp: mired => _.max([2000, _.min([_.round(1000000 / (mired ? mired : 154), -2), 6500])])
 };
