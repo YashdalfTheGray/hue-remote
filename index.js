@@ -29,7 +29,7 @@ app.use(helmet());
 app.get('/', (req, res) => {
     res.json({
         status: 'ok',
-        bridge: process.env.HUE_BRIDGE_ADDRESS
+        bridgeFound: !!process.env.HUE_BRIDGE_ADDRESS
     });
 });
 
