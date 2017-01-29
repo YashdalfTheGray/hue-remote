@@ -48,7 +48,31 @@ lightsRouter.get('/:id/state', checkAuthToken, (req, res) => {
         url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id,
         json: true
     }).then(result => {
-        res.json(result.state);
+        if (result.state.effect === 'colorloop') {
+            console.log('found result.effect');
+            return {
+                on: result.state.on,
+                colorloop: true
+            };
+        }
+        else if (result.state.colormode === 'ct') {
+            console.log('found result.colormode === \'ct\'');
+            return {
+                on: result.state.on,
+                colorTemp: convert.miredToTemp(result.ct)
+            };
+        }
+        else if (result.state.colormode === 'hs' || result.state.colormode === 'xy') {
+            console.log('found colormode === hs || colormode === xy');
+            return {
+                on: result.state.on,
+                color: convert.hueToRgbString([result.state.hue, result.state.sat, result.state.bri])
+            };
+        }
+        console.log('I found nothing');
+        return result;
+    }).then(result => {
+        res.json(result);
     }).catch(err => {
         console.log(err);
         res.status(500).json(err);
