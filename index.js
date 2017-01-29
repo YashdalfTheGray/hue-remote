@@ -29,7 +29,9 @@ app.use(helmet());
 app.get('/', (req, res) => {
     res.json({
         status: 'ok',
-        bridgeFound: !!process.env.HUE_BRIDGE_ADDRESS
+        bridgeFound: !!process.env.HUE_BRIDGE_ADDRESS,
+        bridgeUserFound: !!process.env.HUE_BRIDGE_USERNAME,
+        haveApiToken: !!process.env.HUE_REMOTE_TOKEN
     });
 });
 
