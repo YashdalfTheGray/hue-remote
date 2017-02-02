@@ -5,13 +5,15 @@ const hsv = require('color-space/hsv');
 const validateColorString = cs => /^#[A-Fa-f0-9]{6}$/.test(cs);
 const validateColorArray = ca => ca.length === 3 && ca.reduce((acc, cv) => cv >= 0 && cv <= 255);
 
+const padNumberStr = ns => (ns.length === 1 ? '0' + ns : ns); // eslint-disable-line no-extra-parens
+
 const convertToRgbArray = cs => [
     parseInt(cs.substr(1, 2), 16),
     parseInt(cs.substr(3, 2), 16),
     parseInt(cs.substr(5, 2), 16)
 ];
 
-const convertToRgbString = ca => ca.reduce((acc, n) => acc + n.toString(16), '#');
+const convertToRgbString = ca => ca.reduce((acc, n) => acc + padNumberStr(n.toString(16)), '#');
 
 const scaleToHueValues = hsvArray => [
     _.round(hsvArray[0] / hsv.max[0] * 65535),
