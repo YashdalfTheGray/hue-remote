@@ -12,6 +12,7 @@ const helmet = require('helmet');
 
 const checkAuthToken = require('./util/checkAuthToken');
 const lightsRouter = require('./endpoints/lights');
+const groupsRouter = require('./endpoints/groups');
 
 const app = express();
 const apiRouter = express.Router(); // eslint-disable-line new-cap
@@ -37,6 +38,7 @@ app.get('/', (req, res) => {
 
 apiRouter.use(checkAuthToken);
 apiRouter.use('/lights', lightsRouter);
+apiRouter.use('/groups', groupsRouter);
 
 app.use('/api', apiRouter);
 
