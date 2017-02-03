@@ -2,6 +2,29 @@ const Router = require('express').Router;
 const request = require('request-promise');
 
 const checkAuthToken = require('../util/checkAuthToken');
+const convert = require('../util/convert');
+
+const mapActionObject = a => {
+    if (a.effect === 'colorloop') {
+        return {
+            on: a.on,
+            colorloop: true
+        };
+    }
+    else if (a.colormode === 'ct') {
+        return {
+            on: a.on,
+            colorTemp: convert.miredToTemp(a.ct)
+        };
+    }
+    else if (a.colormode === 'hs' || a.colormode === 'xy') {
+        return {
+            on: a.on,
+            color: convert.hueToRgbString([a.hue, a.sat, a.bri])
+        };
+    }
+    return a;
+};
 
 const groupsRouter = Router(); // eslint-disable-line new-cap
 
@@ -41,9 +64,9 @@ groupsRouter.get('/:id', checkAuthToken, (req, res) => {
         res.json({
             id: req.params.id,
             name: result.name,
-            lightIds: result.lightIds,
+            lightIds: result.lights,
             state: result.state,
-            action: result.action
+            action: mapActionObject(result.action)
         });
     }).catch(err => {
         console.log(err);
