@@ -57,7 +57,7 @@ lightsRouter.get('/:id/state', checkAuthToken, (req, res) => {
         else if (result.state.colormode === 'ct') {
             return {
                 on: result.state.on,
-                colorTemp: convert.miredToTemp(result.ct)
+                colorTemp: convert.miredToTemp(result.state.ct)
             };
         }
         else if (result.state.colormode === 'hs' || result.state.colormode === 'xy') {
@@ -66,7 +66,7 @@ lightsRouter.get('/:id/state', checkAuthToken, (req, res) => {
                 color: convert.hueToRgbString([result.state.hue, result.state.sat, result.state.bri])
             };
         }
-        return result;
+        return result.state;
     }).then(result => {
         res.json(result);
     }).catch(err => {
