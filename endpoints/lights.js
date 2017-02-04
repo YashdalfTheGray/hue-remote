@@ -5,6 +5,28 @@ const _ = require('lodash');
 const checkAuthToken = require('../util/checkAuthToken');
 const convert = require('../util/convert');
 
+const mapStateObject = a => {
+    if (a.effect === 'colorloop') {
+        return {
+            on: a.on,
+            colorloop: true
+        };
+    }
+    else if (a.colormode === 'ct') {
+        return {
+            on: a.on,
+            colorTemp: convert.miredToTemp(a.ct)
+        };
+    }
+    else if (a.colormode === 'hs' || a.colormode === 'xy') {
+        return {
+            on: a.on,
+            color: convert.hueToRgbString([a.hue, a.sat, a.bri])
+        };
+    }
+    return a;
+};
+
 const lightsRouter = Router(); // eslint-disable-line new-cap
 
 lightsRouter.get('/', checkAuthToken, (req, res) => {
@@ -32,43 +54,12 @@ lightsRouter.get('/:id', checkAuthToken, (req, res) => {
         url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id,
         json: true
     }).then(result => {
-        res.json(result);
-    }).catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    });
-});
-
-lightsRouter.get('/:id/state', checkAuthToken, (req, res) => {
-    const hueUser = process.env.HUE_BRIDGE_USERNAME;
-    const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
-
-    request({
-        method: 'GET',
-        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id,
-        json: true
-    }).then(result => {
-        if (result.state.effect === 'colorloop') {
-            return {
-                on: result.state.on,
-                colorloop: true
-            };
-        }
-        else if (result.state.colormode === 'ct') {
-            return {
-                on: result.state.on,
-                colorTemp: convert.miredToTemp(result.state.ct)
-            };
-        }
-        else if (result.state.colormode === 'hs' || result.state.colormode === 'xy') {
-            return {
-                on: result.state.on,
-                color: convert.hueToRgbString([result.state.hue, result.state.sat, result.state.bri])
-            };
-        }
-        return result.state;
-    }).then(result => {
-        res.json(result);
+        res.json({
+            id: req.params.id,
+            state: mapStateObject(result.state),
+            name: result.name,
+            uniqueId: result.uniqueid
+        });
     }).catch(err => {
         console.log(err);
         res.status(500).json(err);
