@@ -12,9 +12,7 @@ Gets the status of all the lights known by the bridge. This works essentially as
 
 Similar to the `/api/lights` endpoint, this works as a proxy for `/api/<username>/lights/<id>` endpoint on the Hue Local API.
 
-## `GET /api/lights/<light_id>/state`
-
-This is where things get more interesting. You cannot `GET` this endpoint on the Hue Local API, you can only `POST` to it. For now, this just returns the `state` object from the call above but this is intended to work the same way as `POST`ing to this endpoint. It will convert colors and map properties to behave similar to the `POST` endpoint.
+This is where things get more interesting. This converts the `state` that Hue sends out to the `state` object that is more user friendly. Check out the `POST` endpoint below to see what gets returned back. 
 
 ## `POST /api/lights/<light_id>/state`
 
@@ -32,7 +30,7 @@ The acceptable properties are listed below.
 **Some Notes**
 
 * You cannot change set the other properties on the light if `on` is set to `false`. The local API will return a `200` but an error along with it.
-* On a related note, the local API will mostly always return `200` unless you can't access an endpoint. What helps is to look at the `error` property of the returned JSON to see if anything failed. 
+* On a related note, the local API will mostly always return `200` unless you can't access an endpoint. What helps is to look at the `error` property of the returned JSON to see if anything failed.
 * The `color` property is type checked and validated before being sent to the local API.
 * The `color` property can accept the standard RGB string that starts with a `'#'` (eg. `'#deadaf'`) or an array of length 3 with numbers between 0 and 255 (eg. `[0, 255, 0]`).
 * The `colorTemp` property follows the color temperature scale commonly found on bulbs. The limits are 2000K to 6500K. To set the light to 5000K, use `5000`.
