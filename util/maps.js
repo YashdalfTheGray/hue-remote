@@ -26,5 +26,5 @@ const mapActionObject = a => {
 
 module.exports = {
     mapActionObject: mapActionObject,
-    mapStateObject: s => _.assign(mapActionObject(s), { reachable: s.reachable })
+    mapStateObject: s => _.assign({}, mapActionObject(s), { reachable: s.reachable })
 };
