@@ -1,8 +1,7 @@
 const Router = require('express').Router;
 const request = require('request-promise');
 
-const checkAuthToken = require('../util/checkAuthToken');
-const { mapActionObject } = require('../util/maps');
+const { checkAuthToken, mapActionObject } = require('../util');
 
 const groupsRouter = Router(); // eslint-disable-line new-cap
 
