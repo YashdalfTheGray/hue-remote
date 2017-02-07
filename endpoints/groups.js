@@ -1,11 +1,8 @@
-const Router = require('express').Router;
 const request = require('request-promise');
 
-const { checkAuthToken, mapActionObject } = require('../util');
+const { mapActionObject } = require('../util');
 
-const groupsRouter = Router(); // eslint-disable-line new-cap
-
-groupsRouter.get('/', checkAuthToken, (req, res) => {
+const getGroupsRoot = (req, res) => {
     const hueUser = process.env.HUE_BRIDGE_USERNAME;
     const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -27,9 +24,9 @@ groupsRouter.get('/', checkAuthToken, (req, res) => {
         console.log(err);
         res.status(500).json(err);
     });
-});
+};
 
-groupsRouter.get('/:id', checkAuthToken, (req, res) => {
+const getGroupsId = (req, res) => {
     const hueUser = process.env.HUE_BRIDGE_USERNAME;
     const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -49,6 +46,9 @@ groupsRouter.get('/:id', checkAuthToken, (req, res) => {
         console.log(err);
         res.status(500).json(err);
     });
-});
+};
 
-module.exports = groupsRouter;
+module.exports = {
+    getGroupsRoot,
+    getGroupsId
+};
