@@ -10,8 +10,8 @@ const bodyParser = require('body-parser');
 const chalk = require('chalk');
 const helmet = require('helmet');
 
-const checkAuthToken = require('./util/checkAuthToken');
-const lightsRouter = require('./endpoints/lights');
+const { checkAuthToken } = require('./util');
+const { getLightsRoot, getLightsId, postLightsIdState } = require('./endpoints/lights');
 const { getGroupsRoot, getGroupsId } = require('./endpoints/groups');
 
 if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
@@ -53,7 +53,9 @@ else {
 
     apiRouter.use(checkAuthToken);
 
-    apiRouter.use('/lights', lightsRouter);
+    apiRouter.get('/lights', getLightsRoot);
+    apiRouter.get('/lights/:id', getLightsId);
+    apiRouter.post('/lights/:id/state', postLightsIdState);
 
     apiRouter.get('/groups', getGroupsRoot);
     apiRouter.get('/groups/:id', getGroupsId);

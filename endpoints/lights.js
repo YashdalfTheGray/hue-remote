@@ -1,12 +1,9 @@
-const Router = require('express').Router;
 const request = require('request-promise');
 const _ = require('lodash');
 
-const { checkAuthToken, convert, mapStateObject } = require('../util');
+const { convert, mapStateObject } = require('../util');
 
-const lightsRouter = Router(); // eslint-disable-line new-cap
-
-lightsRouter.get('/', checkAuthToken, (req, res) => {
+const getLightsRoot = (req, res) => {
     const hueUser = process.env.HUE_BRIDGE_USERNAME;
     const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -20,9 +17,9 @@ lightsRouter.get('/', checkAuthToken, (req, res) => {
         console.log(err);
         res.status(500).json(err);
     });
-});
+};
 
-lightsRouter.get('/:id', checkAuthToken, (req, res) => {
+const getLightsId = (req, res) => {
     const hueUser = process.env.HUE_BRIDGE_USERNAME;
     const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -41,9 +38,9 @@ lightsRouter.get('/:id', checkAuthToken, (req, res) => {
         console.log(err);
         res.status(500).json(err);
     });
-});
+};
 
-lightsRouter.post('/:id/state', checkAuthToken, (req, res) => {
+const postLightsIdState = (req, res) => {
     const hueUser = process.env.HUE_BRIDGE_USERNAME;
     const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
     const validKeys = ['on', 'color', 'colorTemp', 'colorloop'];
@@ -93,6 +90,10 @@ lightsRouter.post('/:id/state', checkAuthToken, (req, res) => {
             message: 'Malformed request body'
         });
     }
-});
+};
 
-module.exports = lightsRouter;
+module.exports = {
+    getLightsRoot,
+    getLightsId,
+    postLightsIdState
+};
