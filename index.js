@@ -12,7 +12,7 @@ const helmet = require('helmet');
 
 const { checkAuthToken } = require('./util');
 const { getLightsRoot, getLightsId, postLightsIdState } = require('./endpoints/lights');
-const { getGroupsRoot, getGroupsId } = require('./endpoints/groups');
+const { getGroupsRoot, getGroupsId, postGroupIdAction } = require('./endpoints/groups');
 
 if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
     const httpApp = express();
@@ -59,6 +59,7 @@ else {
 
     apiRouter.get('/groups', getGroupsRoot);
     apiRouter.get('/groups/:id', getGroupsId);
+    apiRouter.post('/groups/:id/action', postGroupIdAction);
 
     app.use('/api', apiRouter);
 
