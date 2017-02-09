@@ -24,7 +24,39 @@ const mapFromActionObject = a => {
     return a;
 };
 
+const mapToActionObject = p => {
+    if (!p.on) {
+        return { on: false };
+    }
+
+    const params = { on: true };
+
+    if (p.color) {
+        const hueColor = convert.rgbToHue(p.color);
+
+        return _.assign(params, {
+            hue: hueColor[0],
+            sat: hueColor[1],
+            bri: hueColor[2],
+            effect: 'none'
+        });
+    }
+    else if (p.colorTemp) {
+        return _.assign(params, {
+            ct: convert.tempToMired(p.colorTemp),
+            effect: 'none'
+        });
+    }
+    else if (p.colorloop) {
+        return _.assign(params, { effect: 'colorloop' });
+    }
+
+    return params;
+};
+
 module.exports = {
     mapFromActionObject: mapFromActionObject,
-    mapFromStateObject: s => _.assign({}, mapFromActionObject(s), { reachable: s.reachable })
+    mapFromStateObject: s => _.assign({}, mapFromActionObject(s), { reachable: s.reachable }),
+    mapToActionObject: mapToActionObject,
+    mapToStateObject: mapToActionObject
 };
