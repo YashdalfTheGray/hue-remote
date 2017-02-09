@@ -1,7 +1,7 @@
 const request = require('request-promise');
 const _ = require('lodash');
 
-const { convert, mapActionObject } = require('../util');
+const { convert, mapFromActionObject } = require('../util');
 
 const getGroupsRoot = (req, res) => {
     const hueUser = process.env.HUE_BRIDGE_USERNAME;
@@ -41,7 +41,7 @@ const getGroupsId = (req, res) => {
             name: result.name,
             lightIds: result.lights,
             state: result.state,
-            action: mapActionObject(result.action)
+            action: mapFromActionObject(result.action)
         });
     }).catch(err => {
         console.log(err);

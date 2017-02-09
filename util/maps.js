@@ -2,7 +2,7 @@ const _ = require('lodash');
 
 const convert = require('./convert');
 
-const mapActionObject = a => {
+const mapFromActionObject = a => {
     if (a.effect === 'colorloop') {
         return {
             on: a.on,
@@ -25,6 +25,6 @@ const mapActionObject = a => {
 };
 
 module.exports = {
-    mapActionObject: mapActionObject,
-    mapStateObject: s => _.assign({}, mapActionObject(s), { reachable: s.reachable })
+    mapFromActionObject: mapFromActionObject,
+    mapFromStateObject: s => _.assign({}, mapFromActionObject(s), { reachable: s.reachable })
 };

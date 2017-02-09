@@ -1,7 +1,7 @@
 const request = require('request-promise');
 const _ = require('lodash');
 
-const { convert, mapStateObject } = require('../util');
+const { convert, mapFromStateObject } = require('../util');
 
 const getLightsRoot = (req, res) => {
     const hueUser = process.env.HUE_BRIDGE_USERNAME;
@@ -30,7 +30,7 @@ const getLightsId = (req, res) => {
     }).then(result => {
         res.json({
             id: req.params.id,
-            state: mapStateObject(result.state),
+            state: mapFromStateObject(result.state),
             name: result.name,
             uniqueId: result.uniqueid
         });

@@ -1,10 +1,10 @@
 const checkAuthToken = require('./checkAuthToken');
 const convert = require('./convert');
-const { mapActionObject, mapStateObject } = require('./maps');
+const { mapFromActionObject, mapFromStateObject } = require('./maps');
 
 module.exports = {
     checkAuthToken,
-    mapStateObject,
-    mapActionObject,
+    mapFromStateObject,
+    mapFromActionObject,
     convert
 };
