@@ -1,7 +1,7 @@
 const test = require('tape');
 const _ = require('lodash');
 
-const { mapFromActionObject, mapFromStateObject } = require('./maps');
+const { mapFromActionObject, mapFromStateObject, mapToActionObject, mapToStateObject } = require('./maps');
 const convert = require('./convert');
 
 const baseTestAction = {
@@ -115,5 +115,97 @@ test('mapFromStateObject acts as a passthrough when no interesting properties ar
 
     t.equal(result.foo, passTestState.foo);
     t.equal(result.on, passTestState.on);
+    t.end();
+});
+
+test('mapToActionObject maps off requests correctly', t => {
+    t.false(mapToActionObject({ on: false }).on);
+    t.assert(mapToActionObject({}).on === undefined);
+    t.end();
+});
+
+test('mapToActionObject maps on requests correctly', t => {
+    t.true(mapToActionObject({ on: true }).on);
+    t.end();
+});
+
+test('mapToActionObject maps color requests correctly', t => {
+    const testState = {
+        on: true,
+        color: '#00ff00'
+    };
+    const result = mapToActionObject(testState);
+
+    t.true(result.on);
+    t.equal(result.hue, 21845);
+    t.equal(result.sat, 254);
+    t.equal(result.bri, 254);
+    t.equal(result.effect, 'none');
+    t.end();
+});
+
+test('mapToActionObject maps colorTemp requests correctly', t => {
+    const testState = {
+        on: true,
+        colorTemp: 5800
+    };
+    const result = mapToActionObject(testState);
+
+    t.true(result.on);
+    t.equal(result.ct, 172);
+    t.equal(result.effect, 'none');
+    t.end();
+});
+
+test('mapToActionObject maps colorloop requests correctly', t => {
+    const testState = {
+        on: true,
+        colorloop: true
+    };
+    const result = mapToActionObject(testState);
+
+    t.true(result.on);
+    t.equal(result.effect, 'colorloop');
+    t.end();
+});
+
+test('mapToActionObject maps color without on requests correctly', t => {
+    const testState = { color: '#00ffff' };
+    const result = mapToActionObject(testState);
+
+    t.true(result.on === undefined);
+    t.equal(result.hue, 32768);
+    t.equal(result.sat, 254);
+    t.equal(result.bri, 254);
+    t.equal(result.effect, 'none');
+    t.end();
+});
+
+test('mapToActionObject maps colorTemp without on requests correctly', t => {
+    const testState = { colorTemp: 5800 };
+    const result = mapToActionObject(testState);
+
+    t.true(result.on === undefined);
+    t.equal(result.ct, 172);
+    t.equal(result.effect, 'none');
+    t.end();
+});
+
+test('mapToActionObject maps colorloop without on requests correctly', t => {
+    const testState = { colorloop: true };
+    const result = mapToActionObject(testState);
+
+    t.true(result.on === undefined);
+    t.equal(result.effect, 'colorloop');
+    t.end();
+});
+
+test('mapToStateObject does the same stuff as mapToActionObject', t => {
+    const testState = {
+        on: true,
+        color: '#ffff00'
+    };
+
+    t.same(mapToActionObject(testState), mapToStateObject(testState));
     t.end();
 });

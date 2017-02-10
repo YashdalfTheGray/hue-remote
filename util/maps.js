@@ -25,11 +25,11 @@ const mapFromActionObject = a => {
 };
 
 const mapToActionObject = p => {
-    if (!p.on) {
+    if (p.on === false) {
         return { on: false };
     }
 
-    const params = { on: true };
+    const params = { on: p.on };
 
     if (p.color) {
         const hueColor = convert.rgbToHue(p.color);
