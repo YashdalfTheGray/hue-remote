@@ -6,15 +6,15 @@ All the endpoints require the `Authorization` header to be set. This API uses a 
 
 ## `GET /api/lights`
 
-Gets the status of all the lights known by the bridge. This works essentially as a proxy for `/api/<username>/lights` endpoint on the Hue Local API.
+Gets the status of all the lights known by the bridge. This works essentially as a proxy for `/api/<username>/lights` endpoint on the Hue local API.
 
 ## `GET /api/lights/<light_id>`
 
-Similar to the `/api/lights` endpoint, this works as a proxy for `/api/<username>/lights/<id>` endpoint on the Hue Local API.
+Similar to the `/api/lights` endpoint, this works as a proxy for `/api/<username>/lights/<id>` endpoint on the Hue local API.
 
 ## `GET /api/lights/<light_id>/state`
 
-This is where things get more interesting. You cannot `GET` this endpoint on the Hue Local API, you can only `POST` to it. For now, this just returns the `state` object from the call above but this is intended to work the same way as `POST`ing to this endpoint. It will convert colors and map properties to behave similar to the `POST` endpoint.
+This is where things get more interesting. You cannot `GET` this endpoint on the Hue Local API, you can only `POST` to it. It converts colors and map properties to behave similar to the `POST` endpoint listed below.
 
 ## `POST /api/lights/<light_id>/state`
 
@@ -31,10 +31,10 @@ The acceptable properties are listed below.
 
 **Some Notes**
 
-* You cannot change set the other properties on the light if `on` is set to `false`. The local API will return a `200` but an error along with it.
-* On a related note, the local API will mostly always return `200` unless you can't access an endpoint. What helps is to look at the `error` property of the returned JSON to see if anything failed. 
+* You cannot change the other properties on the light if `on` is set to `false`. The local API will return a `200` but an error along with it.
+* On a related note, the local API will mostly always return `200` unless you can't access an endpoint. What helps is to look at the `error` property of the returned JSON to see if anything failed.
 * The `color` property is type checked and validated before being sent to the local API.
-* The `color` property can accept the standard RGB string that starts with a `'#'` (eg. `'#deadaf'`) or an array of length 3 with numbers between 0 and 255 (eg. `[0, 255, 0]`).
+* The `color` property can accept a standard RGB string starting with a `'#'` (eg. `'#deadaf'`) or an array of length 3 with numbers between 0 and 255 (eg. `[0, 255, 0]`).
 * The `colorTemp` property follows the color temperature scale commonly found on bulbs. The limits are 2000K to 6500K. To set the light to 5000K, use `5000`.
 * The `colorTemp` property is also checked for bounds, if an illegal value is encountered, it will change to the nearest legal value. For example, setting `colorTemp` to `1700` will actually send the equivalent of 2000K on to the local API.
 * The lights can only loop through the color spectrum that they support. Different lights support different color spectrums and that information can be found in the Hue Developer documentation (login required, but free).

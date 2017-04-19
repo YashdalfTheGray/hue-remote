@@ -4,9 +4,9 @@ The code that goes with this documentation can be found under the `util/` folder
 
 ## `checkAuthToken`
 
-So the way that Hue handles authentication is really terrible when opening it up to the internet. Once you register as a developer against the Hue Bridge, it gives you a username string. You then use the username string *in the URL* of the request to "authenticate". Dumb. So for example, if you want to check the status of the lights that the bridge knows about you would `GET` the endpoint `/api/<your_username>/lights`.
+The way that Hue handles authentication is really terrible when opening it up to the internet. Once you register as a developer against the Hue Bridge, it gives you a username string. You then use the username string *in the URL* of the request to "authenticate". Dumb. For example, if you want to check the status of the lights that the bridge knows about you would `GET` the endpoint `/api/<your_username>/lights`.
 
-The reason that they use it is that the API is only exposed locally and you should know who is hanging out on your local network, I guess? Either way, super shitty authentication method. To mitigate that, I switched to using the `Authorization` header and using a different auth key to authenticate. It's a lot easier to configure `hue-remote` to use a different auth key than register a new Hue Bridge developer.
+The reason that they use it is that the API is only exposed locally and you should know who is hanging out on your local network, I guess? Either way, super insecure authentication method. To mitigate that, I switched to using the `Authorization` header and using a different auth key to authenticate. It's a lot easier to configure `hue-remote` to use a different auth key than register a new Hue Bridge developer.
 
 ## `convert`
 

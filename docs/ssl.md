@@ -9,7 +9,7 @@ The first step here is to install the Certbot tool. Installation instructions re
 The step are as follows.
 
 1. Put the server in verification mode by running `node index.js --letsencrypt-verify` at the command line.
-2. Make sure that the server responds to the domain that you want to get an SSL certificate for. For example, if your domain is `hue-remote.example.com`, make sure that the server will respond to `http://hue-remote.example.com`. This will probably involve creating a DNS record with your domain registrar and forwarding the correct ports (port 80 for HTTP and port 443 for HTTPS) on your router.
+2. Make sure that the server responds to the domain that you want to get an SSL certificate for. For example, if your domain is `hue-remote.example.com`, make sure that the server will respond to `http://hue-remote.example.com`. This will involves creating a DNS record with your domain registrar and forwarding the correct ports (port 80 for HTTP and port 443 for HTTPS) on your router.
 3. Run `letsencrypt certonly --webroot -w ./static -d <your_domain_name>`. See the explanation below for what this command does.
 4. You should now have 4 files in `/etc/letsencrypt/live/<your_domain_name>` - `cert.pem`, `chain.pem`, `fullchain.pem` and `privkey.pem`. You're going to need `fullchain.pem` and `privkey.pem` for this server. Some explanation about these files is [here](http://letsencrypt.readthedocs.io/en/latest/using.html#where-are-my-certificates).
 5. Either copy them over to the `sslcert/` directory or create symlinks for them into the `sslcert/` directory. Be sure to rename `fullchain.pem` to `cert.pem` and `privkey.pem` to `key.pem`.
@@ -40,7 +40,7 @@ openssl req -x509 -sha256 -days 365 -key key.pem -in csr.csr -out cert.pem
 
 The `./sslcert` directory is where the application looks for the `key.pen` and the `cert.pem` file. Running the commands from inside that folder is advised. You can also append `sslcert/` to all of the files in the commands above and be okay.
 
-### Some more explanation
+### Some explanation
 
 The first command generates a 2048-bit RSA private key. The second generates what's called a Certificate Signing Request. This is what you would generally send to a CA to get signed so that you don't see the invalid certificate error. This command will also ask for some information, fill in what you can since you're not going to send it to an actual CA anyway.
 
