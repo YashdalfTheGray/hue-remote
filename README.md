@@ -11,6 +11,8 @@ Clone the repository locally and then run `npm install` to install all the depen
 
 Run `npm start` to start the Hue remote server. This server depends on a few environment variables to be set. Create a copy of the file called `.env.example` and replace the dummy values with actual data. Some explanation around the environment variables is included below.
 
+**Note** - This server won't start unless there is a valid `cert.pem` and `key.pem` in under `sslcert`.
+
 The server can also run in Let's Encrypt verify mode by passing in the `--letsencrypt-verify` command line switch. It will start an HTTP server on port 8080. Check [docs/ssl.md](docs/ssl.md) for more information.
 
 ## Environment Variables
