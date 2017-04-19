@@ -42,8 +42,16 @@ test('convert.hueToRgbArray converts to rgb array properly', t => {
 test('convert.hueToRgbString converts to rgb string properly', t => {
     const result = [[65089, 56, 221], [42736, 218, 239]].map(convert.hueToRgbString);
 
-    t.same(result[0], '#deadaf');
-    t.same(result[1], '#2233f0');
+    t.equal(result[0], '#deadaf');
+    t.equal(result[1], '#2233f0');
+    t.end();
+});
+
+test('convert.hueToRgbString converts to rgb string properly with zeroes', t => {
+    const result = [[24886, 254, 254], [21845, 254, 254]].map(convert.hueToRgbString);
+
+    t.equal(result[0], '#00ff48');
+    t.equal(result[1], '#00ff00');
     t.end();
 });
 
