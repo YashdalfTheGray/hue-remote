@@ -1,4 +1,4 @@
-const test = require('tape');
+const test = require('ava');
 const checkAuthToken = require('./checkAuthToken');
 
 function createMockResponse() {
@@ -17,16 +17,14 @@ test('missing auth header', t => {
     const mockRes = createMockResponse();
 
     checkAuthToken({ get: () => '' }, mockRes);
-    t.equal(mockRes.statusCode, 401);
-    t.end();
+    t.is(mockRes.statusCode, 401);
 });
 
 test('malformed auth header', t => {
     const mockRes = createMockResponse();
 
     checkAuthToken({ get: () => 'stuff stuff' }, mockRes);
-    t.equal(mockRes.statusCode, 401);
-    t.end();
+    t.is(mockRes.statusCode, 401);
 });
 
 test('unauthorized user', t => {
@@ -35,14 +33,12 @@ test('unauthorized user', t => {
     process.env.HUE_REMOTE_TOKEN = 'actual-token';
 
     checkAuthToken({ get: () => 'Bearer stuff' }, mockRes);
-    t.equal(mockRes.statusCode, 403);
-    t.end();
+    t.is(mockRes.statusCode, 403);
 });
 
 test('unauthorized user', t => {
     const next = () => {
-        t.assert(true);
-        t.end();
+        t.pass(true);
     };
 
     process.env.HUE_REMOTE_TOKEN = 'actual-token';

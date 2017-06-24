@@ -4,7 +4,7 @@
   "description": "A remote Phillips Hue API that provides authenticated access to the Hue bridge",
   "main": "index.js",
   "scripts": {
-    "test": "tape **/*.spec.js | tap-min",
+    "test": "ava **/*.spec.js",
     "start": "node index.js",
     "linter": "eslint \"**/*.js\""
   },
