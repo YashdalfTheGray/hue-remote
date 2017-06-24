@@ -1,7 +1,9 @@
 language: node_js
 node_js:
-  - 7.4.0
-  - 6.9.4
+  - node
+  - 7
+  - 6.10
+  - 6
 script:
   - npm test
   - npm run linter
