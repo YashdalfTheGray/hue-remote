@@ -6,7 +6,8 @@
   "scripts": {
     "test": "ava **/*.spec.js",
     "start": "node index.js",
-    "linter": "eslint \"**/*.js\""
+    "linter": "eslint \"**/*.js\"",
+    "linter-autofix": "eslint --fix"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,7 @@
   },
   "homepage": "https://github.com/yashdalfthegray/hue-remote#readme",
   "dependencies": {
-    "bluebird": "~3.5.0",
+    "bluebird": "^3.5.0",
     "body-parser": "~1.17.2",
     "chalk": "~1.1.3",
     "color-space": "~1.14.7",
@@ -41,7 +42,9 @@
   },
   "devDependencies": {
     "ava": "^0.19.1",
-    "eslint": "~4.0.0"
+    "eslint": "~3.19.0",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-plugin-import": "^2.7.0"
   },
   "engines": {
     "node": ">=6.0.0"
