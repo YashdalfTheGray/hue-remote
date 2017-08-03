@@ -1,5 +1,6 @@
 const checkAuthToken = require('./checkAuthToken');
 const convert = require('./convert');
+const { setupRedis, injectRedis } = require('./redis');
 const { mapFromActionObject, mapFromStateObject, mapToActionObject, mapToStateObject } = require('./maps');
 
 module.exports = {
@@ -8,5 +9,7 @@ module.exports = {
     mapFromStateObject,
     mapToActionObject,
     mapToStateObject,
-    convert
+    convert,
+    setupRedis,
+    injectRedis
 };
