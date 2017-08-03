@@ -8,11 +8,11 @@ const getLightsRoot = (req, res) => {
 
     request({
         method: 'GET',
-        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights',
+        url: `http://${hueBridge}/api/${hueUser}/lights`,
         json: true
-    }).then(result => {
+    }).then((result) => {
         res.json(result);
-    }).catch(err => {
+    }).catch((err) => {
         console.log(err);
         res.status(500).json(err);
     });
@@ -24,16 +24,16 @@ const getLightsId = (req, res) => {
 
     request({
         method: 'GET',
-        url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id,
+        url: `http://${hueBridge}/api/${hueUser}/lights/${req.params.id}`,
         json: true
-    }).then(result => {
+    }).then((result) => {
         res.json({
             id: req.params.id,
             state: mapFromStateObject(result.state),
             name: result.name,
             uniqueId: result.uniqueid
         });
-    }).catch(err => {
+    }).catch((err) => {
         console.log(err);
         res.status(500).json(err);
     });
@@ -49,12 +49,12 @@ const postLightsIdState = (req, res) => {
     if (validRequest) {
         request({
             method: 'PUT',
-            url: 'http://' + hueBridge + '/api/' + hueUser + '/lights/' + req.params.id + '/state',
+            url: `http://${hueBridge}/api/${hueUser}/lights/${req.params.id}/state`,
             body: mapToStateObject(req.body),
             json: true
-        }).then(result => {
+        }).then((result) => {
             res.json(result);
-        }).catch(err => {
+        }).catch((err) => {
             console.log(err);
             res.status(500).json(err);
         });

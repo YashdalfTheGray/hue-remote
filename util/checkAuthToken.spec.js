@@ -13,21 +13,21 @@ function createMockResponse() {
     };
 }
 
-test('missing auth header', t => {
+test('missing auth header', (t) => {
     const mockRes = createMockResponse();
 
     checkAuthToken({ get: () => '' }, mockRes);
     t.is(mockRes.statusCode, 401);
 });
 
-test('malformed auth header', t => {
+test('malformed auth header', (t) => {
     const mockRes = createMockResponse();
 
     checkAuthToken({ get: () => 'stuff stuff' }, mockRes);
     t.is(mockRes.statusCode, 401);
 });
 
-test('unauthorized user', t => {
+test('unauthorized user', (t) => {
     const mockRes = createMockResponse();
 
     process.env.HUE_REMOTE_TOKEN = 'actual-token';
@@ -36,7 +36,7 @@ test('unauthorized user', t => {
     t.is(mockRes.statusCode, 403);
 });
 
-test('unauthorized user', t => {
+test('unauthorized user', (t) => {
     const next = () => {
         t.pass(true);
     };

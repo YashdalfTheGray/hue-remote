@@ -18,10 +18,10 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
     const httpApp = express();
 
     console.log([
-        '\n' + chalk.yellow('WARNING!'),
+        `\n${chalk.yellow('WARNING!')}`,
         'The server running in Let\'s Encrypt verification mode.',
-        'It is serving any files under ' + chalk.magenta('./static') + ' without any authentication over HTTP.',
-        'A restart without the ' + chalk.cyan('--letsencrypt-verify') + ' switch is suggested',
+        `It is serving any files under ${chalk.magenta('./static')} without any authentication over HTTP.`,
+        `A restart without the ${chalk.cyan('--letsencrypt-verify')} switch is suggested`,
         'after verification is complete.\n'
     ].join(os.EOL));
 

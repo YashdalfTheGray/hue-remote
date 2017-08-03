@@ -2,7 +2,7 @@ const _ = require('lodash');
 
 const convert = require('./convert');
 
-const mapFromActionObject = a => {
+const mapFromActionObject = (a) => {
     if (a.effect === 'colorloop') {
         return {
             on: a.on,
@@ -24,7 +24,7 @@ const mapFromActionObject = a => {
     return a;
 };
 
-const mapToActionObject = p => {
+const mapToActionObject = (p) => {
     if (p.on === false) {
         return { on: false };
     }

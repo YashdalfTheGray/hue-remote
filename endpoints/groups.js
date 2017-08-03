@@ -8,9 +8,9 @@ const getGroupsRoot = (req, res) => {
 
     request({
         method: 'GET',
-        url: 'http://' + hueBridge + '/api/' + hueUser + '/groups',
+        url: `http://${hueBridge}/api/${hueUser}/groups`,
         json: true
-    }).then(result => {
+    }).then((result) => {
         res.json(Object.keys(result).reduce((acc, k) => {
             acc.push({
                 id: k,
@@ -20,7 +20,7 @@ const getGroupsRoot = (req, res) => {
             });
             return acc;
         }, []));
-    }).catch(err => {
+    }).catch((err) => {
         console.log(err);
         res.status(500).json(err);
     });
@@ -32,9 +32,9 @@ const getGroupsId = (req, res) => {
 
     request({
         method: 'GET',
-        url: 'http://' + hueBridge + '/api/' + hueUser + '/groups/' + req.params.id,
+        url: `http://${hueBridge}/api/${hueUser}/groups/${req.params.id}`,
         json: true
-    }).then(result => {
+    }).then((result) => {
         res.json({
             id: req.params.id,
             name: result.name,
@@ -42,7 +42,7 @@ const getGroupsId = (req, res) => {
             state: result.state,
             action: mapFromActionObject(result.action)
         });
-    }).catch(err => {
+    }).catch((err) => {
         console.log(err);
         res.status(500).json(err);
     });
@@ -58,12 +58,12 @@ const postGroupIdAction = (req, res) => {
     if (validRequest) {
         request({
             method: 'PUT',
-            url: 'http://' + hueBridge + '/api/' + hueUser + '/groups/' + req.params.id + '/action',
+            url: `http://${hueBridge}/api/${hueUser}/groups/${req.params.id}/action`,
             body: mapToActionObject(req.body),
             json: true
-        }).then(result => {
+        }).then((result) => {
             res.json(result);
-        }).catch(err => {
+        }).catch((err) => {
             console.log(err);
             res.status(500).json(err);
         });

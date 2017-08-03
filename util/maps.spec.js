@@ -18,7 +18,7 @@ const baseTestAction = {
 const baseTestState = _.assign({}, baseTestAction, { reachable: true });
 
 
-test('mapFromActionObject works in colorloop mode', t => {
+test('mapFromActionObject works in colorloop mode', (t) => {
     const colorLoopTestAction = _.assign({}, baseTestAction, { effect: 'colorloop' });
     const result = mapFromActionObject(colorLoopTestAction);
 
@@ -26,7 +26,7 @@ test('mapFromActionObject works in colorloop mode', t => {
     t.is(result.on, colorLoopTestAction.on);
 });
 
-test('mapFromActionObject works in ct mode', t => {
+test('mapFromActionObject works in ct mode', (t) => {
     const ctTestAction = _.assign({}, baseTestAction, { colormode: 'ct' });
     const result = mapFromActionObject(ctTestAction);
 
@@ -34,7 +34,7 @@ test('mapFromActionObject works in ct mode', t => {
     t.is(result.on, ctTestAction.on);
 });
 
-test('mapFromActionObject works in hs mode', t => {
+test('mapFromActionObject works in hs mode', (t) => {
     const hsTestAction = _.assign({}, baseTestAction, { colormode: 'hs' });
     const result = mapFromActionObject(hsTestAction);
 
@@ -42,7 +42,7 @@ test('mapFromActionObject works in hs mode', t => {
     t.is(result.on, hsTestAction.on);
 });
 
-test('mapFromActionObject works in xy mode', t => {
+test('mapFromActionObject works in xy mode', (t) => {
     const xyTestAction = _.assign({}, baseTestAction, { colormode: 'xy' });
     const result = mapFromActionObject(xyTestAction);
 
@@ -50,7 +50,7 @@ test('mapFromActionObject works in xy mode', t => {
     t.is(result.on, xyTestAction.on);
 });
 
-test('mapFromActionObject acts as a passthrough when no interesting properties are found', t => {
+test('mapFromActionObject acts as a passthrough when no interesting properties are found', (t) => {
     const passTestAction = {
         on: true,
         foo: 'bar'
@@ -61,7 +61,7 @@ test('mapFromActionObject acts as a passthrough when no interesting properties a
     t.is(result.on, passTestAction.on);
 });
 
-test('mapFromStateObject works in colorloop mode', t => {
+test('mapFromStateObject works in colorloop mode', (t) => {
     const colorLoopTestState = _.assign({}, baseTestState, { effect: 'colorloop' });
     const result = mapFromStateObject(colorLoopTestState);
 
@@ -70,7 +70,7 @@ test('mapFromStateObject works in colorloop mode', t => {
     t.is(result.reachable, colorLoopTestState.reachable);
 });
 
-test('mapFromStateObject works in ct mode', t => {
+test('mapFromStateObject works in ct mode', (t) => {
     const ctTestState = _.assign({}, baseTestState, { colormode: 'ct' });
     const result = mapFromStateObject(ctTestState);
 
@@ -79,7 +79,7 @@ test('mapFromStateObject works in ct mode', t => {
     t.is(result.reachable, ctTestState.reachable);
 });
 
-test('mapFromStateObject works in hs mode', t => {
+test('mapFromStateObject works in hs mode', (t) => {
     const hsTestState = _.assign({}, baseTestState, { colormode: 'hs' });
     const result = mapFromStateObject(hsTestState);
 
@@ -88,7 +88,7 @@ test('mapFromStateObject works in hs mode', t => {
     t.is(result.reachable, hsTestState.reachable);
 });
 
-test('mapFromStateObject works in xy mode', t => {
+test('mapFromStateObject works in xy mode', (t) => {
     const xyTestState = _.assign({}, baseTestState, { colormode: 'xy' });
     const result = mapFromStateObject(xyTestState);
 
@@ -97,7 +97,7 @@ test('mapFromStateObject works in xy mode', t => {
     t.is(result.reachable, xyTestState.reachable);
 });
 
-test('mapFromStateObject acts as a passthrough when no interesting properties are found', t => {
+test('mapFromStateObject acts as a passthrough when no interesting properties are found', (t) => {
     const passTestState = {
         on: true,
         foo: 'bar'
@@ -108,16 +108,16 @@ test('mapFromStateObject acts as a passthrough when no interesting properties ar
     t.is(result.on, passTestState.on);
 });
 
-test('mapToActionObject maps off requests correctly', t => {
+test('mapToActionObject maps off requests correctly', (t) => {
     t.false(mapToActionObject({ on: false }).on);
     t.pass(mapToActionObject({}).on === undefined);
 });
 
-test('mapToActionObject maps on requests correctly', t => {
+test('mapToActionObject maps on requests correctly', (t) => {
     t.true(mapToActionObject({ on: true }).on);
 });
 
-test('mapToActionObject maps color requests correctly', t => {
+test('mapToActionObject maps color requests correctly', (t) => {
     const testState = {
         on: true,
         color: '#00ff00'
@@ -131,7 +131,7 @@ test('mapToActionObject maps color requests correctly', t => {
     t.is(result.effect, 'none');
 });
 
-test('mapToActionObject maps colorTemp requests correctly', t => {
+test('mapToActionObject maps colorTemp requests correctly', (t) => {
     const testState = {
         on: true,
         colorTemp: 5800
@@ -143,7 +143,7 @@ test('mapToActionObject maps colorTemp requests correctly', t => {
     t.is(result.effect, 'none');
 });
 
-test('mapToActionObject maps colorloop requests correctly', t => {
+test('mapToActionObject maps colorloop requests correctly', (t) => {
     const testState = {
         on: true,
         colorloop: true
@@ -154,7 +154,7 @@ test('mapToActionObject maps colorloop requests correctly', t => {
     t.is(result.effect, 'colorloop');
 });
 
-test('mapToActionObject maps color without on requests correctly', t => {
+test('mapToActionObject maps color without on requests correctly', (t) => {
     const testState = { color: '#00ffff' };
     const result = mapToActionObject(testState);
 
@@ -165,7 +165,7 @@ test('mapToActionObject maps color without on requests correctly', t => {
     t.is(result.effect, 'none');
 });
 
-test('mapToActionObject maps colorTemp without on requests correctly', t => {
+test('mapToActionObject maps colorTemp without on requests correctly', (t) => {
     const testState = { colorTemp: 5800 };
     const result = mapToActionObject(testState);
 
@@ -174,7 +174,7 @@ test('mapToActionObject maps colorTemp without on requests correctly', t => {
     t.is(result.effect, 'none');
 });
 
-test('mapToActionObject maps colorloop without on requests correctly', t => {
+test('mapToActionObject maps colorloop without on requests correctly', (t) => {
     const testState = { colorloop: true };
     const result = mapToActionObject(testState);
 
@@ -182,7 +182,7 @@ test('mapToActionObject maps colorloop without on requests correctly', t => {
     t.is(result.effect, 'colorloop');
 });
 
-test('mapToStateObject does the same stuff as mapToActionObject', t => {
+test('mapToStateObject does the same stuff as mapToActionObject', (t) => {
     const testState = {
         on: true,
         color: '#ffff00'
