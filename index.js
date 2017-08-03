@@ -10,9 +10,12 @@ const bodyParser = require('body-parser');
 const chalk = require('chalk');
 const helmet = require('helmet');
 
-const { checkAuthToken } = require('./util');
+const { checkAuthToken, setupRedis, injectRedis } = require('./util');
 const { getLightsRoot, getLightsId, postLightsIdState } = require('./endpoints/lights');
 const { getGroupsRoot, getGroupsId, postGroupIdAction } = require('./endpoints/groups');
+const { getProtocols, getOneProtocol } = require('./endpoints/protocols');
+
+const wrap = fn => (...args) => fn(...args).catch(args[2]);
 
 if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
     const httpApp = express();
@@ -31,6 +34,7 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
 else {
     const app = express();
     const apiRouter = express.Router(); // eslint-disable-line new-cap
+    const client = setupRedis(process.env.REDIS_URL);
 
     const appPort = process.env.PORT || process.argv[2] || 8080;
     const cert = {
@@ -60,6 +64,9 @@ else {
     apiRouter.get('/groups', getGroupsRoot);
     apiRouter.get('/groups/:id', getGroupsId);
     apiRouter.post('/groups/:id/action', postGroupIdAction);
+
+    apiRouter.get('/protocols', injectRedis(client), wrap(getProtocols));
+    apiRouter.get('/protocols/:id', injectRedis(client), wrap(getOneProtocol));
 
     app.use('/api', apiRouter);
 
