@@ -13,7 +13,7 @@ const helmet = require('helmet');
 const { checkAuthToken, setupRedis, injectRedis } = require('./util');
 const { getLightsRoot, getLightsId, postLightsIdState } = require('./endpoints/lights');
 const { getGroupsRoot, getGroupsId, postGroupIdAction } = require('./endpoints/groups');
-const { getProtocols, getOneProtocol } = require('./endpoints/protocols');
+const { getProtocols, getOneProtocol, createProtocol, deleteProtocol, updateProtocol } = require('./endpoints/protocols');
 
 const wrap = fn => (...args) => fn(...args).catch(args[2]);
 
@@ -66,7 +66,10 @@ else {
     apiRouter.post('/groups/:id/action', postGroupIdAction);
 
     apiRouter.get('/protocols', injectRedis(client), wrap(getProtocols));
-    apiRouter.get('/protocols/:id', injectRedis(client), wrap(getOneProtocol));
+    apiRouter.post('/protocols', injectRedis(client), wrap(createProtocol));
+    apiRouter.get('/protocols/:name', injectRedis(client), wrap(getOneProtocol));
+    apiRouter.delete('/protocols/:name', injectRedis(client), wrap(deleteProtocol));
+    apiRouter.put('/protocols/:name', injectRedis(client), wrap(updateProtocol));
 
     app.use('/api', apiRouter);
 
