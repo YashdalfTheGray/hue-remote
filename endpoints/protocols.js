@@ -1,5 +1,6 @@
 const request = require('request-promise');
-const { mapToStateObject } = require('../util');
+
+const { mapToStateObject, runSerially } = require('../util');
 
 const getProtocols = async (req, res) => {
     const client = res.locals.redis;
@@ -75,10 +76,10 @@ const runProtocol = async (req, res) => {
     try {
         const protocolToRun = await client.hgetallAsync(req.params.name);
 
-        const responses = await Promise.all(
+        const responses = await runSerially(
             Object.entries(protocolToRun)
             .map(([id, color]) => [id, mapToStateObject({ on: true, color: color })])
-            .map(([id, state]) => request({
+            .map(([id, state]) => () => request({
                 method: 'PUT',
                 url: `http://${hueBridge}/api/${hueUser}/lights/${id}/state`,
                 body: state,
