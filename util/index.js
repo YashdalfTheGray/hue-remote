@@ -1,6 +1,7 @@
 const checkAuthToken = require('./checkAuthToken');
 const convert = require('./convert');
 const { setupRedis, injectRedis } = require('./redis');
+const runSerially = require('./runSerially');
 const { mapFromActionObject, mapFromStateObject, mapToActionObject, mapToStateObject } = require('./maps');
 
 module.exports = {
@@ -11,5 +12,6 @@ module.exports = {
     mapToStateObject,
     convert,
     setupRedis,
-    injectRedis
+    injectRedis,
+    runSerially
 };
