@@ -1,3 +1,6 @@
+const request = require('request-promise');
+const { mapToStateObject } = require('../util');
+
 const getProtocols = async (req, res) => {
     const client = res.locals.redis;
 
@@ -64,10 +67,37 @@ const updateProtocol = async (req, res) => {
     }
 };
 
+const runProtocol = async (req, res) => {
+    const hueUser = process.env.HUE_BRIDGE_USERNAME;
+    const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
+    const client = res.locals.redis;
+
+    try {
+        const protocolToRun = await client.hgetallAsync(req.params.name);
+
+        const responses = await Promise.all(
+            Object.entries(protocolToRun)
+            .map(([id, color]) => [id, mapToStateObject({ on: true, color: color })])
+            .map(([id, state]) => request({
+                method: 'PUT',
+                url: `http://${hueBridge}/api/${hueUser}/lights/${id}/state`,
+                body: state,
+                json: true
+            }))
+        );
+
+        res.json(responses);
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+};
+
 module.exports = {
     getProtocols,
     getOneProtocol,
     createProtocol,
     deleteProtocol,
-    updateProtocol
+    updateProtocol,
+    runProtocol
 };
