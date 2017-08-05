@@ -27,8 +27,7 @@ test('wrong accessToken in POST request body', (t) => {
 
     checkAuthToken({
         method: 'POST',
-        body: { accessToken: 'bad-token' },
-        get: () => 'don\'t do this'
+        body: { accessToken: 'bad-token' }
     }, mockRes);
     t.is(mockRes.statusCode, 403);
 });
@@ -45,6 +44,20 @@ test('good accessToken in POST request body', (t) => {
         body: { accessToken: 'actual-token' },
         get: () => 'don\'t do this'
     }, null, next);
+});
+
+test('good accessToken in the header of a POST', (t) => {
+    const next = () => {
+        t.pass(true);
+    };
+
+    process.env.HUE_REMOTE_TOKEN = 'actual-token';
+
+    checkAuthToken({
+        method: 'POST',
+        get: () => 'Bearer actual-token',
+        body: {}
+    }, {}, next);
 });
 
 test('malformed auth header', (t) => {

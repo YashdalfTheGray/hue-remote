@@ -1,12 +1,5 @@
 module.exports = (req, res, next) => {
-    if (!req.get('Authorization')) {
-        res.status(401).json({
-            success: false,
-            code: 401,
-            reason: 'No auth token found in request'
-        });
-    }
-    else if (req.method === 'POST') {
+    if (req.method === 'POST' && req.body.accessToken) {
         if (req.body.accessToken.toLowerCase() === process.env.HUE_REMOTE_TOKEN.toLowerCase()) {
             next();
         }
@@ -18,7 +11,7 @@ module.exports = (req, res, next) => {
             });
         }
     }
-    else {
+    else if (req.get('Authorization')) {
         const authMethod = req.get('Authorization').split(' ')[0];
         const authToken = req.get('Authorization').split(' ')[1].toLowerCase();
 
@@ -39,5 +32,12 @@ module.exports = (req, res, next) => {
         else if (authToken === process.env.HUE_REMOTE_TOKEN.toLowerCase()) {
             next();
         }
+    }
+    else {
+        res.status(401).json({
+            success: false,
+            code: 401,
+            reason: 'No auth token found in request'
+        });
     }
 };
