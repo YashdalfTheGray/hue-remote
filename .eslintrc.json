@@ -7,11 +7,11 @@
         "brace-style": ["error", "stroustrup"],
         "class-methods-use-this": ["off"],
         "comma-dangle": ["error", "never"],
-        "indent": ["error", 4],
+        "indent": ["error", 4, { "MemberExpression": 0 }],
         "linebreak-style": ["off"],
         "max-len": ["warn", 160],
         "no-console": ["off"],
-        "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["res"] }],
+        "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["res", "result"] }],
         "object-shorthand": ["error", "consistent-as-needed"]
     }
 }

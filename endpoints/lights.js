@@ -11,6 +11,9 @@ const getLightsRoot = (req, res) => {
         url: `http://${hueBridge}/api/${hueUser}/lights`,
         json: true
     }).then((result) => {
+        Object.keys(result).forEach((k) => {
+            result[k].state = mapFromStateObject(result[k].state);
+        });
         res.json(result);
     }).catch((err) => {
         console.log(err);
