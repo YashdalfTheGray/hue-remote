@@ -6,6 +6,18 @@ module.exports = (req, res, next) => {
             reason: 'No auth token found in request'
         });
     }
+    else if (req.method === 'POST') {
+        if (req.body.accessToken.toLowerCase() === process.env.HUE_REMOTE_TOKEN.toLowerCase()) {
+            next();
+        }
+        else {
+            res.status(403).json({
+                success: false,
+                code: 403,
+                reason: 'Not authorized'
+            });
+        }
+    }
     else {
         const authMethod = req.get('Authorization').split(' ')[0];
         const authToken = req.get('Authorization').split(' ')[1].toLowerCase();
