@@ -8,6 +8,10 @@ The way that Hue handles authentication is really terrible when opening it up to
 
 The reason that they use it is that the API is only exposed locally and you should know who is hanging out on your local network, I guess? Either way, super insecure authentication method. To mitigate that, I switched to using the `Authorization` header and using a different auth key to authenticate. It's a lot easier to configure `hue-remote` to use a different auth key than register a new Hue Bridge developer.
 
+## `checkEnv`
+
+This utility goes through the environment variables and looks for the ones that Hue Remote needs to run. If any of them are not found, it will stop the server with an error.
+
 ## `convert`
 
 Another idiosyncrasy with Hue is the way that it handles color or color temperature. To turn on the light/change light color, you have to `POST` to `/api/<your_username>/lights/<light_id>/state` with a body like the examples below.
@@ -52,3 +56,15 @@ Use `convert.rgbToHue('#453ade')` to convert to from RGB string to Hue-HSB or `c
 ### `.tempToMired()`
 
 Hue uses something called the Mired color temperature to set the color temperature of the lights. It's a reciprocal temperature number. The formula for it can be found on the Wikipedia page linked in the resources but it would be great to not have to think about that. So `convert.tempToMired(6500)` will convert a human readable color temperature to the Mired values that hue uses. Passing nothing to `convert.tempToMired()` will set the color temperature to 6500K.   
+
+## `maps`
+
+This utility converts state and action objects as the Hue Remote API understands them to state objects that the actual Hue Bridge API understands. The maps basically involve setting certain color properties if needed and changing the other members to the ones that the Hue Bridge is expecting. This module is also used to map the other way, from the unfamiliar Hue Bridge state and action objects to something that's a little more user friendly.
+
+## `redis`
+
+This is a utility that will set up and inject the Redis keystore into middleware that needs it. The Redis keystore is used for setting, getting, changing and running protocols on the lights. See [api.md](./api.md) for more information on protocols.
+
+## `runSerially`
+
+This is a utility that sends commands to the bridge in a serial fashion if there are too many to send. If you send too many commands to the Hue Bridge at one time, it basically throttles you and returns an error after the first few commmands. Instead, we send the commands one after the last one finishes so that the Hue Bridge doesn't get overwhelmed and throttle our commands. 
