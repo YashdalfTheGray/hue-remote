@@ -1,15 +1,15 @@
 [![Build Status](https://travis-ci.org/YashdalfTheGray/hue-remote.svg?branch=master)](https://travis-ci.org/YashdalfTheGray/hue-remote)
 
 # hue-remote
-A Phillips Hue remote API that provides remote access to the Hue bridge.
+A Phillips Hue remote API that provides access to the Hue bridge from outside the local network.
 
 ## Setup
 
-Clone the repository locally and then run `npm install` to install all the dependencies.
+Clone the repository locally and check out the [Docker Compose installation](https://docs.docker.com/compose/install/) page to get all the tools necessary.
 
 ## Running
 
-Run `npm start` to start the Hue remote server. This server depends on a few environment variables to be set. Create a copy of the file called `.env.example` and replace the dummy values with actual data. Some explanation around the environment variables is included below.
+Run `docker-compose up` to start the Hue remote server. This server depends on a few environment variables to be set. Create a copy of the file called `.env.example` and replace the dummy values with actual data. Some explanation around the environment variables is included below.
 
 **Note** - This server won't start unless there is a valid `cert.pem` and `key.pem` in under `sslcert`.
 
@@ -23,10 +23,11 @@ The server can also run in Let's Encrypt verify mode by passing in the `--letsen
 | `HUE_BRIDGE_ADDRESS`  | The local IP address of your hue bridge.                                         |
 | `HUE_BRIDGE_USERNAME` | The username that the bridge gives you after registering with the local Hue API, |
 | `HUE_REMOTE_TOKEN`    | An access token that you want to use to authenticate with the Hue remote API.    |
+| `REDIS_URL`           | The URL of the Redis server to store the protocols.    |
 
 ## Testing
 
-You can use `npm test` to run the tests against the `checkAuthToken` middleware and the `convert` color conversion utility.
+You can use `npm test` to run the tests against all the utility files included with this project. Sanity check - they should all pass on a newly cloned repository. 
 
 ## The API
 
@@ -34,11 +35,11 @@ check [docs/api.md](docs/api.md) for documentation on the full Hue Remote API.
 
 ## Suggested use
 
-This is an API server. It is intended to be started and left running on a computer with an open port. The easiest way to do that is to use the `forever` npm module. Run `npm install --global forever` to install it. `forever` is a utility that turns any node scripts into services that can run in the background. If one of those scripts encounters a fatal error and dies, it is logged and the script is restarted.
+This is an API server. It is intended to be started and left running on a computer with an open port. The easiest way to do that is to use the Docker Compose. This project comes with it's own `Dockerfile` and also a `docker-compose.yml` which defines the relationship between this app and the Redis server needed as a key value store.
 
-The default command is `forever start index.js`. This will start `index.js` as a service which can then be left alone for the long term. The location of the logfile for this command can be gotten using `forever logs`.
+Once you have Docker Compose, a simple `docker-compose up` will start the application. You'd want to run it in the background though after confirming that everything works. You can do that by running `docker-compose up -d`.
 
-To get a little fancier, you  can use `forever start -l forever.log -o out.log -e err.log index.js`. This command separates the forever logs, the `stdout` and the `stderr` output streams. You can use `forever list` to get a list of all the running processes and `forever stop` to stop a process.
+To get the logs from the server, you have to locate the docker container name first. Run `docker-compose ps` and locate the name of the app container. You can tell which one it is by looking for the container with the command `npm start`. Once found, run `docker-compose logs <container_name>`. You can also get the Redis logs in the same way.
 
 ## Included utilities
 
