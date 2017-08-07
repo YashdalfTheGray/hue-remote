@@ -4,7 +4,7 @@
 
 All the endpoints require the `Authorization` header to be set. There is a special exception for `POST` requests where the access token can be included in the request body instead. This API uses a bearer token to authenticate users. The bearer token can be set using the `.env` file. Below are the two examples showing how to authenticate.
 
-Using the `Authorization` header for the access token:
+Using the `Authorization` header for the access token
 ```shell
 curl -H 'Authorization: Bearer <acces_token>' https://<hue_remote_url>/api/lights
 ```
