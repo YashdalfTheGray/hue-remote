@@ -77,7 +77,7 @@ Gets the names of all the stored protocols.
 
 ### `POST /api/protocols`
 
-Stores a new protocol to the list that is described by a JSON object. The JSON object format is defined below.
+Stores a new protocol to the list that is described by a JSON object. The JSON object format is defined below. An empty string in the JSON object turns off the light. 
 
 ```json
 {
@@ -85,7 +85,8 @@ Stores a new protocol to the list that is described by a JSON object. The JSON o
     "details": {
         "1": "#deadaf",
         "2": "#345667",
-        "3": "#987654"
+        "3": "#987654",
+        "4": ""
     }
 }
 ```
