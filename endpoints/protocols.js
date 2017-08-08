@@ -78,7 +78,12 @@ const runProtocol = async (req, res) => {
 
         const responses = await runSerially(
             Object.entries(protocolToRun)
-            .map(([id, color]) => [id, mapToStateObject({ on: true, color: color })])
+            .map(([id, color]) => {
+                if (color.length !== 0) {
+                    return [id, mapToStateObject({ on: true, color: color })];
+                }
+                return [id, mapToStateObject({ on: false })];
+            })
             .map(([id, state]) => () => request({
                 method: 'PUT',
                 url: `http://${hueBridge}/api/${hueUser}/lights/${id}/state`,
