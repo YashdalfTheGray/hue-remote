@@ -34,7 +34,25 @@ const getOneScene = async (req, res) => {
     }
 };
 
+const deleteOneScene = async (req, res) => {
+    const hueUser = process.env.HUE_BRIDGE_USERNAME;
+    const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
+
+    try {
+        const response = await request({
+            method: 'DELETE',
+            url: `http://${hueBridge}/api/${hueUser}/scenes/${req.params.id}`,
+            json: true
+        });
+        res.json(response);
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+};
+
 module.exports = {
     getScenes,
-    getOneScene
+    getOneScene,
+    deleteOneScene
 };
