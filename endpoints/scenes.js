@@ -61,7 +61,6 @@ const runScene = async (req, res) => {
             url: `http://${hueBridge}/api/${hueUser}/scenes/${req.params.id}`,
             json: true
         });
-        console.log(response);
         res.json(response);
     }
     catch (e) {
