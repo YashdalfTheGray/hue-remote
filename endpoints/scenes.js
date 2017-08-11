@@ -1,4 +1,5 @@
 const request = require('request-promise');
+const { runSerially } = require('../util');
 
 const getScenes = async (req, res) => {
     const hueUser = process.env.HUE_BRIDGE_USERNAME;
@@ -61,7 +62,16 @@ const runScene = async (req, res) => {
             url: `http://${hueBridge}/api/${hueUser}/scenes/${req.params.id}`,
             json: true
         });
-        res.json(response);
+        const responses = await runSerially(
+            Object.entries(response.lightstates)
+            .map(([id, state]) => () => request({
+                method: 'PUT',
+                url: `http://${hueBridge}/api/${hueUser}/lights/${id}/state`,
+                body: state,
+                json: true
+            }))
+        );
+        res.json(responses);
     }
     catch (e) {
         res.status(500).json(e);
