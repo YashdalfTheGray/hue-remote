@@ -77,7 +77,7 @@ Gets the names of all the stored protocols.
 
 ### `POST /api/protocols`
 
-Stores a new protocol to the list that is described by a JSON object. The JSON object format is defined below. An empty string in the JSON object turns off the light. 
+Stores a new protocol to the list that is described by a JSON object. The JSON object format is defined below. An empty string in the JSON object turns off the light.
 
 ```json
 {
@@ -108,3 +108,23 @@ Updates the protocol of the given name. This is a replace operation and the new 
 ### `POST /api/protocols/<protocol_name>`
 
 This command runs the specified protocol. This operation will happen sequentially, changing the lights one by one, starting at the first light id encountered in the object.
+
+## Scenes
+
+Use these endpoints to interact with the Hue scenes stored on the bridge.
+
+### `GET /api/scenes`
+
+Get a list of all the scenes stored on the bridge including some of the details about each.
+
+### `GET /api/scenes/<scene_id>`
+
+Get more details on a specific scene, including the light states involved in it.
+
+### `DELETE /api/scenes/<scene_id>`
+
+Delete a scene from the Hue bridge.
+
+### `POST /api/scenes/<scene_id>`
+
+Apply a particular scene to the lights involved. Basically takes the contents of the `lightstates` object and sends the states to the corresponding light ids. 
