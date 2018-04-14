@@ -20,6 +20,7 @@ const wrap = fn => (...args) => fn(...args).catch(args[2]);
 
 if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
     const httpApp = express();
+    httpApp.use(morgan('dev'));
 
     console.log([
         `\n${chalk.yellow('WARNING!')}`,
@@ -28,6 +29,8 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
         `A restart without the ${chalk.cyan('--letsencrypt-verify')} switch is suggested`,
         'after verification is complete.\n'
     ].join(os.EOL));
+
+    httpApp.get('/', (req, res) => res.json({ foo: 'bar' }));
 
     httpApp.use(express.static('static'));
     httpApp.listen(8080, () => console.log(`Let's Encrypt verify server running at ${chalk.green('8080')}...`));
