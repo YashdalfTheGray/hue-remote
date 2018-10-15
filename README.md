@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/YashdalfTheGray/hue-remote.svg?branch=master)](https://travis-ci.org/YashdalfTheGray/hue-remote)
 
 # hue-remote
+
 A Phillips Hue remote API that provides access to the Hue bridge from outside the local network.
 
 ## Setup
@@ -18,16 +19,16 @@ The server can also run in Let's Encrypt verify mode by passing in the `--letsen
 ## Environment Variables
 
 | Environment Variable  | Explanation                                                                      |
-|-----------------------|----------------------------------------------------------------------------------|
+| --------------------- | -------------------------------------------------------------------------------- |
 | `PORT`                | The port that you want the HTTPS server to use.                                  |
 | `HUE_BRIDGE_ADDRESS`  | The local IP address of your hue bridge.                                         |
 | `HUE_BRIDGE_USERNAME` | The username that the bridge gives you after registering with the local Hue API, |
 | `HUE_REMOTE_TOKEN`    | An access token that you want to use to authenticate with the Hue remote API.    |
-| `REDIS_URL`           | The URL of the Redis server to store the protocols.    |
+| `REDIS_URL`           | The URL of the Redis server to store the protocols.                              |
 
 ## Testing
 
-You can use `npm test` to run the tests against all the utility files included with this project. Sanity check - they should all pass on a newly cloned repository. 
+You can use `npm test` to run the tests against all the utility files included with this project. Sanity check - they should all pass on a newly cloned repository.
 
 ## The API
 
@@ -47,6 +48,6 @@ Check [docs/utils.md](docs/utils.md) for documentation of some of the tools incl
 
 ## Some resources
 
-* [Hue Bridge API](https://www.developers.meethue.com/documentation/getting-started) - you have to set up yourself as a developer on your Hue Bridge and log into the Hue Developers website to access the documentation, blegh.
-* [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) - this is kind of the color space that the Hue Bridge uses but scales differently for whatever reason. My sneaking suspicion is that the bridge doesn't have full floating point support.
-* [Mired color temperature](https://en.wikipedia.org/wiki/Mired) - this is what Hue uses to set the color temperature for the lights.
+- [Hue Bridge API](https://www.developers.meethue.com/documentation/getting-started) - you have to set up yourself as a developer on your Hue Bridge and log into the Hue Developers website to access the documentation, blegh.
+- [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) - this is kind of the color space that the Hue Bridge uses but scales differently for whatever reason. My sneaking suspicion is that the bridge doesn't have full floating point support.
+- [Mired color temperature](https://en.wikipedia.org/wiki/Mired) - this is what Hue uses to set the color temperature for the lights.

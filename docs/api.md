@@ -5,11 +5,13 @@
 All the endpoints require the `Authorization` header to be set. There is a special exception for `POST` requests where the access token can be included in the request body instead. This API uses a bearer token to authenticate users. The bearer token can be set using the `.env` file. Below are the two examples showing how to authenticate.
 
 Using the `Authorization` header for the access token
+
 ```shell
 curl -H 'Authorization: Bearer <acces_token>' https://<hue_remote_url>/api/lights
 ```
 
 Using the request body for a `POST` request
+
 ```shell
 curl -X POST -H 'Content-Type: application/json' -d '{ "accessToken": "<access_token>" }' https://<hue_remote_url>/api/protocols/theme
 ```
@@ -33,7 +35,7 @@ This affects the state of the lights. It takes a JSON object as the body with so
 The acceptable properties are listed below.
 
 | Key         | Type                | Description                                                                 |
-|-------------|---------------------|-----------------------------------------------------------------------------|
+| ----------- | ------------------- | --------------------------------------------------------------------------- |
 | `on`        | `bool`              | This turns the light on if set to `true` and off if set to `false`.         |
 | `color`     | `string` or `array` | This is the color that you want to set the light to.                        |
 | `colorTemp` | `number`            | This is the color temperature that you want to set the light to.            |
@@ -41,15 +43,15 @@ The acceptable properties are listed below.
 
 **Some Notes**
 
-* You cannot change the other properties on the light if `on` is set to `false`. The local API will return a `200` but an error along with it.
-* On a related note, the local API will mostly always return `200` unless you can't access an endpoint. What helps is to look at the `error` property of the returned JSON to see if anything failed.
-* The `color` property is type checked and validated before being sent to the local API.
-* The `color` property can accept a standard RGB string starting with a `'#'` (eg. `'#deadaf'`) or an array of length 3 with numbers between 0 and 255 (eg. `[0, 255, 0]`).
-* The `colorTemp` property follows the color temperature scale commonly found on bulbs. The limits are 2000K to 6500K. To set the light to 5000K, use `5000`.
-* The `colorTemp` property is also checked for bounds, if an illegal value is encountered, it will change to the nearest legal value. For example, setting `colorTemp` to `1700` will actually send the equivalent of 2000K on to the local API.
-* The lights can only loop through the color spectrum that they support. Different lights support different color spectrums and that information can be found in the Hue Developer documentation (login required, but free).
-* Hue lights are stateful so if you send `{ color: '#103fad', colorloop: true }`, the light will start looping through the colors it can support but also set its color to `'#103fad'` so when you turn off the colorloop effect, it will show that color.
-* The `colorloop` property overrides all the properties listed followed by `color` overriding `colorTemp`.
+- You cannot change the other properties on the light if `on` is set to `false`. The local API will return a `200` but an error along with it.
+- On a related note, the local API will mostly always return `200` unless you can't access an endpoint. What helps is to look at the `error` property of the returned JSON to see if anything failed.
+- The `color` property is type checked and validated before being sent to the local API.
+- The `color` property can accept a standard RGB string starting with a `'#'` (eg. `'#deadaf'`) or an array of length 3 with numbers between 0 and 255 (eg. `[0, 255, 0]`).
+- The `colorTemp` property follows the color temperature scale commonly found on bulbs. The limits are 2000K to 6500K. To set the light to 5000K, use `5000`.
+- The `colorTemp` property is also checked for bounds, if an illegal value is encountered, it will change to the nearest legal value. For example, setting `colorTemp` to `1700` will actually send the equivalent of 2000K on to the local API.
+- The lights can only loop through the color spectrum that they support. Different lights support different color spectrums and that information can be found in the Hue Developer documentation (login required, but free).
+- Hue lights are stateful so if you send `{ color: '#103fad', colorloop: true }`, the light will start looping through the colors it can support but also set its color to `'#103fad'` so when you turn off the colorloop effect, it will show that color.
+- The `colorloop` property overrides all the properties listed followed by `color` overriding `colorTemp`.
 
 ## Groups
 
@@ -81,19 +83,19 @@ Stores a new protocol to the list that is described by a JSON object. The JSON o
 
 ```json
 {
-    "name": "test-protocol",
-    "details": {
-        "1": "#deadaf",
-        "2": "#345667",
-        "3": "#987654",
-        "4": ""
-    }
+  "name": "test-protocol",
+  "details": {
+    "1": "#deadaf",
+    "2": "#345667",
+    "3": "#987654",
+    "4": ""
+  }
 }
 ```
 
 As can be seen, the object just defines a name and an object that specifies color preset for each light by ID.
 
-###  `GET /api/protocols/<protocol_name>`
+### `GET /api/protocols/<protocol_name>`
 
 Returns the presets for each light configured for the given protocol name.
 
@@ -127,4 +129,4 @@ Delete a scene from the Hue bridge.
 
 ### `POST /api/scenes/<scene_id>`
 
-Apply a particular scene to the lights involved. Basically takes the contents of the `lightstates` object and sends the states to the corresponding light ids. 
+Apply a particular scene to the lights involved. Basically takes the contents of the `lightstates` object and sends the states to the corresponding light ids.

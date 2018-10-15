@@ -4,7 +4,7 @@ The code that goes with this documentation can be found under the `util/` folder
 
 ## `checkAuthToken`
 
-The way that Hue handles authentication is really terrible when opening it up to the internet. Once you register as a developer against the Hue Bridge, it gives you a username string. You then use the username string *in the URL* of the request to "authenticate". Dumb. For example, if you want to check the status of the lights that the bridge knows about you would `GET` the endpoint `/api/<your_username>/lights`.
+The way that Hue handles authentication is really terrible when opening it up to the internet. Once you register as a developer against the Hue Bridge, it gives you a username string. You then use the username string _in the URL_ of the request to "authenticate". Dumb. For example, if you want to check the status of the lights that the bridge knows about you would `GET` the endpoint `/api/<your_username>/lights`.
 
 The reason that they use it is that the API is only exposed locally and you should know who is hanging out on your local network, I guess? Either way, super insecure authentication method. To mitigate that, I switched to using the `Authorization` header and using a different auth key to authenticate. It's a lot easier to configure `hue-remote` to use a different auth key than register a new Hue Bridge developer.
 
@@ -20,11 +20,11 @@ For setting a color,
 
 ```json
 {
-    "on": true,
-    "colormode": "hs",
-    "bri": "254",
-    "hue": "34974",
-    "sat": "178"
+  "on": true,
+  "colormode": "hs",
+  "bri": "254",
+  "hue": "34974",
+  "sat": "178"
 }
 ```
 
@@ -32,9 +32,9 @@ For setting a color temperature,
 
 ```json
 {
-    "on": true,
-    "colormode": "ct",
-    "ct": "153"
+  "on": true,
+  "colormode": "ct",
+  "ct": "153"
 }
 ```
 
@@ -43,7 +43,7 @@ For setting a color temperature,
 If the example `POST` bodies don't make sense, that's expected. For setting color, Hue uses a custom scaled HSL color space. It's also called HSV/HSB in some places. You can find the min and max for HSL and Hue-HSB in the table below.
 
 |             | Hue   | Saturation | Luminosity/Value/Brightness |
-|-------------|-------|------------|-----------------------------|
+| ----------- | ----- | ---------- | --------------------------- |
 | HSL min     | 0     | 0          | 0                           |
 | Hue-HSB min | 0     | 0          | 1                           |
 | HSL max     | 360   | 100        | 100                         |
@@ -55,7 +55,7 @@ Use `convert.rgbToHue('#453ade')` to convert to from RGB string to Hue-HSB or `c
 
 ### `.tempToMired()`
 
-Hue uses something called the Mired color temperature to set the color temperature of the lights. It's a reciprocal temperature number. The formula for it can be found on the Wikipedia page linked in the resources but it would be great to not have to think about that. So `convert.tempToMired(6500)` will convert a human readable color temperature to the Mired values that hue uses. Passing nothing to `convert.tempToMired()` will set the color temperature to 6500K.   
+Hue uses something called the Mired color temperature to set the color temperature of the lights. It's a reciprocal temperature number. The formula for it can be found on the Wikipedia page linked in the resources but it would be great to not have to think about that. So `convert.tempToMired(6500)` will convert a human readable color temperature to the Mired values that hue uses. Passing nothing to `convert.tempToMired()` will set the color temperature to 6500K.
 
 ## `maps`
 
@@ -67,4 +67,4 @@ This is a utility that will set up and inject the Redis keystore into middleware
 
 ## `runSerially`
 
-This is a utility that sends commands to the bridge in a serial fashion if there are too many to send. If you send too many commands to the Hue Bridge at one time, it basically throttles you and returns an error after the first few commmands. Instead, we send the commands one after the last one finishes so that the Hue Bridge doesn't get overwhelmed and throttle our commands. 
+This is a utility that sends commands to the bridge in a serial fashion if there are too many to send. If you send too many commands to the Hue Bridge at one time, it basically throttles you and returns an error after the first few commmands. Instead, we send the commands one after the last one finishes so that the Hue Bridge doesn't get overwhelmed and throttle our commands.

@@ -5,9 +5,9 @@ promisifyAll(redis.RedisClient.prototype);
 promisifyAll(redis.Multi.prototype);
 
 module.exports = {
-    setupRedis: url => redis.createClient(url),
-    injectRedis: rc => (req, res, next) => {
-        res.locals.redis = rc;
-        next();
-    }
+  setupRedis: url => redis.createClient(url),
+  injectRedis: rc => (req, res, next) => {
+    res.locals.redis = rc;
+    next();
+  }
 };
