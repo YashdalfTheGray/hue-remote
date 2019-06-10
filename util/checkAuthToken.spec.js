@@ -87,7 +87,7 @@ test('unauthorized user', t => {
   t.is(mockRes.statusCode, 403);
 });
 
-test('unauthorized user', t => {
+test('good access token in the headers', t => {
   const next = () => {
     t.pass(true);
   };
