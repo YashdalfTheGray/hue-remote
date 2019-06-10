@@ -7,7 +7,7 @@
     "test": "ava **/*.spec.js",
     "start": "node index.js",
     "linter": "eslint \"**/*.js\"",
-    "linter-autofix": "eslint --fix"
+    "linter-autofix": "eslint --fix ."
   },
   "repository": {
     "type": "git",
@@ -27,29 +27,29 @@
   },
   "homepage": "https://github.com/yashdalfthegray/hue-remote#readme",
   "dependencies": {
-    "bluebird": "~3.5.2",
-    "body-parser": "~1.18.3",
-    "chalk": "~2.4.1",
+    "bluebird": "~3.5.5",
+    "body-parser": "~1.19.0",
+    "chalk": "~2.4.2",
     "color-space": "~1.16.0",
-    "dotenv": "~6.1.0",
-    "express": "~4.16.4",
-    "helmet": "~3.14.0",
+    "dotenv": "~8.0.0",
+    "express": "~4.17.1",
+    "helmet": "~3.18.0",
     "lodash": "~4.17.11",
     "morgan": "~1.9.1",
     "redis": "~2.8.0",
     "request": "~2.88.0",
-    "request-promise": "~4.2.2"
+    "request-promise": "~4.2.4"
   },
   "devDependencies": {
-    "ava": "~0.25.0",
-    "eslint": "~5.7.0",
+    "ava": "~2.0.0",
+    "eslint": "~5.16.0",
     "eslint-config-airbnb-base": "~13.1.0",
-    "eslint-config-prettier": "~3.1.0",
-    "eslint-plugin-import": "~2.14.0",
-    "eslint-plugin-prettier": "~3.0.0",
-    "husky": "~1.1.2",
-    "lint-staged": "~7.3.0",
-    "prettier": "~1.14.3"
+    "eslint-config-prettier": "~4.3.0",
+    "eslint-plugin-import": "~2.17.3",
+    "eslint-plugin-prettier": "~3.1.0",
+    "husky": "~2.4.0",
+    "lint-staged": "~8.2.0",
+    "prettier": "^1.18.2"
   },
   "engines": {
     "node": ">=6.0.0"
