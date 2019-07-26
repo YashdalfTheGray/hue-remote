@@ -33,7 +33,7 @@
     "color-space": "~1.16.0",
     "dotenv": "~8.0.0",
     "express": "~4.17.1",
-    "helmet": "~3.18.0",
+    "helmet": "^3.20.0",
     "lodash": "^4.17.15",
     "morgan": "~1.9.1",
     "redis": "~2.8.0",
@@ -41,14 +41,14 @@
     "request-promise": "~4.2.4"
   },
   "devDependencies": {
-    "ava": "~2.0.0",
+    "ava": "^2.2.0",
     "eslint": "~5.16.0",
-    "eslint-config-airbnb-base": "~13.1.0",
-    "eslint-config-prettier": "~4.3.0",
-    "eslint-plugin-import": "~2.17.3",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "~3.1.0",
-    "husky": "~2.4.0",
-    "lint-staged": "~8.2.0",
+    "husky": "^3.0.1",
+    "lint-staged": "^9.2.1",
     "prettier": "^1.18.2"
   },
   "engines": {
