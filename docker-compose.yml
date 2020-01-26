@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
     app:
         build: .
@@ -6,7 +6,7 @@ services:
             - "3308:3308"
         restart: unless-stopped
     redis:
-        image: redis
+        image: redis:buster
         ports:
             - "6379:6379"
         restart: unless-stopped
