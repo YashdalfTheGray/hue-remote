@@ -26,27 +26,30 @@ test('convert.rgbToHue handles no input', t => {
 });
 
 test('convert.hueToRgbArray converts to rgb array properly', t => {
-  const result = [[65089, 56, 221], [42736, 218, 239]].map(
-    convert.hueToRgbArray
-  );
+  const result = [
+    [65089, 56, 221],
+    [42736, 218, 239]
+  ].map(convert.hueToRgbArray);
 
   t.deepEqual(result[0], [222, 173, 175]);
   t.deepEqual(result[1], [34, 51, 240]);
 });
 
 test('convert.hueToRgbString converts to rgb string properly', t => {
-  const result = [[65089, 56, 221], [42736, 218, 239]].map(
-    convert.hueToRgbString
-  );
+  const result = [
+    [65089, 56, 221],
+    [42736, 218, 239]
+  ].map(convert.hueToRgbString);
 
   t.is(result[0], '#deadaf');
   t.is(result[1], '#2233f0');
 });
 
 test('convert.hueToRgbString converts to rgb string properly with zeroes', t => {
-  const result = [[24886, 254, 254], [21845, 254, 254]].map(
-    convert.hueToRgbString
-  );
+  const result = [
+    [24886, 254, 254],
+    [21845, 254, 254]
+  ].map(convert.hueToRgbString);
 
   t.is(result[0], '#00ff48');
   t.is(result[1], '#00ff00');
