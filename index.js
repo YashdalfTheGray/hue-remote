@@ -13,6 +13,7 @@ const helmet = require('helmet');
 const { checkAuthToken, setupRedis, injectRedis } = require('./util');
 const {
   getLightsRoot,
+  getLightsRootAsync,
   getLightsId,
   postLightsIdState
 } = require('./endpoints/lights');
@@ -67,6 +68,7 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
 } else {
   const app = express();
   const apiRouter = express.Router(); // eslint-disable-line new-cap
+  const apiv2Router = express.Router(); // eslint-disable-line new-cap
   const client = setupRedis(process.env.REDIS_URL);
 
   const appPort = process.env.PORT || process.argv[2] || 8080;
@@ -89,10 +91,12 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   });
 
   apiRouter.use(checkAuthToken);
+  apiv2Router.use(checkAuthToken);
 
   apiRouter.get('/lights', getLightsRoot);
   apiRouter.get('/lights/:id', getLightsId);
   apiRouter.post('/lights/:id/state', postLightsIdState);
+  apiv2Router.get('/lights', getLightsRootAsync);
 
   apiRouter.get('/groups', getGroupsRoot);
   apiRouter.get('/groups/:id', getGroupsId);
@@ -115,6 +119,7 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   apiRouter.post('/protocols/:name', injectRedis(client), wrap(runProtocol));
 
   app.use('/api', apiRouter);
+  app.use('/api/v2', apiv2Router);
 
   https
     .createServer(cert, app)
