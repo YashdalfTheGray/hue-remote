@@ -1,4 +1,5 @@
 const request = require('request-promise');
+const fetch = require('node-fetch');
 
 const { mapFromStateObject, mapToStateObject } = require('../util');
 
@@ -21,6 +22,25 @@ const getLightsRoot = (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
+};
+
+const getLightsRootAsync = async (req, res) => {
+  const hueUser = process.env.HUE_BRIDGE_USERNAME;
+  const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
+
+  try {
+    const response = await fetch(`http://${hueBridge}/api/${hueUser}/lights`, {
+      method: 'GET'
+    });
+    const json = await response.json();
+    Object.keys(json).forEach(k => {
+      json[k].state = mapFromStateObject(json[k].state);
+    });
+    res.json(json);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 };
 
 const getLightsId = (req, res) => {
@@ -80,6 +100,7 @@ const postLightsIdState = (req, res) => {
 
 module.exports = {
   getLightsRoot,
+  getLightsRootAsync,
   getLightsId,
   postLightsIdState
 };
