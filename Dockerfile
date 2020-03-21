@@ -1,5 +1,7 @@
 FROM node:lts
 
+ARG PORT=3308
+
 # Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -12,6 +14,6 @@ RUN npm install
 COPY . /usr/src/app
 RUN npm test
 
-EXPOSE 3308
+EXPOSE ${PORT}
 
 CMD [ "npm", "start" ]
