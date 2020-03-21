@@ -3,7 +3,7 @@ services:
     app:
         build: .
         ports:
-            - "3308:3308"
+            - "${PORT}:${PORT}"
         restart: unless-stopped
     redis:
         image: redis:buster
