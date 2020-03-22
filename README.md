@@ -51,3 +51,4 @@ Check [docs/utils.md](docs/utils.md) for documentation of some of the tools incl
 - [Hue Bridge API](https://www.developers.meethue.com/documentation/getting-started) - you have to set up yourself as a developer on your Hue Bridge and log into the Hue Developers website to access the documentation, blegh.
 - [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) - this is kind of the color space that the Hue Bridge uses but scales differently for whatever reason. My sneaking suspicion is that the bridge doesn't have full floating point support.
 - [Mired color temperature](https://en.wikipedia.org/wiki/Mired) - this is what Hue uses to set the color temperature for the lights.
+- [`node-fetch`](https://www.npmjs.com/package/node-fetch)
