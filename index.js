@@ -16,7 +16,8 @@ const {
   getLightsRootAsync,
   getLightsId,
   getLightsIdAsync,
-  postLightsIdState
+  postLightsIdState,
+  postLightsIdStateAsync
 } = require('./endpoints/lights');
 const {
   getGroupsRoot,
@@ -99,6 +100,7 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   apiRouter.post('/lights/:id/state', postLightsIdState);
   apiv2Router.get('/lights', wrap(getLightsRootAsync));
   apiv2Router.get('/lights/:id', wrap(getLightsIdAsync));
+  apiv2Router.post('/lights/:id/state', wrap(postLightsIdStateAsync));
 
   apiRouter.get('/groups', getGroupsRoot);
   apiRouter.get('/groups/:id', getGroupsId);
