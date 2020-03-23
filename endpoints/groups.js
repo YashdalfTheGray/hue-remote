@@ -1,4 +1,5 @@
 const request = require('request-promise');
+const fetch = require('node-fetch');
 
 const { mapFromActionObject, mapToActionObject } = require('../util');
 
@@ -28,6 +29,33 @@ const getGroupsRoot = (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
+};
+
+const getGroupsRootAsync = async (req, res) => {
+  const hueUser = process.env.HUE_BRIDGE_USERNAME;
+  const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
+
+  try {
+    const response = await fetch(`http://${hueBridge}/api/${hueUser}/groups`, {
+      method: 'GET'
+    });
+    const json = await response.json();
+
+    res.json(
+      Object.keys(json).reduce((acc, k) => {
+        acc.push({
+          id: k,
+          name: json[k].name,
+          lightIds: json[k].lights,
+          state: json[k].state
+        });
+        return acc;
+      }, [])
+    );
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 };
 
 const getGroupsId = (req, res) => {
@@ -88,6 +116,7 @@ const postGroupIdAction = (req, res) => {
 
 module.exports = {
   getGroupsRoot,
+  getGroupsRootAsync,
   getGroupsId,
   postGroupIdAction
 };
