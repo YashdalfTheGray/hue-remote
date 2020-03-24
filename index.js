@@ -24,7 +24,8 @@ const {
   getGroupsRootAsync,
   getGroupsId,
   getGroupsIdAsync,
-  postGroupIdAction
+  postGroupIdAction,
+  postGroupIdActionAsync
 } = require('./endpoints/groups');
 const {
   getScenes,
@@ -109,6 +110,7 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   apiRouter.post('/groups/:id/action', postGroupIdAction);
   apiv2Router.get('/groups', wrap(getGroupsRootAsync));
   apiv2Router.get('/groups/:id', wrap(getGroupsIdAsync));
+  apiv2Router.post('/groups/:id/action', wrap(postGroupIdActionAsync));
 
   apiRouter.get('/scenes', wrap(getScenes));
   apiRouter.get('/scenes/:id', wrap(getOneScene));
