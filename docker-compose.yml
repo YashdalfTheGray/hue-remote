@@ -1,17 +1,17 @@
-version: "3"
+version: '3'
 services:
   app:
     build:
       context: .
       args:
-        PORT: "${PORT}"
+        PORT: '${PORT}'
     ports:
-      - "${PORT}:${PORT}"
+      - '${PORT}:${PORT}'
     restart: unless-stopped
   redis:
     image: redis:buster
     volumes:
       - /tmp/redis:/data
     ports:
-      - "6379:6379"
+      - '6379:6379'
     restart: unless-stopped
