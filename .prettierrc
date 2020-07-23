@@ -1,5 +1,7 @@
 {
   "singleQuote": true,
+  "endOfLine": "lf",
   "jsxBracketSameLine": true,
-  "endOfLine": "lf"
+  "trailingComma": "none",
+  "arrowParens": "avoid"
 }
