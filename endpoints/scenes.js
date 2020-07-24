@@ -1,4 +1,6 @@
 const request = require('request-promise');
+const fetch = require('node-fetch');
+
 const { runSerially } = require('../util');
 
 const getScenes = async (req, res) => {
@@ -10,6 +12,20 @@ const getScenes = async (req, res) => {
       method: 'GET',
       url: `http://${hueBridge}/api/${hueUser}/scenes`,
       json: true
+    });
+    res.json(response);
+  } catch (e) {
+    res.status(500).json(e);
+  }
+};
+
+const getScenesAsync = async (req, res) => {
+  const hueUser = process.env.HUE_BRIDGE_USERNAME;
+  const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
+
+  try {
+    const response = await fetch(`http://${hueBridge}/api/${hueUser}/scenes`, {
+      method: 'GET'
     });
     res.json(response);
   } catch (e) {
@@ -77,6 +93,7 @@ const runScene = async (req, res) => {
 
 module.exports = {
   getScenes,
+  getScenesAsync,
   getOneScene,
   deleteOneScene,
   runScene
