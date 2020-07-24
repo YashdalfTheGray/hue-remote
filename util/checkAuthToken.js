@@ -14,10 +14,7 @@ module.exports = (req, res, next) => {
     }
   } else if (req.get('Authorization')) {
     const authMethod = req.get('Authorization').split(' ')[0];
-    const authToken = req
-      .get('Authorization')
-      .split(' ')[1]
-      .toLowerCase();
+    const authToken = req.get('Authorization').split(' ')[1].toLowerCase();
 
     if (authMethod !== 'Bearer') {
       res.status(401).json({
