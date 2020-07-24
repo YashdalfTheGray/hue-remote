@@ -7,7 +7,8 @@
     "test": "ava **/*.spec.js",
     "start": "node index.js",
     "linter": "eslint \"**/*.js\"",
-    "linter-autofix": "eslint --fix ."
+    "linter-autofix": "eslint --fix .",
+    "prettier": "prettier --write docs endpoints util index.js .eslintrc.json .travis.yml docker-compose.yml package.json README.md"
   },
   "repository": {
     "type": "git",
