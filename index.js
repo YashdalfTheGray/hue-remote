@@ -29,9 +29,13 @@ const {
 } = require('./endpoints/groups');
 const {
   getScenes,
+  getScenesAsync,
   getOneScene,
+  getOneSceneAsync,
   deleteOneScene,
-  runScene
+  deleteOneSceneAsync,
+  runScene,
+  runSceneAsync
 } = require('./endpoints/scenes');
 const {
   getProtocols,
@@ -116,6 +120,10 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   apiRouter.get('/scenes/:id', wrap(getOneScene));
   apiRouter.delete('/scenes/:id', wrap(deleteOneScene));
   apiRouter.post('/scenes/:id', wrap(runScene));
+  apiv2Router.get('/scenes', wrap(getScenesAsync));
+  apiv2Router.get('/scenes/:id', wrap(getOneSceneAsync));
+  apiv2Router.delete('/scenes/:id', wrap(deleteOneSceneAsync));
+  apiv2Router.post('/scenes/:id', wrap(runSceneAsync));
 
   apiRouter.get('/protocols', injectRedis(client), wrap(getProtocols));
   apiRouter.post('/protocols', injectRedis(client), wrap(createProtocol));
