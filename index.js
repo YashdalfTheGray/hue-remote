@@ -43,7 +43,8 @@ const {
   createProtocol,
   deleteProtocol,
   updateProtocol,
-  runProtocol
+  runProtocol,
+  runProtocolAsync
 } = require('./endpoints/protocols');
 
 const wrap = fn => (...args) => fn(...args).catch(args[2]);
@@ -135,6 +136,28 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   );
   apiRouter.put('/protocols/:name', injectRedis(client), wrap(updateProtocol));
   apiRouter.post('/protocols/:name', injectRedis(client), wrap(runProtocol));
+  apiv2Router.get('/protocols', injectRedis(client), wrap(getProtocols));
+  apiv2Router.post('/protocols', injectRedis(client), wrap(createProtocol));
+  apiv2Router.get(
+    '/protocols/:name',
+    injectRedis(client),
+    wrap(getOneProtocol)
+  );
+  apiv2Router.delete(
+    '/protocols/:name',
+    injectRedis(client),
+    wrap(deleteProtocol)
+  );
+  apiv2Router.put(
+    '/protocols/:name',
+    injectRedis(client),
+    wrap(updateProtocol)
+  );
+  apiv2Router.post(
+    '/protocols/:name',
+    injectRedis(client),
+    wrap(runProtocolAsync)
+  );
 
   app.use('/api', apiRouter);
   app.use('/api/v2', apiv2Router);
