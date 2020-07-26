@@ -22,7 +22,7 @@ test('many promises work', async t => {
   t.deepEqual(responses, [true, false, true, false, true, false]);
 });
 
-test('order gets maintained', async t => {
+test('delay also works', async t => {
   const responses = await runSerially([
     () => Promise.delay(50).then(() => 1),
     () => Promise.resolve(2),
@@ -35,7 +35,7 @@ test('order gets maintained', async t => {
   t.deepEqual(responses, [1, 2, 3, 4, 5, 6]);
 });
 
-test('delay also works', async t => {
+test('order gets maintained', async t => {
   const responses = await runSerially(
     [
       () => Promise.resolve(1),

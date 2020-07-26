@@ -4,7 +4,9 @@
   "description": "A remote Phillips Hue API that provides authenticated access to the Hue bridge",
   "main": "index.js",
   "scripts": {
-    "test": "ava **/*.spec.js",
+    "test": "nyc ava",
+    "test:no-coverage": "ava",
+    "open-coverage-report": "npx open ./coverage/index.html",
     "start": "node index.js",
     "linter": "eslint \"**/*.js\"",
     "linter-autofix": "eslint --fix .",
@@ -66,5 +68,22 @@
     "*.{js,json,css,md}": [
       "prettier --write"
     ]
+  },
+  "nyc": {
+    "include": [
+      "**/*.js"
+    ],
+    "exclude": [
+      "**/*.spec.js"
+    ],
+    "extension": [
+      ".js"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
   }
 }
