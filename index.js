@@ -126,15 +126,6 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   apiv2Router.delete('/scenes/:id', wrap(deleteOneSceneAsync));
   apiv2Router.post('/scenes/:id', wrap(runSceneAsync));
 
-  apiRouter.get('/protocols', injectRedis(client), wrap(getProtocols));
-  apiRouter.post('/protocols', injectRedis(client), wrap(createProtocol));
-  apiRouter.get('/protocols/:name', injectRedis(client), wrap(getOneProtocol));
-  apiRouter.delete(
-    '/protocols/:name',
-    injectRedis(client),
-    wrap(deleteProtocol)
-  );
-  apiRouter.put('/protocols/:name', injectRedis(client), wrap(updateProtocol));
   apiRouter.post('/protocols/:name', injectRedis(client), wrap(runProtocol));
   apiv2Router.get('/protocols', injectRedis(client), wrap(getProtocols));
   apiv2Router.post('/protocols', injectRedis(client), wrap(createProtocol));
