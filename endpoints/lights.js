@@ -22,29 +22,6 @@ const getLightsRootAsync = async (req, res) => {
   }
 };
 
-const getLightsId = (req, res) => {
-  const hueUser = process.env.HUE_BRIDGE_USERNAME;
-  const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
-
-  request({
-    method: 'GET',
-    url: `http://${hueBridge}/api/${hueUser}/lights/${req.params.id}`,
-    json: true
-  })
-    .then(result => {
-      res.json({
-        id: req.params.id,
-        state: mapFromStateObject(result.state),
-        name: result.name,
-        uniqueId: result.uniqueid
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-};
-
 const getLightsIdAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
@@ -59,12 +36,7 @@ const getLightsIdAsync = async (req, res) => {
 
     const json = await response.json();
 
-    res.json({
-      id: req.params.id,
-      state: mapFromStateObject(json.state),
-      name: json.name,
-      uniqueId: json.uniqueid
-    });
+    res.json(Object.assign(json, { state: mapFromStateObject(json.state) }));
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -138,7 +110,6 @@ const postLightsIdStateAsync = async (req, res) => {
 
 module.exports = {
   getLightsRootAsync,
-  getLightsId,
   getLightsIdAsync,
   postLightsIdState,
   postLightsIdStateAsync
