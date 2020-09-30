@@ -1,4 +1,3 @@
-const request = require('request-promise');
 const fetch = require('node-fetch');
 
 const { mapFromActionObject, mapToActionObject } = require('../util');
@@ -57,38 +56,6 @@ const getGroupsIdAsync = async (req, res) => {
   }
 };
 
-const postGroupIdAction = (req, res) => {
-  const hueUser = process.env.HUE_BRIDGE_USERNAME;
-  const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
-  const validKeys = ['on', 'color', 'colorTemp', 'colorloop'];
-
-  const validRequest = Object.keys(req.body).reduce(
-    (acc, k) => acc || validKeys.indexOf(k) !== -1,
-    false
-  );
-
-  if (validRequest) {
-    request({
-      method: 'PUT',
-      url: `http://${hueBridge}/api/${hueUser}/groups/${req.params.id}/action`,
-      body: mapToActionObject(req.body),
-      json: true
-    })
-      .then(result => {
-        res.json(result);
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-  } else {
-    res.status(400).json({
-      status: 400,
-      message: 'Malformed request body'
-    });
-  }
-};
-
 const postGroupIdActionAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
@@ -126,6 +93,5 @@ const postGroupIdActionAsync = async (req, res) => {
 module.exports = {
   getGroupsRootAsync,
   getGroupsIdAsync,
-  postGroupIdAction,
   postGroupIdActionAsync
 };
