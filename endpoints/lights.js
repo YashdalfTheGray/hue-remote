@@ -1,4 +1,3 @@
-const request = require('request-promise');
 const fetch = require('node-fetch');
 
 const { mapFromStateObject, mapToStateObject } = require('../util');
@@ -43,38 +42,6 @@ const getLightsIdAsync = async (req, res) => {
   }
 };
 
-const postLightsIdState = (req, res) => {
-  const hueUser = process.env.HUE_BRIDGE_USERNAME;
-  const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
-  const validKeys = ['on', 'color', 'colorTemp', 'colorloop'];
-
-  const validRequest = Object.keys(req.body).reduce(
-    (acc, k) => acc || validKeys.indexOf(k) !== -1,
-    false
-  );
-
-  if (validRequest) {
-    request({
-      method: 'PUT',
-      url: `http://${hueBridge}/api/${hueUser}/lights/${req.params.id}/state`,
-      body: mapToStateObject(req.body),
-      json: true
-    })
-      .then(result => {
-        res.json(result);
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-  } else {
-    res.status(400).json({
-      status: 400,
-      message: 'Malformed request body'
-    });
-  }
-};
-
 const postLightsIdStateAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
@@ -111,6 +78,5 @@ const postLightsIdStateAsync = async (req, res) => {
 module.exports = {
   getLightsRootAsync,
   getLightsIdAsync,
-  postLightsIdState,
   postLightsIdStateAsync
 };

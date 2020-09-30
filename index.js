@@ -14,7 +14,6 @@ const { checkAuthToken, setupRedis, injectRedis } = require('./util');
 const {
   getLightsRootAsync,
   getLightsIdAsync,
-  postLightsIdState,
   postLightsIdStateAsync
 } = require('./endpoints/lights');
 const {
@@ -94,7 +93,6 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   apiRouter.use(checkAuthToken);
   apiv2Router.use(checkAuthToken);
 
-  apiRouter.post('/lights/:id/state', postLightsIdState);
   apiv2Router.get('/lights', wrap(getLightsRootAsync));
   apiv2Router.get('/lights/:id', wrap(getLightsIdAsync));
   apiv2Router.post('/lights/:id/state', wrap(postLightsIdStateAsync));
