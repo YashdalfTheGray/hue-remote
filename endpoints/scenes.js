@@ -10,7 +10,7 @@ const getScenesAsync = async (req, res) => {
     const response = await fetch(`http://${hueBridge}/api/${hueUser}/scenes`, {
       method: 'GET'
     });
-    res.json(response);
+    res.json(await response.json());
   } catch (e) {
     res.status(500).json(e);
   }
@@ -27,7 +27,7 @@ const getOneSceneAsync = async (req, res) => {
         method: 'GET'
       }
     );
-    res.json(response);
+    res.json(await response.json());
   } catch (e) {
     res.status(500).json(e);
   }
@@ -44,7 +44,7 @@ const deleteOneSceneAsync = async (req, res) => {
         method: 'DELETE'
       }
     );
-    res.json(response);
+    res.json(await response.json());
   } catch (e) {
     res.status(500).json(e);
   }
