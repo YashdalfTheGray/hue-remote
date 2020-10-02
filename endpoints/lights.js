@@ -57,8 +57,8 @@ const postLightsIdStateAsync = async (req, res) => {
       const response = await fetch(
         `http://${hueBridge}/api/${hueUser}/lights/${req.params.id}/state`,
         {
-          method: 'POST',
-          body: mapToStateObject(req.body)
+          method: 'PUT',
+          body: JSON.stringify(mapToStateObject(req.body))
         }
       );
       const json = await response.json();
