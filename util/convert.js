@@ -24,21 +24,41 @@ const validateColorArray = ca =>
  */
 const padNumberStrToTwo = ns => (ns.length === 1 ? `0${ns}` : ns);
 
+/**
+ * convertToRgbArray converts a color string in the format `#rrggbb` to an array
+ * in the format `[r, g, b]`
+ * @param {string} cs the color, represented as a string, to convert
+ */
 const convertToRgbArray = cs => [
   parseInt(cs.substr(1, 2), 16),
   parseInt(cs.substr(3, 2), 16),
   parseInt(cs.substr(5, 2), 16)
 ];
 
+/**
+ * convertToRgbString converts a color in the format `[r, g, b]` to `#rrggbb`
+ * @param {number[]} ca the color, represented as a 3 number array, to convert
+ */
 const convertToRgbString = ca =>
   ca.reduce((acc, n) => acc + padNumberStrToTwo(n.toString(16)), '#');
 
+/**
+ * scaleToHueValues scales a color represented by HSV to the scale that
+ * Hue bulbs are expecting
+ * @param {number[]} hsvArray an array of HSV values
+ * @see https://github.com/YashdalfTheGray/hue-remote/blob/master/docs/utils.md#rgbtohue
+ */
 const scaleToHueValues = hsvArray => [
   _.round((hsvArray[0] / hsv.max[0]) * 65535),
   _.round((hsvArray[1] / hsv.max[1]) * 254),
   _.round((hsvArray[2] / hsv.max[2]) * 253) + 1
 ];
 
+/**
+ * scaletoHsv converts a color that we get back from the Hue API to HSV
+ * @param {number[]} hueArray an array representing a color within the Hue color system
+ * @see https://github.com/YashdalfTheGray/hue-remote/blob/master/docs/utils.md#rgbtohue
+ */
 const scaleToHsv = hueArray => [
   _.round((hueArray[0] / 65535) * hsv.max[0]),
   _.round((hueArray[1] / 254) * hsv.max[1]),
