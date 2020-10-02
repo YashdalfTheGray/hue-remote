@@ -17,7 +17,12 @@ const validateColorString = cs => /^#[A-Fa-f0-9]{6}$/.test(cs);
 const validateColorArray = ca =>
   ca.length === 3 && ca.reduce((acc, cv) => cv >= 0 && cv <= 255);
 
-const padNumberStr = ns => (ns.length === 1 ? `0${ns}` : ns); // eslint-disable-line no-extra-parens
+/**
+ * padNumberStrToTwo is a helper function that changes single digit hex number
+ * strings from `a` to `0a`.
+ * @param {string} ns a string representing a number that needs to be padded
+ */
+const padNumberStrToTwo = ns => (ns.length === 1 ? `0${ns}` : ns);
 
 const convertToRgbArray = cs => [
   parseInt(cs.substr(1, 2), 16),
@@ -26,7 +31,7 @@ const convertToRgbArray = cs => [
 ];
 
 const convertToRgbString = ca =>
-  ca.reduce((acc, n) => acc + padNumberStr(n.toString(16)), '#');
+  ca.reduce((acc, n) => acc + padNumberStrToTwo(n.toString(16)), '#');
 
 const scaleToHueValues = hsvArray => [
   _.round((hsvArray[0] / hsv.max[0]) * 65535),
