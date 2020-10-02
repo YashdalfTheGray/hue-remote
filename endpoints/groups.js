@@ -72,7 +72,7 @@ const postGroupIdActionAsync = async (req, res) => {
         `http://${hueBridge}/api/${hueUser}/groups/${req.params.id}/action`,
         {
           method: 'PUT',
-          body: mapToActionObject(req.body)
+          body: JSON.stringify(mapToActionObject(req.body))
         }
       );
       const json = await response.json();
