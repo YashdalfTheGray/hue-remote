@@ -65,6 +65,12 @@ const scaleToHsv = hueArray => [
   _.round((hueArray[2] / 254) * hsv.max[2])
 ];
 
+/**
+ * convertRgbToHue validates and converts a color from an RGB hex string
+ * representation to an array of 3 numbers that the Hue system can understand
+ * @param {string} rgbColor an RGB hex string, in the format `#rrggbb`
+ * @see https://github.com/YashdalfTheGray/hue-remote/blob/master/docs/utils.md#rgbtohue
+ */
 const convertRgbToHue = rgbColor => {
   let colorArr = [];
 
@@ -86,6 +92,11 @@ const convertRgbToHue = rgbColor => {
   return scaleToHueValues(rgb.hsv(colorArr));
 };
 
+/**
+ * concertHueToRgbArray converts a color from the Hue color system into an
+ * array of 3 numbers representing an RGB color
+ * @param {number[]} hue an array representing a color in the Hue color system
+ */
 const convertHueToRgbArray = hue =>
   hsv.rgb(scaleToHsv(hue)).map(e => _.round(e));
 
