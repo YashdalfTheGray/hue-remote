@@ -2,7 +2,18 @@ const _ = require('lodash');
 const rgb = require('color-space/rgb');
 const hsv = require('color-space/hsv');
 
+/**
+ * validateColorString checks whether a passed in string is in the "#rrggbb"
+ * color format
+ * @param {string} cs the color string to validate
+ */
 const validateColorString = cs => /^#[A-Fa-f0-9]{6}$/.test(cs);
+
+/**
+ * validateColorArray checks whether a given array of numbers can represent
+ * an array of RGB numbers. Specifically, `|ca| = 3 && ∃ e ∈ ca, 0 ≤ e ≤ 255`
+ * @param {number[]} ca the colors array to validate
+ */
 const validateColorArray = ca =>
   ca.length === 3 && ca.reduce((acc, cv) => cv >= 0 && cv <= 255);
 
