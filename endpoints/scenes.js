@@ -61,8 +61,9 @@ const runSceneAsync = async (req, res) => {
         method: 'GET'
       }
     );
+    const jsonBody = await response.json();
     const responses = await runSerially(
-      Object.entries(response.lightstates).map(([id, state]) => () =>
+      Object.entries(jsonBody.lightstates).map(([id, state]) => () =>
         fetch(`http://${hueBridge}/api/${hueUser}/lights/${id}/state`, {
           method: 'PUT',
           body: state
