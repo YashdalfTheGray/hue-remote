@@ -16,13 +16,19 @@ const convert = require('./convert');
  */
 
 /**
- * @typedef {Object} ActionResponse
+ * @typedef {Object} HueRemoteActionObject
  * @property {boolean} on whether the light is on or off
  * @property {boolean=} colorloop whether the light is colorlooping or not
  * @property {number=} colorTemp the color temperature of the light in K notation
  * @property {string=} color the color of the light, in the `#rrggbb` hex format
  */
 
+/**
+ * mapFromActionObject changes the state object from the Hue API
+ * to match the return object type from hue-remote's API
+ * @param {HueActionObject} a the action object to convert from
+ * @returns {HueRemoteActionObject} the translated response to be sent back
+ */
 const mapFromActionObject = a => {
   if (a.effect === 'colorloop') {
     return {
@@ -45,6 +51,11 @@ const mapFromActionObject = a => {
   return a;
 };
 
+/**
+ * mapToActionObject converts a hue remote action object into a hue action object
+ * @param {HueRemoteActionObject} p the hue remote action object to convert
+ * @returns {HueActionObject} the action object equivalent
+ */
 const mapToActionObject = p => {
   if (p.on === false) {
     return { on: false };
