@@ -3,24 +3,10 @@ const _ = require('lodash');
 const convert = require('./convert');
 
 /**
- * @typedef {Object} HueActionObject
- * @property {boolean} on whether the light is on or off
- * @property {number} bri the currently set Hue-HSV brightness value
- * @property {number} hue the currently set Hue-HSV hue value
- * @property {number} sat the currently set Hue-HSV saturation value
- * @property {string} effect the currently set effect mode
- * @property {number[]} xy the xy coordinates of the currently set color
- * @property {number} ct the mired value of the color temperature
- * @property {string} alert set to either "select" or "lselect" to denote whether the light is alerting
- * @property {string} colormode a string that represents which color representation is currently applied
- */
-
-/**
- * @typedef {Object} HueRemoteActionObject
- * @property {boolean} on whether the light is on or off
- * @property {boolean=} colorloop whether the light is colorlooping or not
- * @property {number=} colorTemp the color temperature of the light in K notation
- * @property {string=} color the color of the light, in the `#rrggbb` hex format
+ * @typedef { import("./types").HueActionObject } HueActionObject
+ * @typedef { import("./types").HueStateObject } HueStateObject
+ * @typedef { import("./types").HueRemoteActionObject } HueRemoteActionObject
+ * @typedef { import("./types").HueRemoteStateObject } HueRemoteStateObject
  */
 
 /**
@@ -88,6 +74,11 @@ const mapToActionObject = p => {
 
 module.exports = {
   mapFromActionObject: mapFromActionObject,
+  /**
+   * mapFromStateObject converts a hue state object into a hue remote state object
+   * @param {HueStateObject} s the hue remote state object to convert
+   * @returns {HueRemoteStateObject} the state object equivalent
+   */
   mapFromStateObject: s =>
     _.assign({}, mapFromActionObject(s), { reachable: s.reachable }),
   mapToActionObject: mapToActionObject,
