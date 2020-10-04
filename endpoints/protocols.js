@@ -117,6 +117,7 @@ const runProtocolAsync = async (req, res) => {
             body: state
           })
         )
+        .map(r => r.json())
     );
 
     res.json(responses);
