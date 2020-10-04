@@ -48,3 +48,25 @@ test('order gets maintained', async t => {
 
   t.deepEqual(responses, [1, 2, 3, 4]);
 });
+
+test('handles async functions properly', async t => {
+  const responses = await runSerially([
+    async () => 1,
+    async () => 2,
+    async () => 3,
+    async () => 4
+  ]);
+
+  t.deepEqual(responses, [1, 2, 3, 4]);
+});
+
+test('handles async functions that return promises', async t => {
+  const responses = await runSerially([
+    async () => Promise.resolve(1),
+    async () => Promise.resolve(2),
+    async () => Promise.resolve(3),
+    async () => Promise.resolve(4)
+  ]);
+
+  t.deepEqual(responses, [1, 2, 3, 4]);
+});
