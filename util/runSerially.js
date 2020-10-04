@@ -1,14 +1,15 @@
 const Promise = require('bluebird');
 
 /**
- *
- * @typedef {(...args: any[]) => Promise<any>} RunFunction
+ * @template T
+ * @typedef { (...args: any[]) => Promise<T> } RunFunction
  */
 
 /**
- *
- * @param {Array<RunFunction>} funcs an array of functions to run serially
+ * @template T
+ * @param {Array<RunFunction<T>>} funcs an array of functions to run serially
  * @param {number} delayMs a delay in milliseconds between each function run, defaults to 0
+ * @return {Promise<T[]>} an array of results that match the order of functions executed
  */
 module.exports = (funcs, delayMs = 0) =>
   funcs.reduce(
