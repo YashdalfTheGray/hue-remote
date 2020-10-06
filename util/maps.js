@@ -7,6 +7,7 @@ const convert = require('./convert');
  * @typedef { import("./types").HueStateObject } HueStateObject
  * @typedef { import("./types").HueRemoteActionObject } HueRemoteActionObject
  * @typedef { import("./types").HueRemoteStateObject } HueRemoteStateObject
+ * @typedef { import("./types").HueResponseObject } HueResponseObject
  */
 
 /**
@@ -72,6 +73,16 @@ const mapToActionObject = p => {
   return params;
 };
 
+/**
+ * mapFromHueResponseObject stitches together a set of hue response objects
+ * into one HueRemoteStateObject.
+ * @param {HueResponseObject[]} responses the response object to transform
+ * @returns {HueRemoteStateObject} the transformed state object
+ */
+const mapFromHueResponseObject = responses => {
+  return responses.map(r => r.success);
+};
+
 module.exports = {
   mapFromActionObject: mapFromActionObject,
   /**
@@ -82,5 +93,6 @@ module.exports = {
   mapFromStateObject: s =>
     _.assign({}, mapFromActionObject(s), { reachable: s.reachable }),
   mapToActionObject: mapToActionObject,
-  mapToStateObject: mapToActionObject
+  mapToStateObject: mapToActionObject,
+  mapFromHueResponseObject: mapFromHueResponseObject
 };
