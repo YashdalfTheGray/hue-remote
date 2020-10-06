@@ -67,3 +67,17 @@ export type HueRemoteStateObject = {
   colorTemp?: number;
   color?: string;
 };
+
+type PutResponseSuccess = {
+  [key: string]: string | number | boolean;
+};
+
+type PostResponseSuccess = {
+  id: string;
+};
+
+type DeleteResponseSuccess = string;
+
+export type HueResponseObject = {
+  success: PutResponseSuccess | PostResponseSuccess | DeleteResponseSuccess;
+};
