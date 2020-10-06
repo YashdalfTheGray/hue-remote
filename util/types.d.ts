@@ -68,15 +68,15 @@ export type HueRemoteStateObject = {
   color?: string;
 };
 
-type PutResponseSuccess = {
+export type PutResponseSuccess = {
   [key: string]: string | number | boolean;
 };
 
-type PostResponseSuccess = {
+export type PostResponseSuccess = {
   id: string;
 };
 
-type DeleteResponseSuccess = string;
+export type DeleteResponseSuccess = string;
 
 export type HueResponseObject = {
   success: PutResponseSuccess | PostResponseSuccess | DeleteResponseSuccess;

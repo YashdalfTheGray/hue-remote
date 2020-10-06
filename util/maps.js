@@ -7,6 +7,9 @@ const convert = require('./convert');
  * @typedef { import("./types").HueStateObject } HueStateObject
  * @typedef { import("./types").HueRemoteActionObject } HueRemoteActionObject
  * @typedef { import("./types").HueRemoteStateObject } HueRemoteStateObject
+ * @typedef { import("./types").PutResponseSuccess } PutResponseSuccess
+ * @typedef { import("./types").PostResponseSuccess } PostResponseSuccess
+ * @typedef { import("./types").DeleteResponseSuccess } DeleteResponseSuccess
  * @typedef { import("./types").HueResponseObject } HueResponseObject
  */
 
@@ -74,13 +77,36 @@ const mapToActionObject = p => {
 };
 
 /**
+ * buildStateObjectFromResponse parses a `PUT` response from the hue bridge
+ * and builds a state object for each id found
+ * @param {PutResponseSuccess} r the put response to parse
+ */
+const buildStateObjectFromResponse = r => {
+  return r;
+};
+
+/**
  * mapFromHueResponseObject stitches together a set of hue response objects
  * into one HueRemoteStateObject.
  * @param {HueResponseObject[]} responses the response object to transform
  * @returns {HueRemoteStateObject} the transformed state object
  */
 const mapFromHueResponseObject = responses => {
-  return responses.map(r => r.success);
+  return responses
+    .map(r => r.success)
+    .map(s => {
+      if (_.isObject(s)) {
+        const keys = Object.keys(s);
+        if (keys.includes('id')) {
+          return s.id;
+        }
+        return buildStateObjectFromResponse(s);
+      }
+      if (typeof s === 'string') {
+        return s;
+      }
+      return s;
+    });
 };
 
 module.exports = {
