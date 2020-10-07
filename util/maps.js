@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { assign, isObject, merge } = require('lodash');
 
 const convert = require('./convert');
 
@@ -56,7 +56,7 @@ const mapToActionObject = p => {
   if (p.color) {
     const hueColor = convert.rgbToHue(p.color);
 
-    return _.assign(params, {
+    return assign(params, {
       hue: hueColor[0],
       sat: hueColor[1],
       bri: hueColor[2],
@@ -64,17 +64,25 @@ const mapToActionObject = p => {
     });
   }
   if (p.colorTemp) {
-    return _.assign(params, {
+    return assign(params, {
       ct: convert.tempToMired(p.colorTemp),
       effect: 'none'
     });
   }
   if (p.colorloop) {
-    return _.assign(params, { effect: 'colorloop' });
+    return assign(params, { effect: 'colorloop' });
   }
 
   return params;
 };
+
+/**
+ * mapFromStateObject converts a hue state object into a hue remote state object
+ * @param {HueStateObject} s the hue remote state object to convert
+ * @returns {HueRemoteStateObject} the state object equivalent
+ */
+const mapFromStateObject = s =>
+  assign({}, mapFromActionObject(s), { reachable: s.reachable });
 
 /**
  * buildStateObjectFromResponse parses a `PUT` response from the hue bridge
@@ -98,7 +106,7 @@ const buildStateObjectFromResponse = r =>
       pointer = pointer[pathParts[index]];
     }
 
-    return _.merge(acc, result);
+    return merge(acc, result);
   });
 
 /**
@@ -111,7 +119,7 @@ const mapFromHueResponseObject = responses => {
   return responses
     .map(r => r.success)
     .map(s => {
-      if (_.isObject(s)) {
+      if (isObject(s)) {
         const keys = Object.keys(s);
         if (keys.includes('id')) {
           return s;
@@ -139,20 +147,15 @@ const mapFromHueResponseObject = responses => {
         return { messages: [...acc.messages, e.message] };
       }
 
-      return _.merge(acc, { modified: e });
+      return merge(acc, { modified: e });
     }, {});
 };
 
 module.exports = {
   mapFromActionObject: mapFromActionObject,
-  /**
-   * mapFromStateObject converts a hue state object into a hue remote state object
-   * @param {HueStateObject} s the hue remote state object to convert
-   * @returns {HueRemoteStateObject} the state object equivalent
-   */
-  mapFromStateObject: s =>
-    _.assign({}, mapFromActionObject(s), { reachable: s.reachable }),
+  mapFromStateObject: mapFromStateObject,
   mapToActionObject: mapToActionObject,
   mapToStateObject: mapToActionObject,
+  buildStateObjectFromResponse: buildStateObjectFromResponse,
   mapFromHueResponseObject: mapFromHueResponseObject
 };
