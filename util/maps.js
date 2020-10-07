@@ -81,9 +81,25 @@ const mapToActionObject = p => {
  * and builds a state object for each id found
  * @param {PutResponseSuccess} r the put response to parse
  */
-const buildStateObjectFromResponse = r => {
-  return r;
-};
+const buildStateObjectFromResponse = r =>
+  Object.entries(r).reduce((acc, e) => {
+    const [key, value] = e;
+    const pathParts = key.split('/');
+    const result = {};
+    const lastKeyPartIndex = pathParts.length - 1;
+
+    let pointer = result;
+    let index = 0;
+
+    while (pointer != null && index < pathParts.length) {
+      const valueToAssign = index === lastKeyPartIndex ? value : {};
+      pointer[pathParts[index]] = valueToAssign;
+      index += 1;
+      pointer = pointer[pathParts[index]];
+    }
+
+    return _.merge(acc, result);
+  });
 
 /**
  * mapFromHueResponseObject stitches together a set of hue response objects
