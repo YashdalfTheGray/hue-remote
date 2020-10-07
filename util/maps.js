@@ -122,7 +122,25 @@ const mapFromHueResponseObject = responses => {
         return { message: s };
       }
       return s;
-    });
+    })
+    .reduce((acc, e) => {
+      const keys = Object.keys(e);
+      if (keys.includes('id')) {
+        if (!acc.created) {
+          return { created: [e.id] };
+        }
+        return { created: [...acc.created, e.id] };
+      }
+
+      if (keys.includes('message')) {
+        if (!acc.messages) {
+          return { messages: [e.message] };
+        }
+        return { messages: [...acc.messages, e.message] };
+      }
+
+      return _.merge(acc, { modified: e });
+    }, {});
 };
 
 module.exports = {
