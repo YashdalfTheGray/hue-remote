@@ -114,12 +114,12 @@ const mapFromHueResponseObject = responses => {
       if (_.isObject(s)) {
         const keys = Object.keys(s);
         if (keys.includes('id')) {
-          return s.id;
+          return s;
         }
         return buildStateObjectFromResponse(s);
       }
       if (typeof s === 'string') {
-        return s;
+        return { message: s };
       }
       return s;
     });
