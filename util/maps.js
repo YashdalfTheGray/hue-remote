@@ -78,11 +78,18 @@ const mapToActionObject = p => {
 
 /**
  * mapFromStateObject converts a hue state object into a hue remote state object
- * @param {HueStateObject} s the hue remote state object to convert
- * @returns {HueRemoteStateObject} the state object equivalent
+ * @param {HueStateObject} s the hue state object to convert
+ * @returns {HueRemoteStateObject} the remote state object equivalent
  */
 const mapFromStateObject = s =>
   assign({}, mapFromActionObject(s), { reachable: s.reachable });
+
+/**
+ * mapToStateObject converts a hue remote state object into a hue state object
+ * @param {HueRemoteStateObject} s the hue remote state object to convert
+ * @returns {HueStateObject} the state object equivalent
+ */
+const mapToStateObject = s => mapToActionObject(s);
 
 /**
  * buildStateObjectFromResponse parses a `PUT` response from the hue bridge
@@ -152,10 +159,10 @@ const mapFromHueResponseObject = responses => {
 };
 
 module.exports = {
-  mapFromActionObject: mapFromActionObject,
-  mapFromStateObject: mapFromStateObject,
-  mapToActionObject: mapToActionObject,
-  mapToStateObject: mapToActionObject,
-  buildStateObjectFromResponse: buildStateObjectFromResponse,
-  mapFromHueResponseObject: mapFromHueResponseObject
+  mapFromActionObject,
+  mapFromStateObject,
+  mapToActionObject,
+  mapToStateObject,
+  buildStateObjectFromResponse,
+  mapFromHueResponseObject
 };
