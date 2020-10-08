@@ -109,12 +109,12 @@ const buildStateObjectFromResponse = r =>
     while (pointer != null && index < pathParts.length) {
       const valueToAssign = index === lastKeyPartIndex ? value : {};
       pointer[pathParts[index]] = valueToAssign;
-      index += 1;
       pointer = pointer[pathParts[index]];
+      index += 1;
     }
 
     return merge(acc, result);
-  });
+  }, {});
 
 /**
  * mapFromHueResponseObject stitches together a set of hue response objects

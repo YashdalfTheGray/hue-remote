@@ -5,7 +5,8 @@ const {
   mapFromActionObject,
   mapFromStateObject,
   mapToActionObject,
-  mapToStateObject
+  mapToStateObject,
+  buildStateObjectFromResponse
 } = require('./maps');
 const convert = require('./convert');
 
@@ -217,4 +218,12 @@ test('mapToStateObject does the same stuff as mapToActionObject', t => {
   };
 
   t.deepEqual(mapToActionObject(testState), mapToStateObject(testState));
+});
+
+test('buildStateObjectFromResponse builds state from one property', t => {
+  const input = { 'lights/1/state/on': true };
+
+  const output = buildStateObjectFromResponse(input);
+
+  t.is(output.lights['1'].state.on, true);
 });
