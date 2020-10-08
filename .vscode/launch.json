@@ -8,16 +8,18 @@
       "type": "node",
       "request": "launch",
       "name": "Debug tests",
-      "program": "${workspaceFolder}/node_modules/ava/profile.js",
-      "args": ["${file}"],
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/ava",
+      "runtimeArgs": ["${file}"],
+      "outputCapture": "std",
       "skipFiles": ["<node_internals>/**/*.js"]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Debug tests serially",
-      "program": "${workspaceFolder}/node_modules/ava/profile.js",
-      "args": ["${file}", "--serial"],
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/ava",
+      "runtimeArgs": ["--serial", "${file}"],
+      "outputCapture": "std",
       "skipFiles": ["<node_internals>/**/*.js"]
     }
   ]
