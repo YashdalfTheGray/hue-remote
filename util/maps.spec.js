@@ -6,7 +6,8 @@ const {
   mapFromStateObject,
   mapToActionObject,
   mapToStateObject,
-  buildStateObjectFromResponse
+  buildStateObjectFromResponse,
+  mapFromHueResponseObject
 } = require('./maps');
 const convert = require('./convert');
 
@@ -262,4 +263,21 @@ test('buildStateObjectFromResponse handles an empty response', t => {
   const output = buildStateObjectFromResponse(input);
 
   t.is(Object.keys(output).length, 0);
+});
+
+test('mapFromHueResponseObject handles a single POST response', t => {
+  const input = [{ success: { id: 'groups/2' } }];
+
+  const output = mapFromHueResponseObject(input);
+
+  t.deepEqual(output.created, ['groups/2']);
+});
+
+test('mapFromHueResponseObject handles multiple POST responses', t => {
+  const ids = ['groups/2', 'lights/7', 'schedules/1'];
+  const input = ids.map(id => ({ success: { id } }));
+
+  const output = mapFromHueResponseObject(input);
+
+  t.deepEqual(output.created, ids);
 });
