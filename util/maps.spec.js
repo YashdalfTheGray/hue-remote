@@ -255,3 +255,11 @@ test('buildStateObjectFromResponse accounts for different datatypes', t => {
   t.is(output.lights['2'].state.ct, 213);
   t.is(output.lights['2'].state.effect, 'none');
 });
+
+test('buildStateObjectFromResponse handles an empty response', t => {
+  const input = {};
+
+  const output = buildStateObjectFromResponse(input);
+
+  t.is(Object.keys(output).length, 0);
+});
