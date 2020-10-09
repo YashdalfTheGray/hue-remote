@@ -227,3 +227,31 @@ test('buildStateObjectFromResponse builds state from one property', t => {
 
   t.is(output.lights['1'].state.on, true);
 });
+
+test('buildStateObjectFromResponse builds state from multiple properties', t => {
+  const input = {
+    'lights/1/state/on': true,
+    'lights/2/state/on': true,
+    'lights/2/state/effect': 'none'
+  };
+
+  const output = buildStateObjectFromResponse(input);
+
+  t.is(output.lights['1'].state.on, true);
+  t.is(output.lights['2'].state.on, true);
+  t.is(output.lights['2'].state.effect, 'none');
+});
+
+test('buildStateObjectFromResponse accounts for different datatypes', t => {
+  const input = {
+    'lights/2/state/on': true,
+    'lights/2/state/ct': 213,
+    'lights/2/state/effect': 'none'
+  };
+
+  const output = buildStateObjectFromResponse(input);
+
+  t.is(output.lights['2'].state.on, true);
+  t.is(output.lights['2'].state.ct, 213);
+  t.is(output.lights['2'].state.effect, 'none');
+});
