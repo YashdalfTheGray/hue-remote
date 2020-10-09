@@ -281,3 +281,24 @@ test('mapFromHueResponseObject handles multiple POST responses', t => {
 
   t.deepEqual(output.created, ids);
 });
+
+test('mapFromHueResponseObject handles a single DELETE response', t => {
+  const input = [{ success: 'schedules/1 deleted' }];
+
+  const output = mapFromHueResponseObject(input);
+
+  t.deepEqual(output.messages, ['schedules/1 deleted']);
+});
+
+test('mapFromHueResponseObject handles multiple DELETE responses', t => {
+  const messages = [
+    'schedules/1 deleted',
+    'groups/4 deleted',
+    'lights/6 deleted'
+  ];
+  const input = messages.map(m => ({ success: m }));
+
+  const output = mapFromHueResponseObject(input);
+
+  t.deepEqual(output.messages, messages);
+});
