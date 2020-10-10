@@ -352,3 +352,19 @@ test('mapFromHueResponseObject handles an empty response list', t => {
 
   t.deepEqual(output, {});
 });
+
+test('mapFromHueResponseObject returns unrecognized keys under the success key', t => {
+  const input = [{ success: { foo: 'true' } }];
+
+  const output = mapFromHueResponseObject(input);
+
+  t.deepEqual(output, { modified: { foo: 'true' } });
+});
+
+test('mapFromHueResponseObject ignores top-level unrecognized keys', t => {
+  const input = [{ foo: true }];
+
+  const output = mapFromHueResponseObject(input);
+
+  t.deepEqual(output, {});
+});

@@ -139,6 +139,9 @@ const mapFromHueResponseObject = responses => {
       return s;
     })
     .reduce((acc, e) => {
+      if (!e) {
+        return {};
+      }
       const keys = Object.keys(e);
       if (keys.includes('id')) {
         if (!acc.created) {
