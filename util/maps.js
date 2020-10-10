@@ -142,16 +142,16 @@ const mapFromHueResponseObject = responses => {
       const keys = Object.keys(e);
       if (keys.includes('id')) {
         if (!acc.created) {
-          return { created: [e.id] };
+          return { ...acc, created: [e.id] };
         }
-        return { created: [...acc.created, e.id] };
+        return { ...acc, created: [...acc.created, e.id] };
       }
 
       if (keys.includes('message')) {
         if (!acc.messages) {
-          return { messages: [e.message] };
+          return { ...acc, messages: [e.message] };
         }
-        return { messages: [...acc.messages, e.message] };
+        return { ...acc, messages: [...acc.messages, e.message] };
       }
 
       return merge(acc, { modified: e });
