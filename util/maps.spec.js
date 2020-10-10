@@ -302,3 +302,29 @@ test('mapFromHueResponseObject handles multiple DELETE responses', t => {
 
   t.deepEqual(output.messages, messages);
 });
+
+test('mapFromHueResponseObject handles a single PUT response', t => {
+  const input = [{ success: { 'lights/2/state/on': true } }];
+
+  const output = mapFromHueResponseObject(input);
+
+  t.deepEqual(output.modified, { lights: { 2: { state: { on: true } } } });
+});
+
+test('mapFromHueResponseObject handles multiple PUT responses', t => {
+  const input = [
+    { success: { 'lights/2/state/on': true } },
+    { success: { 'lights/2/state/hue': 41334 } },
+    { success: { 'lights/2/state/sat': 254 } },
+    { success: { 'lights/2/state/bri': 254 } },
+    { success: { 'lights/2/state/effect': 'none' } }
+  ];
+
+  const output = mapFromHueResponseObject(input);
+
+  t.deepEqual(output.modified, {
+    lights: {
+      2: { state: { on: true, hue: 41334, sat: 254, bri: 254, effect: 'none' } }
+    }
+  });
+});
