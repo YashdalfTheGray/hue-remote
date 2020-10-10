@@ -328,3 +328,27 @@ test('mapFromHueResponseObject handles multiple PUT responses', t => {
     }
   });
 });
+
+test('mapFromHueResponseObject handles multiple types of responses', t => {
+  const input = [
+    { success: { 'lights/2/state/on': true } },
+    { success: { id: 'groups/2' } },
+    { success: 'schedules/2 deleted' }
+  ];
+
+  const output = mapFromHueResponseObject(input);
+
+  t.deepEqual(output, {
+    created: ['groups/2'],
+    messages: ['schedules/2 deleted'],
+    modified: { lights: { 2: { state: { on: true } } } }
+  });
+});
+
+test('mapFromHueResponseObject handles an empty response list', t => {
+  const input = [];
+
+  const output = mapFromHueResponseObject(input);
+
+  t.deepEqual(output, {});
+});
