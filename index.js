@@ -4,11 +4,14 @@ require('./util/checkEnv');
 const os = require('os');
 const fs = require('fs');
 const https = require('https');
+const path = require('path');
+
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
 const helmet = require('helmet');
+const rfs = require('rotating-file-stream');
 
 const { checkAuthToken, setupRedis, injectRedis } = require('./util');
 const {
@@ -71,6 +74,14 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   const apiv2Router = express.Router(); // eslint-disable-line new-cap
   const client = setupRedis(process.env.REDIS_URL);
 
+  const logsPath = process.env.LOGS_OUTPUT_PATH || 'output/logs';
+  const requestLogStream = rfs.createStream('request.log', {
+    interval: '6h',
+    path: path.resolve(__dirname, logsPath),
+    size: '10M',
+    compress: 'gzip'
+  });
+
   const appPort = process.env.PORT || process.argv[2] || 8080;
   const cert = {
     key: fs.readFileSync('./sslcert/key.pem'),
@@ -79,6 +90,7 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
 
   app.use(bodyParser.json());
   app.use(morgan('common'));
+  app.use(morgan('common', { stream: requestLogStream }));
   app.use(helmet());
 
   app.get('/', (req, res) => {
