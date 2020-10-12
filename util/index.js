@@ -8,6 +8,7 @@ const {
   mapToActionObject,
   mapToStateObject
 } = require('./maps');
+const { getRequestLogsPath } = require('./logs');
 
 module.exports = {
   checkAuthToken,
@@ -18,5 +19,6 @@ module.exports = {
   convert,
   setupRedis,
   injectRedis,
-  runSerially
+  runSerially,
+  getRequestLogsPath
 };
