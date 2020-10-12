@@ -4,7 +4,6 @@ require('./util/checkEnv');
 const os = require('os');
 const fs = require('fs');
 const https = require('https');
-const path = require('path');
 
 const express = require('express');
 const morgan = require('morgan');
@@ -13,7 +12,12 @@ const chalk = require('chalk');
 const helmet = require('helmet');
 const rfs = require('rotating-file-stream');
 
-const { checkAuthToken, setupRedis, injectRedis } = require('./util');
+const {
+  checkAuthToken,
+  setupRedis,
+  injectRedis,
+  getRequestLogsPath
+} = require('./util');
 const {
   getLightsRootAsync,
   getLightsIdAsync,
@@ -74,10 +78,9 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   const apiv2Router = express.Router(); // eslint-disable-line new-cap
   const client = setupRedis(process.env.REDIS_URL);
 
-  const logsPath = process.env.LOGS_OUTPUT_PATH || 'output/logs';
   const requestLogStream = rfs.createStream('request.log', {
     interval: '6h',
-    path: path.resolve(__dirname, logsPath),
+    path: getRequestLogsPath(),
     size: '10M',
     compress: 'gzip'
   });

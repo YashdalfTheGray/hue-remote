@@ -18,14 +18,14 @@ The server can also run in Let's Encrypt verify mode by passing in the `--letsen
 
 ## Environment Variables
 
-| Environment Variable  | Explanation                                                                                      |
-| --------------------- | ------------------------------------------------------------------------------------------------ |
-| `PORT`                | The port that you want the HTTPS server to use, defaults to 8080.                                |
-| `HUE_BRIDGE_ADDRESS`  | The local IP address of your hue bridge.                                                         |
-| `HUE_BRIDGE_USERNAME` | The username that the bridge gives you after registering with the local Hue API,                 |
-| `HUE_REMOTE_TOKEN`    | An access token that you want to use to authenticate with the Hue remote API.                    |
-| `REDIS_URL`           | The URL of the Redis server to store the protocols.                                              |
-| `LOGS_OUTPUT_PATH`    | A path, relative to the project root, where the logs should be stored, defaults to `output/logs` |
+| Environment Variable  | Explanation                                                                                                               |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `PORT`                | The port that you want the HTTPS server to use, defaults to 8080.                                                         |
+| `HUE_BRIDGE_ADDRESS`  | The local IP address of your hue bridge.                                                                                  |
+| `HUE_BRIDGE_USERNAME` | The username that the bridge gives you after registering with the local Hue API,                                          |
+| `HUE_REMOTE_TOKEN`    | An access token that you want to use to authenticate with the Hue remote API.                                             |
+| `REDIS_URL`           | The URL of the Redis server to store the protocols.                                                                       |
+| `LOGS_OUTPUT_PATH`    | A path where the logs should be stored, defaults to `./output/logs`. This option supports absolute paths like `/tmp/logs` |
 
 ## Testing
 
