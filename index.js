@@ -16,7 +16,8 @@ const {
   checkAuthToken,
   setupRedis,
   injectRedis,
-  getLogsPath
+  getLogsPath,
+  logger
 } = require('./util');
 const {
   getLightsRootAsync,
@@ -74,6 +75,7 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   );
 } else {
   const app = express();
+  app.locals.logger = logger;
   const apiRouter = express.Router(); // eslint-disable-line new-cap
   const apiv2Router = express.Router(); // eslint-disable-line new-cap
   const client = setupRedis(process.env.REDIS_URL);

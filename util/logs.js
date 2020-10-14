@@ -8,7 +8,9 @@ const getLogsPath = () => {
     // we were provided an absolute path
     return LogsPathFromEnvOrDefault;
   }
-  return path.resolve(__dirname, LogsPathFromEnvOrDefault);
+  // this is because __dirname evaluates to '<project_dir>/util'
+  // so we go a directory higher and then concat the logs path
+  return path.resolve(__dirname, '..', LogsPathFromEnvOrDefault);
 };
 
 module.exports = {
