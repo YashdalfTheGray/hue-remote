@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 const path = require('path');
 
 const winston = require('winston');
@@ -19,4 +21,12 @@ class Logger {
   }
 }
 
-module.exports = Logger;
+class Singleton {
+  getInstance() {
+    if (!Singleton.instance) {
+      Singleton.instance = new Logger();
+    }
+  }
+}
+
+module.exports = Singleton;
