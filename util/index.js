@@ -9,6 +9,7 @@ const {
   mapToStateObject
 } = require('./maps');
 const { getLogsPath } = require('./logs');
+const logger = require('./logger');
 
 module.exports = {
   checkAuthToken,
@@ -20,5 +21,6 @@ module.exports = {
   setupRedis,
   injectRedis,
   runSerially,
-  getLogsPath
+  getLogsPath,
+  logger
 };
