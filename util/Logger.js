@@ -22,6 +22,12 @@ class Logger {
             winston.format.simple()
           )
         })
+      ],
+      exceptionHandlers: [
+        new winston.transports.File({
+          filename: path.resolve(getLogsPath(), 'uncaught-exceptions.log'),
+          format: winston.format.json()
+        })
       ]
     });
   }
@@ -32,6 +38,7 @@ class Singleton {
     if (!Singleton.instance) {
       Singleton.instance = new Logger();
     }
+    return Singleton.instance;
   }
 }
 
