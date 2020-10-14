@@ -16,7 +16,7 @@ const {
   checkAuthToken,
   setupRedis,
   injectRedis,
-  getRequestLogsPath
+  getLogsPath
 } = require('./util');
 const {
   getLightsRootAsync,
@@ -80,7 +80,7 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
 
   const requestLogStream = rfs.createStream('request.log', {
     interval: '6h',
-    path: getRequestLogsPath(),
+    path: getLogsPath(),
     size: '10M',
     compress: 'gzip'
   });

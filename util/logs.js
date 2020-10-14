@@ -1,6 +1,6 @@
 const path = require('path');
 
-const getRequestLogsPath = () => {
+const getLogsPath = () => {
   const LogsPathFromEnvOrDefault =
     process.env.LOGS_OUTPUT_PATH || 'output/logs';
 
@@ -12,5 +12,5 @@ const getRequestLogsPath = () => {
 };
 
 module.exports = {
-  getRequestLogsPath
+  getLogsPath
 };
