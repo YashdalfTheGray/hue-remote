@@ -3,18 +3,19 @@ const winston = require('winston');
 const { getLogsPath } = require('./logs');
 
 const logger = winston.createLogger({
-  level: 'info',
   defaultMeta: { application: 'hue-remote' },
   transports: [
     new winston.transports.File({
       filename: `${getLogsPath()}/application.log`,
-      format: winston.format.json()
+      format: winston.format.json(),
+      level: 'verbose'
     }),
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(),
         winston.format.simple()
-      )
+      ),
+      level: 'silly'
     })
   ],
   exceptionHandlers: [
