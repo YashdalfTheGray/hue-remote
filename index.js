@@ -99,12 +99,14 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   app.use(helmet());
 
   app.get('/', (req, res) => {
-    res.json({
+    const response = {
       status: 'ok',
       bridgeFound: !!process.env.HUE_BRIDGE_ADDRESS,
       bridgeUserFound: !!process.env.HUE_BRIDGE_USERNAME,
       apiTokenFound: !!process.env.HUE_REMOTE_TOKEN
-    });
+    };
+    logger.info(response);
+    res.json(response);
   });
 
   apiRouter.use(checkAuthToken);
@@ -153,6 +155,6 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   https
     .createServer(cert, app)
     .listen(appPort, () =>
-      console.log(`Hue remote now listening at ${chalk.green(appPort)}...`)
+      logger.info(`Hue remote now listening at ${chalk.green(appPort)}...`)
     );
 }
