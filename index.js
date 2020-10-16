@@ -41,7 +41,6 @@ const {
   createProtocol,
   deleteProtocol,
   updateProtocol,
-  runProtocol,
   runProtocolAsync
 } = require('./endpoints/protocols');
 
@@ -109,7 +108,11 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
     res.json(response);
   });
 
-  apiRouter.use(checkAuthToken);
+  apiRouter.use((req, res) => {
+    res.location(req.originalUrl.replace(/\/api\//, '/api/v2/'));
+    res.sendStatus(301);
+  });
+
   apiv2Router.use(checkAuthToken);
 
   apiv2Router.get('/lights', wrap(getLightsRootAsync));
@@ -125,7 +128,6 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   apiv2Router.delete('/scenes/:id', wrap(deleteOneSceneAsync));
   apiv2Router.post('/scenes/:id', wrap(runSceneAsync));
 
-  apiRouter.post('/protocols/:name', injectRedis(client), wrap(runProtocol));
   apiv2Router.get('/protocols', injectRedis(client), wrap(getProtocols));
   apiv2Router.post('/protocols', injectRedis(client), wrap(createProtocol));
   apiv2Router.get(
