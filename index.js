@@ -17,7 +17,8 @@ const {
   setupRedis,
   injectRedis,
   getLogsPath,
-  logger
+  logger,
+  getAppStatus
 } = require('./util');
 const {
   getLightsRootAsync,
@@ -91,21 +92,19 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
     key: fs.readFileSync('./sslcert/key.pem'),
     cert: fs.readFileSync('./sslcert/cert.pem')
   };
+  logger.info('Read TLS cert');
+
+  const appStatus = getAppStatus();
+  logger.info(appStatus);
 
   app.use(bodyParser.json());
   app.use(morgan('common'));
   app.use(morgan('common', { stream: requestLogStream }));
   app.use(helmet());
+  logger.info('Set up request logging');
 
   app.get('/', (req, res) => {
-    const response = {
-      status: 'ok',
-      bridgeFound: !!process.env.HUE_BRIDGE_ADDRESS,
-      bridgeUserFound: !!process.env.HUE_BRIDGE_USERNAME,
-      apiTokenFound: !!process.env.HUE_REMOTE_TOKEN
-    };
-    logger.info(response);
-    res.json(response);
+    res.json(appStatus);
   });
 
   apiRouter.use((req, res) => {

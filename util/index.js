@@ -10,6 +10,7 @@ const {
 } = require('./maps');
 const { getLogsPath } = require('./logs');
 const logger = require('./logger');
+const getAppStatus = require('./status');
 
 module.exports = {
   checkAuthToken,
@@ -22,5 +23,6 @@ module.exports = {
   injectRedis,
   runSerially,
   getLogsPath,
-  logger
+  logger,
+  getAppStatus
 };
