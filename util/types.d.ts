@@ -81,3 +81,17 @@ export type DeleteResponseSuccess = string;
 export type HueResponseObject = {
   success: PutResponseSuccess | PostResponseSuccess | DeleteResponseSuccess;
 };
+
+/**
+ * @typedef {Object} HueRemoteStatus
+ * @property {string} status set to okay when everything else is true, error when everything else is false, partial_success otherwise
+ * @property {boolean} bridgeFound set to true when the hue bridge ip is provided
+ * @property {boolean} bridgeUserFound set to true when an authenticated user is provided
+ * @property {boolean} apiTokenFound set to true when an api token is provided
+ */
+export type HueRemoteStatus = {
+  status: 'ok' | 'partial_success' | 'error';
+  bridgeFound: boolean;
+  bridgeUserFound: boolean;
+  apiTokenFound: boolean;
+};

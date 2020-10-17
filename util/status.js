@@ -1,5 +1,15 @@
 const isObject = require('lodash/isObject');
 
+/**
+ * @typedef { import('./types').HueRemoteStatus } HueRemoteStatus
+ */
+
+/**
+ * getAppStatus evaluates the current process environment and determines if everything
+ * for proper operation is available
+ * @param {object} env the environment of the node.js process, commonly `process.env`
+ * @returns {HueRemoteStatus} the status of the application
+ */
 const getAppStatus = env => {
   if (!env || !isObject(env)) {
     return {
