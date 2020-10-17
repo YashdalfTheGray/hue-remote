@@ -1,4 +1,7 @@
-const Promise = require('bluebird');
+const delayAsync = (delayInMs, resolveValue) =>
+  new Promise(resolve =>
+    setTimeout(() => resolve(resolveValue || null), delayInMs)
+  );
 
 /**
  * @template T
@@ -11,13 +14,18 @@ const Promise = require('bluebird');
  * @param {number} delayMs a delay in milliseconds between each function run, defaults to 0
  * @return {Promise<T[]>} an array of results that match the order of functions executed
  */
-module.exports = (funcs, delayMs = 0) =>
+const runSerially = (funcs, delayMs = 0) =>
   funcs.reduce(
     (promise, f) =>
       promise.then(results =>
-        Promise.delay(delayMs)
+        delayAsync(delayMs)
           .then(f)
           .then(r => results.concat(r))
       ),
     Promise.resolve([])
   );
+
+module.exports = {
+  delayAsync,
+  runSerially
+};

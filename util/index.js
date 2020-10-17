@@ -1,7 +1,7 @@
 const checkAuthToken = require('./checkAuthToken');
 const convert = require('./convert');
 const { setupRedis, injectRedis } = require('./redis');
-const runSerially = require('./runSerially');
+const { runSerially, delayAsync } = require('./promises');
 const {
   mapFromActionObject,
   mapFromStateObject,
@@ -22,6 +22,7 @@ module.exports = {
   setupRedis,
   injectRedis,
   runSerially,
+  delayAsync,
   getLogsPath,
   logger,
   getAppStatus

@@ -1,9 +1,21 @@
 const test = require('ava');
-const Promise = require('bluebird');
 
-const runSerially = require('./runSerially');
+const { runSerially, delayAsync } = require('./promises');
 
-test('single promise works', async t => {
+test('delayAsync delays and then returns value', async t => {
+  const delay = 200;
+  const start = Date.now();
+  const result = await delayAsync(delay, 'foo');
+  const end = Date.now();
+
+  console.log(start, end);
+
+  t.is(result, 'foo');
+  t.assert(end > start + delay);
+  t.assert(end < start + delay * 1.25);
+});
+
+test('runSerially accepts a single promise', async t => {
   const responses = await runSerially([() => Promise.resolve(true)]);
 
   t.deepEqual(responses, [true]);
@@ -22,9 +34,9 @@ test('many promises work', async t => {
   t.deepEqual(responses, [true, false, true, false, true, false]);
 });
 
-test('delay also works', async t => {
+test('runSerially works with a delay', async t => {
   const responses = await runSerially([
-    () => Promise.delay(50).then(() => 1),
+    () => delayAsync(50).then(() => 1),
     () => Promise.resolve(2),
     () => Promise.resolve(3),
     () => Promise.resolve(4),
@@ -35,7 +47,7 @@ test('delay also works', async t => {
   t.deepEqual(responses, [1, 2, 3, 4, 5, 6]);
 });
 
-test('order gets maintained', async t => {
+test('runSerially maintains order of functions', async t => {
   const responses = await runSerially(
     [
       () => Promise.resolve(1),
@@ -49,7 +61,7 @@ test('order gets maintained', async t => {
   t.deepEqual(responses, [1, 2, 3, 4]);
 });
 
-test('handles async functions properly', async t => {
+test('runSerially handles async functions properly', async t => {
   const responses = await runSerially([
     async () => 1,
     async () => 2,
@@ -60,7 +72,7 @@ test('handles async functions properly', async t => {
   t.deepEqual(responses, [1, 2, 3, 4]);
 });
 
-test('handles async functions that return promises', async t => {
+test('runSerially handles async functions that return promises', async t => {
   const responses = await runSerially([
     async () => Promise.resolve(1),
     async () => Promise.resolve(2),
