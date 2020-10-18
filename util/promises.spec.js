@@ -8,10 +8,8 @@ test('delayAsync delays and then returns value', async t => {
   const result = await delayAsync(delay, 'foo');
   const end = Date.now();
 
-  console.log(start, end);
-
   t.is(result, 'foo');
-  t.assert(end > start + delay);
+  t.assert(end >= start + delay);
   t.assert(end < start + delay * 1.25);
 });
 
