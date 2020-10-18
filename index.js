@@ -95,7 +95,7 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   logger.info('Read TLS cert');
 
   const appStatus = getAppStatus(process.env);
-  logger.info(appStatus);
+  logger.info(JSON.stringify(appStatus));
 
   app.use(bodyParser.json());
   app.use(morgan('common'));
