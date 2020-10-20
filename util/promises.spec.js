@@ -91,3 +91,26 @@ test('promisifyMethods creates async version of methods passed in', async t => {
 
   t.is(result, 9);
 });
+
+test('promisifyMethods creates methods that handle rejections properly', async t => {
+  const target = {
+    test: (a, b, cb) => cb(new Error('Something went wrong'))
+  };
+
+  const promisified = promisifyMethods(target, ['test']);
+  await t.throwsAsync(() => promisified.testAsync(4, 5));
+});
+
+test('promisifyMethods checks for target to be an object', async t => {
+  const target = 'test';
+
+  t.throws(() => promisifyMethods(target, ['foo']));
+});
+
+test('promisifyMethods checks for suffix to be string', t => {
+  const target = {
+    test: (a, b, cb) => cb(null, a + b)
+  };
+
+  t.throws(() => promisifyMethods(target, ['test'], null));
+});
