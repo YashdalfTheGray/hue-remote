@@ -25,6 +25,15 @@ const runSerially = (funcs, delayMs = 0) =>
     Promise.resolve([])
   );
 
+/**
+ * promisifyMethods takes an object with methods and a list of methods contained
+ * in that object, and converts them from the classic node-style callback to
+ * returning promises
+ * @param {Object} target the object to draw methods from
+ * @param {String[]} methodList a list of methods to promisify
+ * @param {string} suffix a suffix to add to the promisified methods, defaults to 'Async'
+ * @returns the target, but with additional methods added to it
+ */
 const promisifyMethods = (target, methodList, suffix = 'Async') => {
   if (!target || typeof target !== 'function' || typeof target !== 'object') {
     throw new TypeError('Invalid target for promisification');
