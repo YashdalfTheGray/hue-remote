@@ -25,7 +25,22 @@ const runSerially = (funcs, delayMs = 0) =>
     Promise.resolve([])
   );
 
+const promisifyMethods = (target, methodList, suffix = 'Async') => {
+  if (!target || typeof target !== 'function' || typeof target !== 'object') {
+    throw new TypeError('Invalid target for promisification');
+  }
+  if (typeof suffix !== 'string') {
+    throw new TypeError('Invalid suffix, must be a string');
+  }
+  if (methodList.length === 0) {
+    return target;
+  }
+
+  return target;
+};
+
 module.exports = {
   delayAsync,
-  runSerially
+  runSerially,
+  promisifyMethods
 };
