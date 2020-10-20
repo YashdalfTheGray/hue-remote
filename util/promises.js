@@ -1,3 +1,5 @@
+const { promisify } = require('util');
+
 const delayAsync = (delayInMs, resolveValue) =>
   new Promise(resolve =>
     setTimeout(() => resolve(resolveValue || null), delayInMs)
@@ -35,7 +37,7 @@ const runSerially = (funcs, delayMs = 0) =>
  * @returns the target, but with additional methods added to it
  */
 const promisifyMethods = (target, methodList, suffix = 'Async') => {
-  if (!target || typeof target !== 'function' || typeof target !== 'object') {
+  if (!target || (typeof target !== 'function' && typeof target !== 'object')) {
     throw new TypeError('Invalid target for promisification');
   }
   if (typeof suffix !== 'string') {
@@ -44,6 +46,11 @@ const promisifyMethods = (target, methodList, suffix = 'Async') => {
   if (methodList.length === 0) {
     return target;
   }
+
+  methodList.forEach(m => {
+    /* eslint-disable-next-line no-param-reassign */
+    target[`${m}Async`] = promisify(target[m]).bind(target);
+  });
 
   return target;
 };

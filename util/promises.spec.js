@@ -1,6 +1,6 @@
 const test = require('ava');
 
-const { runSerially, delayAsync } = require('./promises');
+const { runSerially, delayAsync, promisifyMethods } = require('./promises');
 
 test('delayAsync delays and then returns value', async t => {
   const delay = 200;
@@ -79,4 +79,15 @@ test('runSerially handles async functions that return promises', async t => {
   ]);
 
   t.deepEqual(responses, [1, 2, 3, 4]);
+});
+
+test('promisifyMethods creates async version of methods passed in', async t => {
+  const target = {
+    test: (a, b, cb) => cb(null, a + b)
+  };
+
+  const promisified = promisifyMethods(target, ['test']);
+  const result = await promisified.testAsync(4, 5);
+
+  t.is(result, 9);
 });
