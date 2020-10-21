@@ -134,3 +134,11 @@ test('promisifyMethods returns everything unchanged if empty list of methods', t
 
   t.deepEqual(result, target);
 });
+
+test("promisifyMethods throws if method doesn't exist on target", t => {
+  const target = {
+    test: (a, b, cb) => cb(null, a + b)
+  };
+
+  t.throws(() => promisifyMethods(target, ['foo']));
+});
