@@ -135,10 +135,28 @@ test('promisifyMethods returns everything unchanged if empty list of methods', t
   t.deepEqual(result, target);
 });
 
-test("promisifyMethods throws if method doesn't exist on target", t => {
+test(`promisifyMethods throws if method doesn't exist on target`, t => {
   const target = {
     test: (a, b, cb) => cb(null, a + b)
   };
 
   t.throws(() => promisifyMethods(target, ['foo']));
+});
+
+test('promisifyMethods works for an ES6 class', async t => {
+  class Test {
+    constructor(name) {
+      this.name = name;
+    }
+
+    say(sentence, cb) {
+      cb(null, `Hey, ${this.name}! ${sentence}`);
+    }
+  }
+
+  promisifyMethods(Test, ['say']);
+
+  const instance = new Test('foo');
+  const result = await instance.sayAsync('Hello!');
+  t.is(result, 'Hey, foo! Hello!');
 });
