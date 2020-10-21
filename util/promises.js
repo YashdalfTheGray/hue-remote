@@ -48,11 +48,15 @@ const promisifyMethods = (target, methodList, suffix = 'Async') => {
   }
 
   methodList.forEach(m => {
-    if (!target[m]) {
+    if (target[m]) {
+      /* eslint-disable-next-line no-param-reassign */
+      target[`${m}Async`] = promisify(target[m]).bind(target);
+    } else if (target.prototype && target.prototype[m]) {
+      /* eslint-disable-next-line no-param-reassign */
+      target.prototype[`${m}Async`] = promisify(target.prototype[m]);
+    } else {
       throw new Error(`No method exists by name ${m}`);
     }
-    /* eslint-disable-next-line no-param-reassign */
-    target[`${m}Async`] = promisify(target[m]).bind(target);
   });
 
   return target;
