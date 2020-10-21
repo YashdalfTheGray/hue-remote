@@ -43,7 +43,7 @@ const promisifyMethods = (target, methodList, suffix = 'Async') => {
   if (typeof suffix !== 'string') {
     throw new TypeError('Invalid suffix, must be a string');
   }
-  if (methodList.length === 0) {
+  if (!methodList || methodList.length === 0) {
     return target;
   }
 

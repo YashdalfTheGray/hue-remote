@@ -114,3 +114,23 @@ test('promisifyMethods checks for suffix to be string', t => {
 
   t.throws(() => promisifyMethods(target, ['test'], null));
 });
+
+test('promisifyMethods returns everything unchanged if no methods are selected', t => {
+  const target = {
+    test: (a, b, cb) => cb(null, a + b)
+  };
+
+  const result = promisifyMethods(target);
+
+  t.deepEqual(result, target);
+});
+
+test('promisifyMethods returns everything unchanged if empty list of methods', t => {
+  const target = {
+    test: (a, b, cb) => cb(null, a + b)
+  };
+
+  const result = promisifyMethods(target, []);
+
+  t.deepEqual(result, target);
+});
