@@ -179,3 +179,35 @@ test('promisifyMethods works for an ES6 class instance', async t => {
   const result = await instance.sayAsync('Hello!');
   t.is(result, 'Hey, foo! Hello!');
 });
+
+test('promisifyMethods works for a constructor function', async t => {
+  function Test(name) {
+    this.name = name;
+  }
+
+  Test.prototype.say = function say(sentence, cb) {
+    cb(null, `Hey, ${this.name}! ${sentence}`);
+  };
+
+  promisifyMethods(Test, ['say']);
+  const instance = new Test('foo');
+
+  const result = await instance.sayAsync('Hello!');
+  t.is(result, 'Hey, foo! Hello!');
+});
+
+test('promisifyMethods works for a constructor function instance', async t => {
+  function Test(name) {
+    this.name = name;
+  }
+
+  Test.prototype.say = function say(sentence, cb) {
+    cb(null, `Hey, ${this.name}! ${sentence}`);
+  };
+
+  const instance = new Test('foo');
+  promisifyMethods(instance, ['say']);
+
+  const result = await instance.sayAsync('Hello!');
+  t.is(result, 'Hey, foo! Hello!');
+});
