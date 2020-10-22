@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 const test = require('ava');
 
 const { runSerially, delayAsync, promisifyMethods } = require('./promises');
@@ -157,6 +158,24 @@ test('promisifyMethods works for an ES6 class', async t => {
   promisifyMethods(Test, ['say']);
 
   const instance = new Test('foo');
+  const result = await instance.sayAsync('Hello!');
+  t.is(result, 'Hey, foo! Hello!');
+});
+
+test('promisifyMethods works for an ES6 class instance', async t => {
+  class Test {
+    constructor(name) {
+      this.name = name;
+    }
+
+    say(sentence, cb) {
+      cb(null, `Hey, ${this.name}! ${sentence}`);
+    }
+  }
+
+  const instance = new Test('foo');
+  promisifyMethods(instance, ['say']);
+
   const result = await instance.sayAsync('Hello!');
   t.is(result, 'Hey, foo! Hello!');
 });
