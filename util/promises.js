@@ -30,7 +30,7 @@ const runSerially = (funcs, delayMs = 0) =>
 /**
  * promisifyMethods takes an object with methods and a list of methods contained
  * in that object, and converts them from the classic node-style callback to
- * returning promises
+ * returning promises. This modifies the target and also returns it.
  * @param {Object} target the object to draw methods from
  * @param {String[]} methodList a list of methods to promisify
  * @param {string} suffix a suffix to add to the promisified methods, defaults to 'Async'
