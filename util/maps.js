@@ -122,8 +122,8 @@ const buildStateObjectFromResponse = r =>
  * @param {HueResponseObject[]} responses the response object to transform
  * @returns {HueRemoteStateObject} the transformed state object
  */
-const mapFromHueResponseObject = responses => {
-  return responses
+const mapFromHueResponseObject = responses =>
+  responses
     .map(r => r.success)
     .map(s => {
       if (isObject(s)) {
@@ -159,7 +159,6 @@ const mapFromHueResponseObject = responses => {
 
       return merge(acc, { modified: e });
     }, {});
-};
 
 module.exports = {
   mapFromActionObject,
