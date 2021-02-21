@@ -107,11 +107,6 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
     res.json(appStatus);
   });
 
-  apiRouter.use((req, res) => {
-    res.location(req.originalUrl.replace(/\/api\//, '/api/v2/'));
-    res.sendStatus(301);
-  });
-
   apiv2Router.use(checkAuthToken);
 
   apiv2Router.get('/lights', wrap(getLightsRootAsync));
