@@ -50,14 +50,14 @@
   "devDependencies": {
     "ava": "^3.15.0",
     "eslint": "^8.1.0",
-    "eslint-config-airbnb-base": "~14.2.1",
+    "eslint-config-airbnb-base": "~15.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "~2.25.3",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^11.2.6",
     "nyc": "~15.1.0",
-    "prettier": "^2.4.1"
+    "prettier": "^2.5.0"
   },
   "engines": {
     "node": ">=6.0.0"
