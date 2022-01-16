@@ -45,7 +45,10 @@ const {
   runProtocolAsync
 } = require('./endpoints/protocols');
 
-const wrap = fn => (...args) => fn(...args).catch(args[2]);
+const wrap =
+  fn =>
+  (...args) =>
+    fn(...args).catch(args[2]);
 
 if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
   const httpApp = express();
@@ -74,83 +77,88 @@ if (process.argv.filter(a => a === '--letsencrypt-verify').length > 0) {
     )
   );
 } else {
-  const app = express();
-  app.locals.logger = logger;
-  const apiRouter = express.Router(); // eslint-disable-line new-cap
-  const apiv2Router = express.Router(); // eslint-disable-line new-cap
-  const client = setupRedis(process.env.REDIS_URL);
+  (async () => {
+    const app = express();
+    app.locals.logger = logger;
+    const apiRouter = express.Router(); // eslint-disable-line new-cap
+    const apiv2Router = express.Router(); // eslint-disable-line new-cap
 
-  const requestLogStream = rfs.createStream('request.log', {
-    interval: '6h',
-    path: getLogsPath(),
-    size: '10M',
-    compress: 'gzip'
-  });
+    const client = setupRedis(process.env.REDIS_URL);
+    await client.connect();
+    process.on('exit', () => client.quit());
 
-  const appPort = process.env.PORT || process.argv[2] || 8080;
-  const cert = {
-    key: fs.readFileSync('./sslcert/key.pem'),
-    cert: fs.readFileSync('./sslcert/cert.pem')
-  };
-  logger.info('Read TLS cert');
+    const requestLogStream = rfs.createStream('request.log', {
+      interval: '6h',
+      path: getLogsPath(),
+      size: '10M',
+      compress: 'gzip'
+    });
 
-  const appStatus = getAppStatus(process.env);
-  logger.info(JSON.stringify(appStatus));
+    const appPort = process.env.PORT || process.argv[2] || 8080;
+    const cert = {
+      key: fs.readFileSync('./sslcert/key.pem'),
+      cert: fs.readFileSync('./sslcert/cert.pem')
+    };
+    logger.info('Read TLS cert');
 
-  app.use(bodyParser.json());
-  app.use(morgan('common'));
-  app.use(morgan('common', { stream: requestLogStream }));
-  app.use(helmet());
-  logger.info('Set up request logging');
+    const appStatus = getAppStatus(process.env);
+    logger.info(JSON.stringify(appStatus));
 
-  app.get('/', (req, res) => {
-    res.json(appStatus);
-  });
+    app.use(bodyParser.json());
+    app.use(morgan('common'));
+    app.use(morgan('common', { stream: requestLogStream }));
+    app.use(helmet());
+    logger.info('Set up request logging');
 
-  apiv2Router.use(checkAuthToken);
+    app.get('/', (req, res) => {
+      res.json(appStatus);
+    });
 
-  apiv2Router.get('/lights', wrap(getLightsRootAsync));
-  apiv2Router.get('/lights/:id', wrap(getLightsIdAsync));
-  apiv2Router.post('/lights/:id/state', wrap(postLightsIdStateAsync));
+    apiv2Router.use(checkAuthToken);
 
-  apiv2Router.get('/groups', wrap(getGroupsRootAsync));
-  apiv2Router.get('/groups/:id', wrap(getGroupsIdAsync));
-  apiv2Router.post('/groups/:id/action', wrap(postGroupIdActionAsync));
+    apiv2Router.get('/lights', wrap(getLightsRootAsync));
+    apiv2Router.get('/lights/:id', wrap(getLightsIdAsync));
+    apiv2Router.post('/lights/:id/state', wrap(postLightsIdStateAsync));
 
-  apiv2Router.get('/scenes', wrap(getScenesAsync));
-  apiv2Router.get('/scenes/:id', wrap(getOneSceneAsync));
-  apiv2Router.delete('/scenes/:id', wrap(deleteOneSceneAsync));
-  apiv2Router.post('/scenes/:id', wrap(runSceneAsync));
+    apiv2Router.get('/groups', wrap(getGroupsRootAsync));
+    apiv2Router.get('/groups/:id', wrap(getGroupsIdAsync));
+    apiv2Router.post('/groups/:id/action', wrap(postGroupIdActionAsync));
 
-  apiv2Router.get('/protocols', injectRedis(client), wrap(getProtocols));
-  apiv2Router.post('/protocols', injectRedis(client), wrap(createProtocol));
-  apiv2Router.get(
-    '/protocols/:name',
-    injectRedis(client),
-    wrap(getOneProtocol)
-  );
-  apiv2Router.delete(
-    '/protocols/:name',
-    injectRedis(client),
-    wrap(deleteProtocol)
-  );
-  apiv2Router.put(
-    '/protocols/:name',
-    injectRedis(client),
-    wrap(updateProtocol)
-  );
-  apiv2Router.post(
-    '/protocols/:name',
-    injectRedis(client),
-    wrap(runProtocolAsync)
-  );
+    apiv2Router.get('/scenes', wrap(getScenesAsync));
+    apiv2Router.get('/scenes/:id', wrap(getOneSceneAsync));
+    apiv2Router.delete('/scenes/:id', wrap(deleteOneSceneAsync));
+    apiv2Router.post('/scenes/:id', wrap(runSceneAsync));
 
-  app.use('/api', apiRouter);
-  app.use('/api/v2', apiv2Router);
-
-  https
-    .createServer(cert, app)
-    .listen(appPort, () =>
-      logger.info(`Hue remote now listening at ${chalk.green(appPort)}...`)
+    apiv2Router.get('/protocols', injectRedis(client), wrap(getProtocols));
+    apiv2Router.post('/protocols', injectRedis(client), wrap(createProtocol));
+    apiv2Router.get(
+      '/protocols/:name',
+      injectRedis(client),
+      wrap(getOneProtocol)
     );
+    apiv2Router.delete(
+      '/protocols/:name',
+      injectRedis(client),
+      wrap(deleteProtocol)
+    );
+    apiv2Router.put(
+      '/protocols/:name',
+      injectRedis(client),
+      wrap(updateProtocol)
+    );
+    apiv2Router.post(
+      '/protocols/:name',
+      injectRedis(client),
+      wrap(runProtocolAsync)
+    );
+
+    app.use('/api', apiRouter);
+    app.use('/api/v2', apiv2Router);
+
+    https
+      .createServer(cert, app)
+      .listen(appPort, () =>
+        logger.info(`Hue remote now listening at ${chalk.green(appPort)}...`)
+      );
+  })();
 }
