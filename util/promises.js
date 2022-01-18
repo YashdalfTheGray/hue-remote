@@ -2,6 +2,7 @@ const { promisify } = require('util');
 
 const delayAsync = (delayInMs, resolveValue) =>
   new Promise(resolve =>
+    // eslint-disable-next-line no-promise-executor-return
     setTimeout(() => resolve(resolveValue || null), delayInMs)
   );
 
