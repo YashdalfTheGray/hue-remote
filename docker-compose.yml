@@ -9,7 +9,7 @@ services:
       - '${PORT}:${PORT}'
     restart: unless-stopped
   redis:
-    image: redis:buster
+    image: redis:bullseye
     volumes:
       - /tmp/redis:/data
     ports:
