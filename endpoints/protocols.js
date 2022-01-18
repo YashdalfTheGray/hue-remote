@@ -6,7 +6,7 @@ const getProtocols = async (req, res) => {
   const client = res.locals.redis;
 
   try {
-    const keys = await client.keysAsync('*');
+    const keys = await client.keys('*');
     res.json(keys);
   } catch (e) {
     res.status(500).json(e);
@@ -17,7 +17,7 @@ const getOneProtocol = async (req, res) => {
   const client = res.locals.redis;
 
   try {
-    const value = await client.hgetallAsync(req.params.name);
+    const value = await client.hgetall(req.params.name);
 
     if (!value) {
       res.sendStatus(404);
@@ -33,7 +33,7 @@ const createProtocol = async (req, res) => {
   const client = res.locals.redis;
 
   try {
-    const value = await client.hmsetAsync(req.body.name, req.body.details);
+    const value = await client.hmset(req.body.name, req.body.details);
     res.status(201).json(value);
   } catch (e) {
     res.status(500).json(e);
@@ -44,7 +44,7 @@ const deleteProtocol = async (req, res) => {
   const client = res.locals.redis;
 
   try {
-    const value = await client.delAsync(req.params.name);
+    const value = await client.del(req.params.name);
     res.json(value);
   } catch (e) {
     res.status(500).json(e);
@@ -55,7 +55,7 @@ const updateProtocol = async (req, res) => {
   const client = res.locals.redis;
 
   try {
-    const value = await client.hmsetAsync(req.params.name, req.body);
+    const value = await client.hmset(req.params.name, req.body);
     res.json(value);
   } catch (e) {
     res.status(500).json(e);
@@ -68,7 +68,7 @@ const runProtocolAsync = async (req, res) => {
   const client = res.locals.redis;
 
   try {
-    const protocolToRun = await client.hgetallAsync(req.params.name);
+    const protocolToRun = await client.hgetall(req.params.name);
 
     const responses = await runSerially(
       Object.entries(protocolToRun)
@@ -78,11 +78,13 @@ const runProtocolAsync = async (req, res) => {
           }
           return [id, mapToStateObject({ on: false })];
         })
-        .map(([id, state]) => () =>
-          fetch(`http://${hueBridge}/api/${hueUser}/lights/${id}/state`, {
-            method: 'PUT',
-            body: state
-          })
+        .map(
+          ([id, state]) =>
+            () =>
+              fetch(`http://${hueBridge}/api/${hueUser}/lights/${id}/state`, {
+                method: 'PUT',
+                body: state
+              })
         )
         .map(r => r.json())
     );
