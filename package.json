@@ -44,7 +44,7 @@
     "node-fetch": "~3.2.0",
     "redis": "~4.0.2",
     "rotating-file-stream": "~3.0.2",
-    "winston": "~3.4.0",
+    "winston": "~3.6.0",
     "winston-daily-rotate-file": "~4.6.0"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "eslint-plugin-import": "~2.25.4",
     "eslint-plugin-prettier": "~4.0.0",
     "husky": "~7.0.4",
-    "lint-staged": "^12.2.1",
+    "lint-staged": "^12.3.3",
     "nyc": "~15.1.0",
     "prettier": "~2.5.1"
   },
