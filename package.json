@@ -42,7 +42,7 @@
     "lodash": "~4.17.21",
     "morgan": "~1.10.0",
     "node-fetch": "~3.2.0",
-    "redis": "~4.0.2",
+    "redis": "~4.0.4",
     "rotating-file-stream": "~3.0.3",
     "winston": "~3.6.0",
     "winston-daily-rotate-file": "~4.6.1"
