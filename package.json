@@ -57,7 +57,7 @@
     "husky": "~7.0.4",
     "lint-staged": "^12.3.7",
     "nyc": "~15.1.0",
-    "prettier": "~2.5.1"
+    "prettier": "~2.6.0"
   },
   "engines": {
     "node": ">=6.0.0"
