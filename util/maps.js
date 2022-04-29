@@ -1,6 +1,8 @@
-const { assign, isObject, merge } = require('lodash');
+import assign from 'lodash-es/assign';
+import isObject from 'lodash-es/isObject';
+import merge from 'lodash-es/merge';
 
-const convert = require('./convert');
+import * as convert from './convert';
 
 /**
  * @typedef { import("./types").HueActionObject } HueActionObject
@@ -19,7 +21,7 @@ const convert = require('./convert');
  * @param {HueActionObject} a the action object to convert from
  * @returns {HueRemoteActionObject} the translated response to be sent back
  */
-const mapFromActionObject = a => {
+export const mapFromActionObject = a => {
   if (a.effect === 'colorloop') {
     return {
       on: a.on,
@@ -46,7 +48,7 @@ const mapFromActionObject = a => {
  * @param {HueRemoteActionObject} p the hue remote action object to convert
  * @returns {HueActionObject} the action object equivalent
  */
-const mapToActionObject = p => {
+export const mapToActionObject = p => {
   if (p.on === false) {
     return { on: false };
   }
@@ -81,7 +83,7 @@ const mapToActionObject = p => {
  * @param {HueStateObject} s the hue state object to convert
  * @returns {HueRemoteStateObject} the remote state object equivalent
  */
-const mapFromStateObject = s =>
+export const mapFromStateObject = s =>
   assign({}, mapFromActionObject(s), { reachable: s.reachable });
 
 /**
@@ -89,14 +91,14 @@ const mapFromStateObject = s =>
  * @param {HueRemoteStateObject} s the hue remote state object to convert
  * @returns {HueStateObject} the state object equivalent
  */
-const mapToStateObject = s => mapToActionObject(s);
+export const mapToStateObject = s => mapToActionObject(s);
 
 /**
  * buildStateObjectFromResponse parses a `PUT` response from the hue bridge
  * and builds a state object for each id found
  * @param {PutResponseSuccess} r the put response to parse
  */
-const buildStateObjectFromResponse = r =>
+export const buildStateObjectFromResponse = r =>
   Object.entries(r).reduce((acc, e) => {
     const [key, value] = e;
     const pathParts = key.split('/');
@@ -122,7 +124,7 @@ const buildStateObjectFromResponse = r =>
  * @param {HueResponseObject[]} responses the response object to transform
  * @returns {HueRemoteStateObject} the transformed state object
  */
-const mapFromHueResponseObject = responses =>
+export const mapFromHueResponseObject = responses =>
   responses
     .map(r => r.success)
     .map(s => {
@@ -159,12 +161,3 @@ const mapFromHueResponseObject = responses =>
 
       return merge(acc, { modified: e });
     }, {});
-
-module.exports = {
-  mapFromActionObject,
-  mapFromStateObject,
-  mapToActionObject,
-  mapToStateObject,
-  buildStateObjectFromResponse,
-  mapFromHueResponseObject
-};

@@ -1,8 +1,8 @@
 // There seems to be some contention around this issue
 // https://github.com/import-js/eslint-plugin-import/issues/2331
 // eslint-disable-next-line import/no-unresolved
-const test = require('ava');
-const _ = require('lodash');
+import test from 'ava';
+import assign from 'lodash-es/assign';
 
 const {
   mapFromActionObject,
@@ -25,10 +25,10 @@ const baseTestAction = {
   alert: 'none'
 };
 
-const baseTestState = _.assign({}, baseTestAction, { reachable: true });
+const baseTestState = assign({}, baseTestAction, { reachable: true });
 
 test('mapFromActionObject works in colorloop mode', t => {
-  const colorLoopTestAction = _.assign({}, baseTestAction, {
+  const colorLoopTestAction = assign({}, baseTestAction, {
     effect: 'colorloop'
   });
   const result = mapFromActionObject(colorLoopTestAction);
@@ -38,7 +38,7 @@ test('mapFromActionObject works in colorloop mode', t => {
 });
 
 test('mapFromActionObject works in ct mode', t => {
-  const ctTestAction = _.assign({}, baseTestAction, { colormode: 'ct' });
+  const ctTestAction = assign({}, baseTestAction, { colormode: 'ct' });
   const result = mapFromActionObject(ctTestAction);
 
   t.is(result.colorTemp, convert.miredToTemp(ctTestAction.ct));
@@ -46,7 +46,7 @@ test('mapFromActionObject works in ct mode', t => {
 });
 
 test('mapFromActionObject works in hs mode', t => {
-  const hsTestAction = _.assign({}, baseTestAction, { colormode: 'hs' });
+  const hsTestAction = assign({}, baseTestAction, { colormode: 'hs' });
   const result = mapFromActionObject(hsTestAction);
 
   t.is(
@@ -61,7 +61,7 @@ test('mapFromActionObject works in hs mode', t => {
 });
 
 test('mapFromActionObject works in xy mode', t => {
-  const xyTestAction = _.assign({}, baseTestAction, { colormode: 'xy' });
+  const xyTestAction = assign({}, baseTestAction, { colormode: 'xy' });
   const result = mapFromActionObject(xyTestAction);
 
   t.is(
@@ -87,7 +87,7 @@ test('mapFromActionObject acts as a passthrough when no interesting properties a
 });
 
 test('mapFromStateObject works in colorloop mode', t => {
-  const colorLoopTestState = _.assign({}, baseTestState, {
+  const colorLoopTestState = assign({}, baseTestState, {
     effect: 'colorloop'
   });
   const result = mapFromStateObject(colorLoopTestState);
@@ -98,7 +98,7 @@ test('mapFromStateObject works in colorloop mode', t => {
 });
 
 test('mapFromStateObject works in ct mode', t => {
-  const ctTestState = _.assign({}, baseTestState, { colormode: 'ct' });
+  const ctTestState = assign({}, baseTestState, { colormode: 'ct' });
   const result = mapFromStateObject(ctTestState);
 
   t.is(result.colorTemp, convert.miredToTemp(ctTestState.ct));
@@ -107,7 +107,7 @@ test('mapFromStateObject works in ct mode', t => {
 });
 
 test('mapFromStateObject works in hs mode', t => {
-  const hsTestState = _.assign({}, baseTestState, { colormode: 'hs' });
+  const hsTestState = assign({}, baseTestState, { colormode: 'hs' });
   const result = mapFromStateObject(hsTestState);
 
   t.is(
@@ -119,7 +119,7 @@ test('mapFromStateObject works in hs mode', t => {
 });
 
 test('mapFromStateObject works in xy mode', t => {
-  const xyTestState = _.assign({}, baseTestState, { colormode: 'xy' });
+  const xyTestState = assign({}, baseTestState, { colormode: 'xy' });
   const result = mapFromStateObject(xyTestState);
 
   t.is(

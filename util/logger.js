@@ -1,7 +1,7 @@
-const winston = require('winston');
-const DailyRotateFile = require('winston-daily-rotate-file');
+import winston from 'winston';
+import DailyRotateFile from 'winston-daily-rotate-file';
 
-const { getLogsPath } = require('./logs');
+import { getLogsPath } from './logs';
 
 const logger = winston.createLogger({
   defaultMeta: { application: 'hue-remote' },
@@ -42,4 +42,4 @@ const logger = winston.createLogger({
   ]
 });
 
-module.exports = logger;
+export default logger;

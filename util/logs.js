@@ -1,6 +1,7 @@
-const path = require('path');
+import path from 'path';
 
-const getLogsPath = () => {
+// eslint-disable-next-line import/prefer-default-export
+export const getLogsPath = () => {
   const LogsPathFromEnvOrDefault =
     process.env.LOGS_OUTPUT_PATH || 'output/logs';
 
@@ -11,8 +12,4 @@ const getLogsPath = () => {
   // this is because __dirname evaluates to '<project_dir>/util'
   // so we go a directory higher and then concat the logs path
   return path.resolve(__dirname, '..', LogsPathFromEnvOrDefault);
-};
-
-module.exports = {
-  getLogsPath
 };
