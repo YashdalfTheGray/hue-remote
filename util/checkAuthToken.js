@@ -1,4 +1,4 @@
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
   if (req.method === 'POST' && req.body.accessToken) {
     if (
       req.body.accessToken.toLowerCase() ===
