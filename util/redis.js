@@ -1,9 +1,7 @@
-const redis = require('redis');
+import redis from 'redis';
 
-module.exports = {
-  setupRedis: url => redis.createClient({ url }),
-  injectRedis: rc => (req, res, next) => {
-    res.locals.redis = rc;
-    next();
-  }
+export const setupRedis = url => redis.createClient({ url });
+export const injectRedis = rc => (req, res, next) => {
+  res.locals.redis = rc;
+  next();
 };

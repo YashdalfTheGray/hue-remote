@@ -1,4 +1,4 @@
-const isObject = require('lodash/isObject');
+import isObject from 'lodash-es/isObject';
 
 /**
  * @typedef { import('./types').HueRemoteStatus } HueRemoteStatus
@@ -10,7 +10,8 @@ const isObject = require('lodash/isObject');
  * @param {object} env the environment of the node.js process, commonly `process.env`
  * @returns {HueRemoteStatus} the status of the application
  */
-const getAppStatus = env => {
+// eslint-disable-next-line import/prefer-default-export
+export const getAppStatus = env => {
   if (!env || !isObject(env)) {
     return {
       status: 'error',
@@ -36,5 +37,3 @@ const getAppStatus = env => {
 
   return result;
 };
-
-module.exports = getAppStatus;

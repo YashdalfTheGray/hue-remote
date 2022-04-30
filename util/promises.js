@@ -1,6 +1,6 @@
-const { promisify } = require('util');
+import { promisify } from 'util';
 
-const delayAsync = (delayInMs, resolveValue) =>
+export const delayAsync = (delayInMs, resolveValue) =>
   new Promise(resolve =>
     // eslint-disable-next-line no-promise-executor-return
     setTimeout(() => resolve(resolveValue || null), delayInMs)
@@ -17,7 +17,7 @@ const delayAsync = (delayInMs, resolveValue) =>
  * @param {number} delayMs a delay in milliseconds between each function run, defaults to 0
  * @return {Promise<T[]>} an array of results that match the order of functions executed
  */
-const runSerially = (funcs, delayMs = 0) =>
+export const runSerially = (funcs, delayMs = 0) =>
   funcs.reduce(
     (promise, f) =>
       promise.then(results =>
@@ -37,7 +37,7 @@ const runSerially = (funcs, delayMs = 0) =>
  * @param {string} suffix a suffix to add to the promisified methods, defaults to 'Async'
  * @returns the target, but with additional methods added to it
  */
-const promisifyMethods = (target, methodList, suffix = 'Async') => {
+export const promisifyMethods = (target, methodList, suffix = 'Async') => {
   if (!target || (typeof target !== 'function' && typeof target !== 'object')) {
     throw new TypeError('Invalid target for promisification');
   }
@@ -61,10 +61,4 @@ const promisifyMethods = (target, methodList, suffix = 'Async') => {
   });
 
   return target;
-};
-
-module.exports = {
-  delayAsync,
-  runSerially,
-  promisifyMethods
 };

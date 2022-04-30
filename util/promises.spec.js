@@ -3,9 +3,9 @@
 // There seems to be some contention around this issue
 // https://github.com/import-js/eslint-plugin-import/issues/2331
 // eslint-disable-next-line import/no-unresolved
-const test = require('ava');
+import test from 'ava';
 
-const { runSerially, delayAsync, promisifyMethods } = require('./promises');
+import { runSerially, delayAsync, promisifyMethods } from './promises';
 
 test('delayAsync delays and then returns value', async t => {
   const delay = 200;
