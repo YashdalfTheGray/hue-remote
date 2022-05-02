@@ -1,8 +1,8 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-const { runSerially } = require('../util');
+import { runSerially } from '../util';
 
-const getScenesAsync = async (req, res) => {
+export const getScenesAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -16,7 +16,7 @@ const getScenesAsync = async (req, res) => {
   }
 };
 
-const getOneSceneAsync = async (req, res) => {
+export const getOneSceneAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -33,7 +33,7 @@ const getOneSceneAsync = async (req, res) => {
   }
 };
 
-const deleteOneSceneAsync = async (req, res) => {
+export const deleteOneSceneAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -50,7 +50,7 @@ const deleteOneSceneAsync = async (req, res) => {
   }
 };
 
-const runSceneAsync = async (req, res) => {
+export const runSceneAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -78,11 +78,4 @@ const runSceneAsync = async (req, res) => {
   } catch (e) {
     res.status(500).json(e);
   }
-};
-
-module.exports = {
-  getScenesAsync,
-  getOneSceneAsync,
-  deleteOneSceneAsync,
-  runSceneAsync
 };

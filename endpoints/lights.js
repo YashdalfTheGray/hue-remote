@@ -1,8 +1,8 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-const { mapFromStateObject, mapToStateObject } = require('../util');
+import { mapFromStateObject, mapToStateObject } from '../util';
 
-const getLightsRootAsync = async (req, res) => {
+export const getLightsRootAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -21,7 +21,7 @@ const getLightsRootAsync = async (req, res) => {
   }
 };
 
-const getLightsIdAsync = async (req, res) => {
+export const getLightsIdAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -42,7 +42,7 @@ const getLightsIdAsync = async (req, res) => {
   }
 };
 
-const postLightsIdStateAsync = async (req, res) => {
+export const postLightsIdStateAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
   const validKeys = ['on', 'color', 'colorTemp', 'colorloop'];
@@ -73,10 +73,4 @@ const postLightsIdStateAsync = async (req, res) => {
       message: 'Malformed request body'
     });
   }
-};
-
-module.exports = {
-  getLightsRootAsync,
-  getLightsIdAsync,
-  postLightsIdStateAsync
 };

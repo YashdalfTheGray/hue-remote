@@ -1,8 +1,8 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-const { mapToStateObject, runSerially } = require('../util');
+import { mapToStateObject, runSerially } from '../util';
 
-const getProtocols = async (req, res) => {
+export const getProtocols = async (req, res) => {
   const client = res.locals.redis;
 
   try {
@@ -13,7 +13,7 @@ const getProtocols = async (req, res) => {
   }
 };
 
-const getOneProtocol = async (req, res) => {
+export const getOneProtocol = async (req, res) => {
   const client = res.locals.redis;
 
   try {
@@ -29,7 +29,7 @@ const getOneProtocol = async (req, res) => {
   }
 };
 
-const createProtocol = async (req, res) => {
+export const createProtocol = async (req, res) => {
   const client = res.locals.redis;
 
   try {
@@ -40,7 +40,7 @@ const createProtocol = async (req, res) => {
   }
 };
 
-const deleteProtocol = async (req, res) => {
+export const deleteProtocol = async (req, res) => {
   const client = res.locals.redis;
 
   try {
@@ -51,7 +51,7 @@ const deleteProtocol = async (req, res) => {
   }
 };
 
-const updateProtocol = async (req, res) => {
+export const updateProtocol = async (req, res) => {
   const client = res.locals.redis;
 
   try {
@@ -62,7 +62,7 @@ const updateProtocol = async (req, res) => {
   }
 };
 
-const runProtocolAsync = async (req, res) => {
+export const runProtocolAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
   const client = res.locals.redis;
@@ -93,13 +93,4 @@ const runProtocolAsync = async (req, res) => {
   } catch (e) {
     res.status(500).json(e);
   }
-};
-
-module.exports = {
-  getProtocols,
-  getOneProtocol,
-  createProtocol,
-  deleteProtocol,
-  updateProtocol,
-  runProtocolAsync
 };
