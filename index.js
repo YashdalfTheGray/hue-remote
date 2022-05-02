@@ -1,49 +1,49 @@
-require('dotenv').config();
-require('./util/checkEnv');
+import 'dotenv/config';
+import './util/checkEnv';
 
-const os = require('os');
-const fs = require('fs');
-const https = require('https');
+import os from 'os';
+import fs from 'fs';
+import https from 'https';
 
-const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const chalk = require('chalk');
-const helmet = require('helmet');
-const rfs = require('rotating-file-stream');
+import express from 'express';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import chalk from 'chalk';
+import helmet from 'helmet';
+import rfs from 'rotating-file-stream';
 
-const {
+import {
   checkAuthToken,
   setupRedis,
   injectRedis,
   getLogsPath,
   logger,
   getAppStatus
-} = require('./util');
-const {
+} from './util';
+import {
   getLightsRootAsync,
   getLightsIdAsync,
   postLightsIdStateAsync
-} = require('./endpoints/lights');
-const {
+} from './endpoints/lights';
+import {
   getGroupsRootAsync,
   getGroupsIdAsync,
   postGroupIdActionAsync
-} = require('./endpoints/groups');
-const {
+} from './endpoints/groups';
+import {
   getScenesAsync,
   getOneSceneAsync,
   deleteOneSceneAsync,
   runSceneAsync
-} = require('./endpoints/scenes');
-const {
+} from './endpoints/scenes';
+import {
   getProtocols,
   getOneProtocol,
   createProtocol,
   deleteProtocol,
   updateProtocol,
   runProtocolAsync
-} = require('./endpoints/protocols');
+} from './endpoints/protocols';
 
 const wrap =
   fn =>
