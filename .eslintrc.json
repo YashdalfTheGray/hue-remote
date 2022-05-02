@@ -18,6 +18,12 @@
         "ignorePropertyModificationsFor": ["res", "result"]
       }
     ],
-    "object-shorthand": ["error", "consistent-as-needed"]
+    "object-shorthand": ["error", "consistent-as-needed"],
+    "import/extensions": [
+      "error",
+      {
+        "js": "ignorePackages"
+      }
+    ]
   }
 }
