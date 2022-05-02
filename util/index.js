@@ -1,18 +1,18 @@
-const checkAuthToken = require('./checkAuthToken');
-const convert = require('./convert');
-const { setupRedis, injectRedis } = require('./redis');
-const { runSerially, delayAsync, promisifyMethods } = require('./promises');
-const {
+import checkAuthToken from './checkAuthToken';
+import * as convert from './convert';
+import { setupRedis, injectRedis } from './redis';
+import { runSerially, delayAsync, promisifyMethods } from './promises';
+import {
   mapFromActionObject,
   mapFromStateObject,
   mapToActionObject,
   mapToStateObject
-} = require('./maps');
-const { getLogsPath } = require('./logs');
-const logger = require('./logger');
-const getAppStatus = require('./status');
+} from './maps';
+import { getLogsPath } from './logs';
+import logger from './logger';
+import getAppStatus from './status';
 
-module.exports = {
+export {
   checkAuthToken,
   mapFromActionObject,
   mapFromStateObject,
