@@ -3,7 +3,7 @@
 // eslint-disable-next-line import/no-unresolved
 import test from 'ava';
 
-import { getAppStatus } from './status';
+import { getAppStatus } from './status.js';
 
 test('getAppStatus returns status okay when everything is found', t => {
   const mockEnv = {

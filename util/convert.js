@@ -1,6 +1,6 @@
-import isString from 'lodash-es/isString';
-import rgb from 'color-space/rgb';
-import hsv from 'color-space/hsv';
+import isString from 'lodash-es/isString.js';
+import rgb from 'color-space/rgb.js';
+import hsv from 'color-space/hsv.js';
 
 /**
  * validateColorString checks whether a passed in string is in the "#rrggbb"
@@ -106,7 +106,10 @@ export const hueToRgbString = hue =>
   rgbArrayToRgbString(convertHueToRgbArray(hue));
 
 export const tempToMired = temp =>
-  Math.max([153, Math.min([Math.round(1000000 / (temp || 6500)), 500])]);
+  Math.max(153, Math.min(Math.round(1000000 / (temp || 6500)), 500));
 
 export const miredToTemp = mired =>
-  Math.max([2000, Math.min([Math.round(1000000 / (mired || 154), -2), 6500])]);
+  Math.max(
+    2000,
+    Math.min(Math.round(1000000 / (mired || 154) / 100) * 100, 6500)
+  );

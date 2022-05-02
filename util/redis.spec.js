@@ -2,7 +2,7 @@
 // https://github.com/import-js/eslint-plugin-import/issues/2331
 // eslint-disable-next-line import/no-unresolved
 import test from 'ava';
-import { injectRedis } from './redis';
+import { injectRedis } from './redis.js';
 
 test('injectRedis works', t => {
   const next = () => {

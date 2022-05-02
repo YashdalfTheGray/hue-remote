@@ -9,7 +9,7 @@ import {
   hueToRgbString,
   tempToMired,
   miredToTemp
-} from './convert';
+} from './convert.js';
 
 test('convert.rgbToHue handles an rgb string', t => {
   t.deepEqual(rgbToHue('#deadaf'), [65089, 56, 221]);

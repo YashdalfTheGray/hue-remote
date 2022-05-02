@@ -1,8 +1,8 @@
-import assign from 'lodash-es/assign';
-import isObject from 'lodash-es/isObject';
-import merge from 'lodash-es/merge';
+import assign from 'lodash-es/assign.js';
+import isObject from 'lodash-es/isObject.js';
+import merge from 'lodash-es/merge.js';
 
-import * as convert from './convert';
+import * as convert from './convert.js';
 
 /**
  * @typedef { import("./types").HueActionObject } HueActionObject

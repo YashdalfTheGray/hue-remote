@@ -1,7 +1,7 @@
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 
-import { getLogsPath } from './logs';
+import { getLogsPath } from './logs.js';
 
 const logger = winston.createLogger({
   defaultMeta: { application: 'hue-remote' },

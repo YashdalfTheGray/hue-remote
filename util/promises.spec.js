@@ -5,7 +5,7 @@
 // eslint-disable-next-line import/no-unresolved
 import test from 'ava';
 
-import { runSerially, delayAsync, promisifyMethods } from './promises';
+import { runSerially, delayAsync, promisifyMethods } from './promises.js';
 
 test('delayAsync delays and then returns value', async t => {
   const delay = 200;

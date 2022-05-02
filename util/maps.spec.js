@@ -2,17 +2,17 @@
 // https://github.com/import-js/eslint-plugin-import/issues/2331
 // eslint-disable-next-line import/no-unresolved
 import test from 'ava';
-import assign from 'lodash-es/assign';
+import assign from 'lodash-es/assign.js';
 
-const {
+import {
   mapFromActionObject,
   mapFromStateObject,
   mapToActionObject,
   mapToStateObject,
   buildStateObjectFromResponse,
   mapFromHueResponseObject
-} = require('./maps');
-const convert = require('./convert');
+} from './maps.js';
+import * as convert from './convert.js';
 
 const baseTestAction = {
   on: true,
