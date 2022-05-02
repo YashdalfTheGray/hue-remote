@@ -1,8 +1,8 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-const { mapFromActionObject, mapToActionObject } = require('../util');
+import { mapFromActionObject, mapToActionObject } from '../util';
 
-const getGroupsRootAsync = async (req, res) => {
+export const getGroupsRootAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -29,7 +29,7 @@ const getGroupsRootAsync = async (req, res) => {
   }
 };
 
-const getGroupsIdAsync = async (req, res) => {
+export const getGroupsIdAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
 
@@ -56,7 +56,7 @@ const getGroupsIdAsync = async (req, res) => {
   }
 };
 
-const postGroupIdActionAsync = async (req, res) => {
+export const postGroupIdActionAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
   const hueBridge = process.env.HUE_BRIDGE_ADDRESS;
   const validKeys = ['on', 'color', 'colorTemp', 'colorloop'];
@@ -88,10 +88,4 @@ const postGroupIdActionAsync = async (req, res) => {
       message: 'Malformed request body'
     });
   }
-};
-
-module.exports = {
-  getGroupsRootAsync,
-  getGroupsIdAsync,
-  postGroupIdActionAsync
 };
