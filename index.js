@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import 'dotenv/config.js';
 import './util/checkEnv';
 
 import os from 'os';
