@@ -1,5 +1,7 @@
 import path from 'path';
 
+import { __dirname } from './commonjsShim.js';
+
 // eslint-disable-next-line import/prefer-default-export
 export const getLogsPath = () => {
   const LogsPathFromEnvOrDefault =
