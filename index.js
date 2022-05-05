@@ -1,5 +1,5 @@
 import 'dotenv/config.js';
-import './util/checkEnv';
+import './util/checkEnv.js';
 
 import os from 'os';
 import fs from 'fs';
@@ -19,23 +19,23 @@ import {
   getLogsPath,
   logger,
   getAppStatus
-} from './util';
+} from './util/index.js';
 import {
   getLightsRootAsync,
   getLightsIdAsync,
   postLightsIdStateAsync
-} from './endpoints/lights';
+} from './endpoints/lights.js';
 import {
   getGroupsRootAsync,
   getGroupsIdAsync,
   postGroupIdActionAsync
-} from './endpoints/groups';
+} from './endpoints/groups.js';
 import {
   getScenesAsync,
   getOneSceneAsync,
   deleteOneSceneAsync,
   runSceneAsync
-} from './endpoints/scenes';
+} from './endpoints/scenes.js';
 import {
   getProtocols,
   getOneProtocol,
@@ -43,7 +43,7 @@ import {
   deleteProtocol,
   updateProtocol,
   runProtocolAsync
-} from './endpoints/protocols';
+} from './endpoints/protocols.js';
 
 const wrap =
   fn =>
