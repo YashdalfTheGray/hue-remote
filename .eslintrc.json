@@ -19,11 +19,6 @@
       }
     ],
     "object-shorthand": ["error", "consistent-as-needed"],
-    "import/extensions": [
-      "error",
-      {
-        "js": "ignorePackages"
-      }
-    ]
+    "import/extensions": ["error", "always"]
   }
 }
