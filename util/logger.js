@@ -3,7 +3,8 @@ import DailyRotateFile from 'winston-daily-rotate-file';
 
 import { getLogsPath } from './logs.js';
 
-const logger = winston.createLogger({
+// eslint-disable-next-line import/prefer-default-export
+export const logger = winston.createLogger({
   defaultMeta: { application: 'hue-remote' },
   transports: [
     new DailyRotateFile({
@@ -41,5 +42,3 @@ const logger = winston.createLogger({
     })
   ]
 });
-
-export default logger;

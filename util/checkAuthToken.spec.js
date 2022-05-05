@@ -3,7 +3,7 @@
 // eslint-disable-next-line import/no-unresolved
 import test from 'ava';
 
-import checkAuthToken from './checkAuthToken.js';
+import { checkAuthToken } from './checkAuthToken.js';
 
 function createMockResponse() {
   return {

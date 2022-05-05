@@ -1,4 +1,4 @@
-import checkAuthToken from './checkAuthToken.js';
+import { checkAuthToken } from './checkAuthToken.js';
 import * as convert from './convert.js';
 import { setupRedis, injectRedis } from './redis.js';
 import { runSerially, delayAsync, promisifyMethods } from './promises.js';
@@ -9,8 +9,8 @@ import {
   mapToStateObject
 } from './maps.js';
 import { getLogsPath } from './logs.js';
-import logger from './logger.js';
-import getAppStatus from './status.js';
+import { logger } from './logger.js';
+import { getAppStatus } from './status.js';
 
 export {
   checkAuthToken,

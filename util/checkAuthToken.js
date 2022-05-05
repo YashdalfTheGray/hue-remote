@@ -1,4 +1,5 @@
-export default (req, res, next) => {
+// eslint-disable-next-line import/prefer-default-export
+export const checkAuthToken = (req, res, next) => {
   if (req.method === 'POST' && req.body.accessToken) {
     if (
       req.body.accessToken.toLowerCase() ===
