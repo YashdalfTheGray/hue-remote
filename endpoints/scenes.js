@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import { runSerially } from '../util';
+import { runSerially } from '../util/index.js';
 
 export const getScenesAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;

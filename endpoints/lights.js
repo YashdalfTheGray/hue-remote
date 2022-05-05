@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import { mapFromStateObject, mapToStateObject } from '../util';
+import { mapFromStateObject, mapToStateObject } from '../util/index.js';
 
 export const getLightsRootAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;

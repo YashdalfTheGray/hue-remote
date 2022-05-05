@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import { mapToStateObject, runSerially } from '../util';
+import { mapToStateObject, runSerially } from '../util/index.js';
 
 export const getProtocols = async (req, res) => {
   const client = res.locals.redis;

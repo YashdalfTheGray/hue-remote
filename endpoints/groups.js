@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import { mapFromActionObject, mapToActionObject } from '../util';
+import { mapFromActionObject, mapToActionObject } from '../util/index.js';
 
 export const getGroupsRootAsync = async (req, res) => {
   const hueUser = process.env.HUE_BRIDGE_USERNAME;
