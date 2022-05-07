@@ -7,7 +7,7 @@
   "scripts": {
     "test": "nyc ava",
     "test:no-coverage": "ava",
-    "open-coverage-report": "npx open ./coverage/index.html",
+    "open-coverage-report": "npx open-cli ./coverage/index.html",
     "start": "node index.js",
     "linter": "eslint \"**/*.js\"",
     "linter-autofix": "eslint --fix .",
