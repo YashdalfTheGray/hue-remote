@@ -5,7 +5,7 @@
   "type": "module",
   "exports": "./index.js",
   "scripts": {
-    "test": "nyc ava",
+    "test": "c8 ava",
     "test:no-coverage": "ava",
     "open-coverage-report": "npx open-cli ./coverage/index.html",
     "start": "node index.js",
@@ -68,7 +68,7 @@
       "prettier --write"
     ]
   },
-  "nyc": {
+  "c8": {
     "include": [
       "**/*.js"
     ],
@@ -82,7 +82,6 @@
       "text-summary",
       "html"
     ],
-    "sourceMap": true,
-    "instrument": true
+    "clean": true
   }
 }
