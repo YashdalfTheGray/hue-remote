@@ -15,7 +15,7 @@ test('delayAsync delays and then returns value', async t => {
 
   console.log(start, end, `delayAsync took ${end - start}ms`);
   t.is(result, 'foo');
-  t.assert(Math.abs(end - (start + delay)) < 5);
+  t.assert(Math.abs(end - (start + delay)) < 25);
 });
 
 test('runSerially accepts a single promise', async t => {
