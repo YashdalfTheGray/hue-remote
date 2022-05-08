@@ -15,6 +15,7 @@ test('delayAsync delays and then returns value', async t => {
 
   t.is(result, 'foo');
   t.assert(end >= start + delay);
+  console.log(start, end, `delayAsync took ${end - start}ms`);
   t.assert(end < start + delay * 1.25);
 });
 
