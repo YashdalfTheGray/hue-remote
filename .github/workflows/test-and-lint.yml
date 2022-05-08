@@ -13,7 +13,7 @@ jobs:
     name: Unit tests and linting
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         node: ['14', '16', '17', '18']
