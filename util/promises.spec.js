@@ -13,12 +13,10 @@ const testDelayAsyncTiming = async t => {
   const result = await delayAsync(delay, 'foo');
   const end = Date.now();
 
-  console.log(start, end, `delayAsync took ${end - start}ms`);
   t.is(result, 'foo');
   t.assert(Math.abs(end - (start + delay)) < 10);
 };
 
-console.log(process.env.GITHUB_ACTIONS, typeof process.env.GITHUB_ACTIONS);
 if (process.env.GITHUB_ACTIONS === 'true') {
   test.skip(
     'skip delayAsync timing because it varies between 1% under to 175% over in GitHub Actions',
