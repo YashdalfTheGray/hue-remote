@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/YashdalfTheGray/hue-remote.svg?branch=master)](https://travis-ci.org/YashdalfTheGray/hue-remote)
+[![Test and lint](https://github.com/YashdalfTheGray/hue-remote/actions/workflows/test-and-lint.yml/badge.svg)](https://github.com/YashdalfTheGray/hue-remote/actions/workflows/test-and-lint.yml)
 
 # hue-remote
 
