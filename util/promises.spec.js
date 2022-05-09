@@ -7,7 +7,7 @@ import test from 'ava';
 
 import { runSerially, delayAsync, promisifyMethods } from './promises.js';
 
-test('delayAsync delays and then returns value', async t => {
+const testDelayAsyncTiming = async t => {
   const delay = 200;
   const start = Date.now();
   const result = await delayAsync(delay, 'foo');
@@ -15,8 +15,18 @@ test('delayAsync delays and then returns value', async t => {
 
   console.log(start, end, `delayAsync took ${end - start}ms`);
   t.is(result, 'foo');
-  t.assert(Math.abs(end - (start + delay)) < 25);
-});
+  t.assert(Math.abs(end - (start + delay)) < 10);
+};
+
+console.log(process.env.GITHUB_ACTIONS, typeof process.env.GITHUB_ACTIONS);
+if (process.env.GITHUB_ACTIONS === 'true') {
+  test.skip(
+    'skip delayAsync timing because it varies between 1% under to 175% over in GitHub Actions',
+    testDelayAsyncTiming
+  );
+} else {
+  test('delayAsync delays and then returns value', testDelayAsyncTiming);
+}
 
 test('runSerially accepts a single promise', async t => {
   const responses = await runSerially([() => Promise.resolve(true)]);
