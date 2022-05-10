@@ -1,8 +1,9 @@
 [![Test and lint](https://github.com/YashdalfTheGray/hue-remote/actions/workflows/test-and-lint.yml/badge.svg)](https://github.com/YashdalfTheGray/hue-remote/actions/workflows/test-and-lint.yml)
+[![Docker Image Build](https://github.com/YashdalfTheGray/hue-remote/actions/workflows/docker-build.yml/badge.svg)](https://github.com/YashdalfTheGray/hue-remote/actions/workflows/docker-build.yml)
 
 # hue-remote
 
-A Phillips Hue remote API that provides access to the Hue bridge from outside the local network.
+A Phillips Hue remote API that provides access to the Hue bridge from outside the local network. This project only supports Node.js v14 or higher since it is using ECMAScript Modules support within Node.js.
 
 ## Setup
 
