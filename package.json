@@ -39,7 +39,7 @@
     "color-space": "~2.0.0",
     "dotenv": "~16.0.0",
     "express": "~4.18.1",
-    "helmet": "~5.0.2",
+    "helmet": "~5.1.0",
     "lodash-es": "~4.17.21",
     "morgan": "~1.10.0",
     "node-fetch": "~3.2.3",
