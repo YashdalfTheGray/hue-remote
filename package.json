@@ -45,11 +45,11 @@
     "node-fetch": "~3.2.3",
     "redis": "~4.1.0",
     "rotating-file-stream": "~3.0.4",
-    "winston": "~3.7.2",
+    "winston": "~3.8.0",
     "winston-daily-rotate-file": "~4.6.1"
   },
   "devDependencies": {
-    "ava": "~4.2.0",
+    "ava": "~4.3.0",
     "c8": "~7.11.3",
     "eslint": "~8.15.0",
     "eslint-config-airbnb-base": "~15.0.0",
