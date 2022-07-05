@@ -45,7 +45,7 @@
     "node-fetch": "~3.2.3",
     "redis": "~4.1.0",
     "rotating-file-stream": "~3.0.4",
-    "winston": "~3.7.2",
+    "winston": "~3.8.1",
     "winston-daily-rotate-file": "~4.7.1"
   },
   "devDependencies": {
