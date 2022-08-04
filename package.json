@@ -42,7 +42,7 @@
     "helmet": "~5.1.0",
     "lodash-es": "~4.17.21",
     "morgan": "~1.10.0",
-    "node-fetch": "~3.2.9",
+    "node-fetch": "~3.2.10",
     "redis": "~4.2.0",
     "rotating-file-stream": "~3.0.4",
     "winston": "~3.8.1",
